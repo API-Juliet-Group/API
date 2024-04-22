@@ -12,7 +12,7 @@ namespace API_Juliet
 
             // Add services to the container.
             builder.Services.AddDbContext<DataContext>(options =>
-               options.UseSqlServer(builder.Configuration.GetConnectionString("DataDbContext") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContext' not found.")));
+               options.UseSqlServer(builder.Configuration.GetConnectionString("DataDbContext") ?? throw new InvalidOperationException("Connection string 'DataDbContext' not found.")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

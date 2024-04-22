@@ -1,4 +1,7 @@
 
+using API_Juliet.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace API_Juliet
 {
     public class Program
@@ -8,6 +11,8 @@ namespace API_Juliet
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<DataContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("DataDbContext") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContext' not found.")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

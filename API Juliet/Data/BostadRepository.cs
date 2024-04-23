@@ -18,19 +18,19 @@ namespace API_Juliet.Data
         {
             return await _context.Bostäder.SingleOrDefaultAsync(c => c.Id == id);
         }
-        public async Task AddAsync(Bostad order)
+        public async Task AddAsync(Bostad bostad)
         {
-            _context.Bostäder.Add(order);
+            _context.Bostäder.Add(bostad);
             await _context.SaveChangesAsync();
         }
-        public async Task UpdateAsync(Bostad order)
+        public async Task UpdateAsync(Bostad bostad)
         {
-            _context.Bostäder.Update(order);
+            _context.Bostäder.Update(bostad);
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteAsync(Bostad order)
+        public async Task DeleteAsync(Bostad bostad)
         {
-            _context.Bostäder.Remove(order);
+            _context.Bostäder.Remove(bostad);
             await _context.SaveChangesAsync();
         }
 

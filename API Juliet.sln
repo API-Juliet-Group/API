@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API Juliet", "API Juliet\API Juliet.csproj", "{CE46F2D2-10B6-49E9-BB89-56BA0E7E4E02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API Juliet", "API Juliet\API Juliet.csproj", "{CE46F2D2-10B6-49E9-BB89-56BA0E7E4E02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JulietBlazorApp", "JulietBlazorApp\JulietBlazorApp.csproj", "{1A1FA2D8-E6AE-4BAD-9E4F-1928BE111984}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CE46F2D2-10B6-49E9-BB89-56BA0E7E4E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE46F2D2-10B6-49E9-BB89-56BA0E7E4E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE46F2D2-10B6-49E9-BB89-56BA0E7E4E02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1FA2D8-E6AE-4BAD-9E4F-1928BE111984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1FA2D8-E6AE-4BAD-9E4F-1928BE111984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1FA2D8-E6AE-4BAD-9E4F-1928BE111984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1FA2D8-E6AE-4BAD-9E4F-1928BE111984}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

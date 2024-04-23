@@ -1,5 +1,5 @@
 ﻿using API_Juliet.Data;
-using API_Juliet.Models;
+using BaseLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

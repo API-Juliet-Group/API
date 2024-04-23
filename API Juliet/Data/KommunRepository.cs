@@ -1,4 +1,4 @@
-﻿using API_Juliet.Models;
+﻿using BaseLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_Juliet.Data

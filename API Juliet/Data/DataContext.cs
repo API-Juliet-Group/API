@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using API_Juliet.Models;
+using BaseLibrary.Models;
 
 namespace API_Juliet.Data
 {

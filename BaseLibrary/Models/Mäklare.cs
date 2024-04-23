@@ -1,4 +1,4 @@
-﻿namespace API_Juliet.Models
+﻿namespace BaseLibrary.Models
 {
     public class Mäklare
     {

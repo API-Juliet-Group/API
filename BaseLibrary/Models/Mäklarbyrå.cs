@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace API_Juliet.Models
+﻿namespace BaseLibrary.Models
 {
     public class Mäklarbyrå
     {

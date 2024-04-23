@@ -19,6 +19,8 @@ namespace API_Juliet
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddTransient<IBostad, BostadRepository>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

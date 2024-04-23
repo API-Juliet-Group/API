@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API_Juliet.Data
 {
-    public class MäklareRepository : IMäklareRepository
+    public class MäklareRepository : IMäklare
     {
         private readonly DataContext _context;
 

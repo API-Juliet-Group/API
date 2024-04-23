@@ -1,5 +1,6 @@
 
 using API_Juliet.Data;
+using BaseLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_Juliet
@@ -20,6 +21,9 @@ namespace API_Juliet
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddTransient<IBostad, BostadRepository>();
+            builder.Services.AddTransient<IKommun, KommunRepository>();
+            builder.Services.AddTransient<IMäklarbyrå, MäklarbyråRepository>();
+            builder.Services.AddTransient<IMäklare, MäklareRepository>();
 
             var app = builder.Build();
 

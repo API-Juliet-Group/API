@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace API_Juliet.Data
 {
-    public interface IMäklarbyråRepository
+    public interface IMäklarbyrå
     {
         Task<Mäklarbyrå> GetByIdAsync(int id);
         Task<IEnumerable<Mäklarbyrå>> GetAllAsync();

@@ -12,9 +12,9 @@ namespace API_Juliet.Controllers
     [ApiController]
     public class KommunController : ControllerBase
     {
-        private readonly IKommunRepository _kommunRepository;
+        private readonly IKommun _kommunRepository;
 
-        public KommunController(IKommunRepository kommunRepository)
+        public KommunController(IKommun kommunRepository)
         {
             _kommunRepository = kommunRepository ?? throw new ArgumentNullException(nameof(kommunRepository));
         }

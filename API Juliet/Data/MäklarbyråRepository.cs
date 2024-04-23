@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API_Juliet.Data
 {
-    public class MäklarbyråRepository : IMäklarbyråRepository
+    public class MäklarbyråRepository : IMäklarbyrå
     {
         private readonly DataContext _context;
 

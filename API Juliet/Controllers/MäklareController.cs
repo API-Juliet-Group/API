@@ -12,9 +12,9 @@ namespace API_Juliet.Controllers
     [ApiController]
     public class MäklareController : ControllerBase
     {
-        private readonly IMäklareRepository _mäklareRepository;
+        private readonly IMäklare _mäklareRepository;
 
-        public MäklareController(IMäklareRepository mäklareRepository)
+        public MäklareController(IMäklare mäklareRepository)
         {
             _mäklareRepository = mäklareRepository ?? throw new ArgumentNullException(nameof(mäklareRepository));
         }

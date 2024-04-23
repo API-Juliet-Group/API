@@ -2,7 +2,7 @@
 
 namespace API_Juliet.Data
 {
-    public interface IMäklareRepository
+    public interface IMäklare
     {
         Task<Mäklare> GetByIdAsync(int id);
         Task<IEnumerable<Mäklare>> GetAllAsync();

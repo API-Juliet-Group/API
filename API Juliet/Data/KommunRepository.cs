@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API_Juliet.Data
 {
-    public class KommunRepository : IKommunRepository
+    public class KommunRepository : IKommun
     {
         private readonly DataContext _context;
 

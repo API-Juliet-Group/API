@@ -2,7 +2,7 @@
 
 namespace API_Juliet.Data
 {
-    public interface IKommunRepository
+    public interface IKommun
     {
         Task<Kommun> GetByIdAsync(int id);
         Task<IEnumerable<Kommun>> GetAllAsync();

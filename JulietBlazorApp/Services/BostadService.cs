@@ -15,7 +15,6 @@ public class BostadService
 
     public async Task<List<Bostad>> GetBostäderAsync()
     {
-        var result = await _httpClient.GetFromJsonAsync<List<Bostad>>("api/Bostad");
-        return result ?? new List<Bostad>();
+        return await _httpClient.GetFromJsonAsync<List<Bostad>>("api/Bostad");
     }
 }

@@ -3,6 +3,6 @@
     public class Kommun
     {
         public int Id { get; set; }
-        public string Namn { get; set; }
+        public string? Namn { get; set; }
     }
 }

@@ -1,0 +1,28 @@
+﻿@page "/Bostäder"
+@using BaseLibrary.Models
+@inject BostadService BostadService
+
+<h1>All Bostäder</h1>
+
+@if (bostäder != null)
+{
+    <ul>
+        @foreach (var bostad in bostäder)
+        {
+            <li>@bostad.Adress</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private List<Bostad> bostäder;
+
+    protected override async Task OnInitializedAsync()
+    {
+        bostäder = await BostadService.GetBostäderAsync();
+    }
+}

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API Juliet", "API Juliet\API Juliet.csproj", "{CE46F2D2-10B6-49E9-BB89-56BA0E7E4E02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JulietBlazorApp", "JulietBlazorApp\JulietBlazorApp.csproj", "{1A1FA2D8-E6AE-4BAD-9E4F-1928BE111984}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JulietBlazorApp", "JulietBlazorApp\JulietBlazorApp.csproj", "{1A1FA2D8-E6AE-4BAD-9E4F-1928BE111984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseLibrary", "BaseLibrary\BaseLibrary.csproj", "{7746BA7B-AC62-4320-9AAF-A43E2347E254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseLibrary", "BaseLibrary\BaseLibrary.csproj", "{7746BA7B-AC62-4320-9AAF-A43E2347E254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

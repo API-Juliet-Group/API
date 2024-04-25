@@ -15,6 +15,14 @@ public class BostadService
 
     public async Task<List<Bostad>> GetBostäderAsync()
     {
-        return await _httpClient.GetFromJsonAsync<List<Bostad>>("api/Bostad");
+        try
+        {
+            var bostäder = await _httpClient.GetFromJsonAsync<List<Bostad>>("api/Bostad");
+            return bostäder;
+        }
+        catch(Exception) 
+        {
+            throw;
+        }
     }
 }

@@ -11,16 +11,17 @@ namespace API_Juliet.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BostadKategori",
+                name: "BostadKategorier",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Kategori = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Kategori = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BildURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BostadKategori", x => x.Id);
+                    table.PrimaryKey("PK_BostadKategorier", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,7 +30,7 @@ namespace API_Juliet.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Namn = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Namn = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,6 +43,7 @@ namespace API_Juliet.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Namn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Presentation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Logotyp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -56,12 +58,12 @@ namespace API_Juliet.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MäklarbyråId = table.Column<int>(type: "int", nullable: true),
-                    Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Epostadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefonnummer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Bild = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    BildURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MäklarbyråId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,7 +72,8 @@ namespace API_Juliet.Migrations
                         name: "FK_Mäklare_Mäklarbyråer_MäklarbyråId",
                         column: x => x.MäklarbyråId,
                         principalTable: "Mäklarbyråer",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,38 +82,60 @@ namespace API_Juliet.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BostadKategoriId = table.Column<int>(type: "int", nullable: true),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    KommunId = table.Column<int>(type: "int", nullable: true),
                     Utgångspris = table.Column<int>(type: "int", nullable: false),
                     Boarea = table.Column<int>(type: "int", nullable: false),
                     Biarea = table.Column<int>(type: "int", nullable: false),
                     Tomtarea = table.Column<int>(type: "int", nullable: false),
-                    Objektbeskrivning = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Antalrum = table.Column<int>(type: "int", nullable: false),
                     Månadsavgift = table.Column<int>(type: "int", nullable: false),
                     Driftkonstnad = table.Column<int>(type: "int", nullable: false),
                     Byggår = table.Column<int>(type: "int", nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Objektbeskrivning = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BostadKategoriId = table.Column<int>(type: "int", nullable: false),
+                    KommunId = table.Column<int>(type: "int", nullable: false),
                     MäklareId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bostäder", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bostäder_BostadKategori_BostadKategoriId",
+                        name: "FK_Bostäder_BostadKategorier_BostadKategoriId",
                         column: x => x.BostadKategoriId,
-                        principalTable: "BostadKategori",
-                        principalColumn: "Id");
+                        principalTable: "BostadKategorier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bostäder_Kommuner_KommunId",
                         column: x => x.KommunId,
                         principalTable: "Kommuner",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bostäder_Mäklare_MäklareId",
                         column: x => x.MäklareId,
                         principalTable: "Mäklare",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BostadsBilder",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BildURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BostadId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BostadsBilder", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BostadsBilder_Bostäder_BostadId",
+                        column: x => x.BostadId,
+                        principalTable: "Bostäder",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -129,6 +154,11 @@ namespace API_Juliet.Migrations
                 column: "MäklareId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BostadsBilder_BostadId",
+                table: "BostadsBilder",
+                column: "BostadId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Mäklare_MäklarbyråId",
                 table: "Mäklare",
                 column: "MäklarbyråId");
@@ -138,10 +168,13 @@ namespace API_Juliet.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "BostadsBilder");
+
+            migrationBuilder.DropTable(
                 name: "Bostäder");
 
             migrationBuilder.DropTable(
-                name: "BostadKategori");
+                name: "BostadKategorier");
 
             migrationBuilder.DropTable(
                 name: "Kommuner");

@@ -22,10 +22,11 @@ namespace API_Juliet
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<IBostad, BostadRepository>();
-            builder.Services.AddScoped<IKommun, KommunRepository>();
-            builder.Services.AddScoped<IMäklarbyrå, MäklarbyråRepository>();
-            builder.Services.AddScoped<IMäklare, MäklareRepository>();
+            builder.Services.AddTransient<IBostad, BostadRepository>();
+            builder.Services.AddTransient<IBostadBild, BostadBildRepository>();
+            builder.Services.AddTransient<IKommun, KommunRepository>();
+            builder.Services.AddTransient<IMäklarbyrå, MäklarbyråRepository>();
+            builder.Services.AddTransient<IMäklare, MäklareRepository>();
 
             var app = builder.Build();
 

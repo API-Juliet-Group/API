@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_Juliet.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240423215341_Init")]
+    [Migration("20240426001512_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -45,7 +45,7 @@ namespace API_Juliet.Migrations
                     b.Property<int>("Boarea")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BostadKategoriId")
+                    b.Property<int>("BostadKategoriId")
                         .HasColumnType("int");
 
                     b.Property<int>("Byggår")
@@ -54,7 +54,7 @@ namespace API_Juliet.Migrations
                     b.Property<int>("Driftkonstnad")
                         .HasColumnType("int");
 
-                    b.Property<int?>("KommunId")
+                    b.Property<int>("KommunId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MäklareId")
@@ -83,6 +83,27 @@ namespace API_Juliet.Migrations
                     b.ToTable("Bostäder");
                 });
 
+            modelBuilder.Entity("BaseLibrary.Models.BostadBild", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BildURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BostadId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BostadId");
+
+                    b.ToTable("BostadsBilder");
+                });
+
             modelBuilder.Entity("BaseLibrary.Models.BostadKategori", b =>
                 {
                     b.Property<int>("Id")
@@ -91,12 +112,15 @@ namespace API_Juliet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BildURL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Kategori")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BostadKategori");
+                    b.ToTable("BostadKategorier");
                 });
 
             modelBuilder.Entity("BaseLibrary.Models.Kommun", b =>
@@ -108,6 +132,7 @@ namespace API_Juliet.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Namn")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -126,6 +151,10 @@ namespace API_Juliet.Migrations
                     b.Property<string>("Logotyp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Namn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Presentation")
                         .HasColumnType("nvarchar(max)");
 
@@ -142,19 +171,21 @@ namespace API_Juliet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Bild")
+                    b.Property<string>("BildURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Efternamn")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Epostadress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Förnamn")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MäklarbyråId")
+                    b.Property<int>("MäklarbyråId")
                         .HasColumnType("int");
 
                     b.Property<string>("Telefonnummer")
@@ -171,11 +202,15 @@ namespace API_Juliet.Migrations
                 {
                     b.HasOne("BaseLibrary.Models.BostadKategori", "BostadKategori")
                         .WithMany()
-                        .HasForeignKey("BostadKategoriId");
+                        .HasForeignKey("BostadKategoriId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BaseLibrary.Models.Kommun", "Kommun")
                         .WithMany()
-                        .HasForeignKey("KommunId");
+                        .HasForeignKey("KommunId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BaseLibrary.Models.Mäklare", "Mäklare")
                         .WithMany()
@@ -188,11 +223,24 @@ namespace API_Juliet.Migrations
                     b.Navigation("Mäklare");
                 });
 
+            modelBuilder.Entity("BaseLibrary.Models.BostadBild", b =>
+                {
+                    b.HasOne("BaseLibrary.Models.Bostad", "Bostad")
+                        .WithMany()
+                        .HasForeignKey("BostadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bostad");
+                });
+
             modelBuilder.Entity("BaseLibrary.Models.Mäklare", b =>
                 {
                     b.HasOne("BaseLibrary.Models.Mäklarbyrå", "Mäklarbyrå")
                         .WithMany()
-                        .HasForeignKey("MäklarbyråId");
+                        .HasForeignKey("MäklarbyråId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Mäklarbyrå");
                 });

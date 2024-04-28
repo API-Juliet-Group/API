@@ -16,7 +16,7 @@ namespace API_Juliet.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Kategori = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Namn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BildURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -60,7 +60,7 @@ namespace API_Juliet.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Epostadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Epostadress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefonnummer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BildURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MäklarbyråId = table.Column<int>(type: "int", nullable: false)
@@ -92,16 +92,16 @@ namespace API_Juliet.Migrations
                     Byggår = table.Column<int>(type: "int", nullable: false),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Objektbeskrivning = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BostadKategoriId = table.Column<int>(type: "int", nullable: false),
+                    KategoriId = table.Column<int>(type: "int", nullable: false),
                     KommunId = table.Column<int>(type: "int", nullable: false),
-                    MäklareId = table.Column<int>(type: "int", nullable: true)
+                    MäklareId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bostäder", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bostäder_BostadKategorier_BostadKategoriId",
-                        column: x => x.BostadKategoriId,
+                        name: "FK_Bostäder_BostadKategorier_KategoriId",
+                        column: x => x.KategoriId,
                         principalTable: "BostadKategorier",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -115,7 +115,8 @@ namespace API_Juliet.Migrations
                         name: "FK_Bostäder_Mäklare_MäklareId",
                         column: x => x.MäklareId,
                         principalTable: "Mäklare",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,9 +140,9 @@ namespace API_Juliet.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bostäder_BostadKategoriId",
+                name: "IX_Bostäder_KategoriId",
                 table: "Bostäder",
-                column: "BostadKategoriId");
+                column: "KategoriId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bostäder_KommunId",

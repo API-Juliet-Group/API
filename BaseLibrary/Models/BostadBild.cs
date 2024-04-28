@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BaseLibrary.Models
 {
@@ -11,7 +7,10 @@ namespace BaseLibrary.Models
         public int Id { get; set; }
 
         public string? BildURL { get; set; }
+        
 
+        public int BostadId { get; set; }
+        [ForeignKey("BostadId")]
         public Bostad Bostad { get; set; }
     }
 }

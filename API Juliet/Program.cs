@@ -1,5 +1,6 @@
 
 using API_Juliet.Data;
+using API_Juliet.SeedData;
 using BaseLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
@@ -30,6 +31,7 @@ namespace API_Juliet
 
             var app = builder.Build();
 
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -49,6 +51,8 @@ namespace API_Juliet
 
 
             app.MapControllers();
+
+            app.Seed();
 
             app.Run();
         }

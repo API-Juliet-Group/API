@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BaseLibrary.Models;
+using API_Juliet.SeedData;
 
 namespace API_Juliet.Data
 {
@@ -12,9 +13,7 @@ namespace API_Juliet.Data
         public DbSet<Mäklarbyrå> Mäklarbyråer { get; set; }
         public DbSet<Mäklare> Mäklare {  get; set; }
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options) 
-        { 
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        }
     }
 }

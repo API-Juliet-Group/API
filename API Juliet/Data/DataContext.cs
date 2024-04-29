@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using BaseLibrary.Models;
-using API_Juliet.SeedData;
+﻿using API_Juliet.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace API_Juliet.Data
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BaseLibrary.Models
+namespace API_Juliet.Models
 {
     public class BostadKategori
     {

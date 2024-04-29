@@ -1,4 +1,4 @@
-﻿namespace BaseLibrary.Models
+﻿namespace API_Juliet.Models
 {
     public class Mäklarbyrå
     {

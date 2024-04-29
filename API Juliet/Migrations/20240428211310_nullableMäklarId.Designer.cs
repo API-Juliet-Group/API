@@ -4,6 +4,7 @@ using API_Juliet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_Juliet.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240428211310_nullableMäklarId")]
+    partial class nullableMäklarId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +60,7 @@ namespace API_Juliet.Migrations
                     b.Property<int?>("MäklareId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Månadsavgift")
+                    b.Property<int>("Månadsavgift")
                         .HasColumnType("int");
 
                     b.Property<string>("Objektbeskrivning")

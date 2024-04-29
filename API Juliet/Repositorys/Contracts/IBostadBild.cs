@@ -1,8 +1,6 @@
-﻿using BaseLibrary.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using API_Juliet.Models;
 
-namespace API_Juliet.Data
+namespace API_Juliet.Repositorys.Contracts
 {
     public interface IBostadBild
     {

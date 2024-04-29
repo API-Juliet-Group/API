@@ -1,8 +1,10 @@
-﻿using BaseLibrary.DTO;
-using BaseLibrary.Models;
+﻿using API_Juliet.Data;
+using API_Juliet.Repositorys.Contracts;
+using BaseLibrary.DTO;
+using API_Juliet.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_Juliet.Data
+namespace API_Juliet.Repositorys
 {
     public class BostadRepository : IBostad
     {
@@ -60,9 +62,37 @@ namespace API_Juliet.Data
                     Objektbeskrivning = b.Objektbeskrivning,
                     Kategori = b.BostadKategori.Namn,
                     Kommun = b.Kommun.Namn,
-                    Mäklare = b.Mäklare.Förnamn +" "+ b.Mäklare.Förnamn
+                    Mäklare = b.Mäklare.Förnamn + " " + b.Mäklare.Efternamn
                 })
                 .ToListAsync();
+        }
+
+        public async Task<BostadDto> GetBostadDtoByIdAsync(int id)
+        {
+#pragma warning disable CS8603 // Possible null reference return.
+            return await _context.Bostäder
+                .Include(b => b.BostadKategori)
+                .Include(b => b.Kommun)
+                .Include(b => b.Mäklare)
+                .Select(b => new BostadDto
+                {
+                    Id = b.Id,
+                    Utgångspris = b.Utgångspris,
+                    Boarea = b.Boarea,
+                    Biarea = b.Biarea,
+                    Tomtarea = b.Tomtarea,
+                    Antalrum = b.Antalrum,
+                    Månadsavgift = b.Månadsavgift,
+                    Driftkonstnad = b.Driftkonstnad,
+                    Byggår = b.Byggår,
+                    Adress = b.Adress,
+                    Objektbeskrivning = b.Objektbeskrivning,
+                    Kategori = b.BostadKategori.Namn,
+                    Kommun = b.Kommun.Namn,
+                    Mäklare = b.Mäklare.Förnamn + " " + b.Mäklare.Efternamn
+                })
+                .SingleOrDefaultAsync(c => c.Id == id);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public async Task AddBostadDtoAsync(BostadDto bostadDto)

@@ -1,7 +1,8 @@
 
 using API_Juliet.Data;
+using API_Juliet.Repositorys;
+using API_Juliet.Repositorys.Contracts;
 using API_Juliet.SeedData;
-using BaseLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using static System.Net.WebRequestMethods;

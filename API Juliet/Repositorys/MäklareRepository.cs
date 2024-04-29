@@ -1,7 +1,9 @@
-﻿using BaseLibrary.Models;
+﻿using API_Juliet.Data;
+using API_Juliet.Repositorys.Contracts;
+using API_Juliet.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_Juliet.Data
+namespace API_Juliet.Repositorys
 {
     public class MäklareRepository : IMäklare
     {

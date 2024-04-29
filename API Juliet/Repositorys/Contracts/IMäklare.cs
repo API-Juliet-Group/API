@@ -1,6 +1,6 @@
-﻿using BaseLibrary.Models;
+﻿using API_Juliet.Models;
 
-namespace API_Juliet.Data
+namespace API_Juliet.Repositorys.Contracts
 {
     public interface IMäklare
     {

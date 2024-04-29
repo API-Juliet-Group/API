@@ -1,17 +1,36 @@
-﻿@page "/Bostäder"
-@using BaseLibrary.Models
-@inject BostadService BostadService
+﻿@page "/bostäder"
+@using BaseLibrary.DTO
+@inject BostadDtoService BostadDtoService
+@inject NavigationManager NavigationManager
 
 <h1>Alla Bostäder</h1>
 
 @if (bostäder != null)
 {
-    <ul>
-        @foreach (var bostad in bostäder)
-        {
-            <li>@bostad.Adress</li>
-        }
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bostad in bostäder)
+            {
+                <tr>
+                    <td>
+@*                         <button style="border: none; padding: 0;" @onclick="() => BostadsDetaljer(bostad)">
+                            <img src=@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id).BildURL height="200px" />
+                        </button> *@
+                    </td>
+                    <td>@bostad.Adress</td>
+                    <td>@bostad.Utgångspris kr</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
@@ -19,10 +38,19 @@ else
 }
 
 @code {
-    private List<Bostad> bostäder;
+    private List<BostadDto> bostäder;
 
     protected override async Task OnInitializedAsync()
     {
-        bostäder = await BostadService.GetBostäderAsync();
+        bostäder = await BostadDtoService.GetBostäderAsync();
+
+
+    }
+
+    private List<BostadBildDto> bostadsBilder;
+
+    private void BostadsDetaljer(BostadDto bostad)
+    {
+        NavigationManager.NavigateTo($"/BostadsDetaljer/{bostad.Id}");
     }
 }

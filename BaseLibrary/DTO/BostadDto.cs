@@ -1,5 +1,4 @@
-﻿
-namespace BaseLibrary.DTO
+﻿namespace BaseLibrary.DTO
 {
     public class BostadDto
     {
@@ -10,7 +9,7 @@ namespace BaseLibrary.DTO
         public int Biarea { get; set; }
         public int Tomtarea { get; set; }
         public int Antalrum { get; set; }
-        public int Månadsavgift { get; set; }
+        public int? Månadsavgift { get; set; }
         public int Driftkonstnad { get; set; }
         public int Byggår { get; set; }
 
@@ -20,6 +19,6 @@ namespace BaseLibrary.DTO
 
         public string Kategori { get; set; }
         public string Kommun { get; set; }
-        public string Mäklare { get; set; }
+        public string? Mäklare { get; set; }
     }
 }

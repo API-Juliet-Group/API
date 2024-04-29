@@ -1,6 +1,7 @@
-﻿using BaseLibrary.Models;
+﻿using BaseLibrary.DTO;
+using API_Juliet.Models;
 
-namespace API_Juliet.Data
+namespace API_Juliet.Repositorys.Contracts
 {
     public interface IBostad
     {
@@ -9,5 +10,9 @@ namespace API_Juliet.Data
         Task AddAsync(Bostad bostad);
         Task UpdateAsync(Bostad bostad);
         Task DeleteAsync(Bostad bostad);
+
+        //BostadDTO
+        Task<BostadDto> GetBostadDtoByIdAsync(int id);
+        Task<IEnumerable<BostadDto>> GetAllBostadDtosAsync();
     }
 }

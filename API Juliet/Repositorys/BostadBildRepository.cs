@@ -1,9 +1,9 @@
-﻿using BaseLibrary.Models;
+﻿using API_Juliet.Data;
+using API_Juliet.Repositorys.Contracts;
+using API_Juliet.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace API_Juliet.Data
+namespace API_Juliet.Repositorys
 {
     public class BostadBildRepository : IBostadBild
     {

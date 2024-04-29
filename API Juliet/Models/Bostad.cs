@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BaseLibrary.Models
+namespace API_Juliet.Models
 {
     public class Bostad
     {
@@ -12,7 +12,7 @@ namespace BaseLibrary.Models
         public int Biarea { get; set; }
         public int Tomtarea { get; set; }
         public int Antalrum { get; set; }
-        public int Månadsavgift { get; set; }
+        public int? Månadsavgift { get; set; }
         public int Driftkonstnad { get; set; }
         public int Byggår { get; set; }
 
@@ -28,8 +28,8 @@ namespace BaseLibrary.Models
         [ForeignKey("KommunId")]
         public Kommun Kommun { get; set; }
 
-        public int MäklareId { get; set; }
+        public int? MäklareId { get; set; }
         [ForeignKey("MäklareId")]
-        public Mäklare Mäklare { get; set; }
+        public Mäklare? Mäklare { get; set; }
     }
 }

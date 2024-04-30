@@ -22,7 +22,7 @@ namespace API_Juliet.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BaseLibrary.Models.Bostad", b =>
+            modelBuilder.Entity("API_Juliet.Models.Bostad", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace API_Juliet.Migrations
                     b.ToTable("Bostäder");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.BostadBild", b =>
+            modelBuilder.Entity("API_Juliet.Models.BostadBild", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,7 +101,7 @@ namespace API_Juliet.Migrations
                     b.ToTable("BostadsBilder");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.BostadKategori", b =>
+            modelBuilder.Entity("API_Juliet.Models.BostadKategori", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,7 +121,7 @@ namespace API_Juliet.Migrations
                     b.ToTable("BostadKategorier");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.Kommun", b =>
+            modelBuilder.Entity("API_Juliet.Models.Kommun", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace API_Juliet.Migrations
                     b.ToTable("Kommuner");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.Mäklarbyrå", b =>
+            modelBuilder.Entity("API_Juliet.Models.Mäklarbyrå", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -161,7 +161,7 @@ namespace API_Juliet.Migrations
                     b.ToTable("Mäklarbyråer");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.Mäklare", b =>
+            modelBuilder.Entity("API_Juliet.Models.Mäklare", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,21 +197,21 @@ namespace API_Juliet.Migrations
                     b.ToTable("Mäklare");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.Bostad", b =>
+            modelBuilder.Entity("API_Juliet.Models.Bostad", b =>
                 {
-                    b.HasOne("BaseLibrary.Models.BostadKategori", "BostadKategori")
+                    b.HasOne("API_Juliet.Models.BostadKategori", "BostadKategori")
                         .WithMany()
                         .HasForeignKey("KategoriId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BaseLibrary.Models.Kommun", "Kommun")
+                    b.HasOne("API_Juliet.Models.Kommun", "Kommun")
                         .WithMany()
                         .HasForeignKey("KommunId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BaseLibrary.Models.Mäklare", "Mäklare")
+                    b.HasOne("API_Juliet.Models.Mäklare", "Mäklare")
                         .WithMany()
                         .HasForeignKey("MäklareId");
 
@@ -222,9 +222,9 @@ namespace API_Juliet.Migrations
                     b.Navigation("Mäklare");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.BostadBild", b =>
+            modelBuilder.Entity("API_Juliet.Models.BostadBild", b =>
                 {
-                    b.HasOne("BaseLibrary.Models.Bostad", "Bostad")
+                    b.HasOne("API_Juliet.Models.Bostad", "Bostad")
                         .WithMany()
                         .HasForeignKey("BostadId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -233,9 +233,9 @@ namespace API_Juliet.Migrations
                     b.Navigation("Bostad");
                 });
 
-            modelBuilder.Entity("BaseLibrary.Models.Mäklare", b =>
+            modelBuilder.Entity("API_Juliet.Models.Mäklare", b =>
                 {
-                    b.HasOne("BaseLibrary.Models.Mäklarbyrå", "Mäklarbyrå")
+                    b.HasOne("API_Juliet.Models.Mäklarbyrå", "Mäklarbyrå")
                         .WithMany()
                         .HasForeignKey("MäklarbyråId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -87,14 +87,14 @@ namespace API_Juliet.Migrations
                     Biarea = table.Column<int>(type: "int", nullable: false),
                     Tomtarea = table.Column<int>(type: "int", nullable: false),
                     Antalrum = table.Column<int>(type: "int", nullable: false),
-                    Månadsavgift = table.Column<int>(type: "int", nullable: false),
+                    Månadsavgift = table.Column<int>(type: "int", nullable: true),
                     Driftkonstnad = table.Column<int>(type: "int", nullable: false),
                     Byggår = table.Column<int>(type: "int", nullable: false),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Objektbeskrivning = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     KategoriId = table.Column<int>(type: "int", nullable: false),
                     KommunId = table.Column<int>(type: "int", nullable: false),
-                    MäklareId = table.Column<int>(type: "int", nullable: false)
+                    MäklareId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,8 +115,7 @@ namespace API_Juliet.Migrations
                         name: "FK_Bostäder_Mäklare_MäklareId",
                         column: x => x.MäklareId,
                         principalTable: "Mäklare",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

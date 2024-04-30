@@ -2,6 +2,7 @@
 using API_Juliet.Repositorys.Contracts;
 using API_Juliet.Models;
 using Microsoft.EntityFrameworkCore;
+using BaseLibrary.DTO;
 
 namespace API_Juliet.Repositorys
 {
@@ -40,6 +41,23 @@ namespace API_Juliet.Repositorys
         {
             _context.BostadsBilder.Remove(bostadBild);
             await _context.SaveChangesAsync();
+        }
+
+
+
+        //DTO
+
+
+        public async Task<IEnumerable<BostadBildDto>> GetBostadsBilderDtosAsync()
+        {
+            return await _context.BostadsBilder
+                .Select(b => new BostadBildDto
+                {
+                    Id = b.Id,
+                    BildURL = b.BildURL,
+                    BostadId = b.BostadId,
+                })
+                .ToListAsync();
         }
     }
 }

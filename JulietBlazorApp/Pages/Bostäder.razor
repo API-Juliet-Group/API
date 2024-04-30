@@ -1,36 +1,41 @@
 ﻿@page "/bostäder"
 @using BaseLibrary.DTO
 @inject BostadDtoService BostadDtoService
+@inject BostadBildDtoService BostadBildDtoService
 @inject NavigationManager NavigationManager
 
 <h1>Alla Bostäder</h1>
 
 @if (bostäder != null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var bostad in bostäder)
-            {
-                <tr>
-                    <td>
-@*                         <button style="border: none; padding: 0;" @onclick="() => BostadsDetaljer(bostad)">
-                            <img src=@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id).BildURL height="200px" />
-                        </button> *@
-                    </td>
-                    <td>@bostad.Adress</td>
-                    <td>@bostad.Utgångspris kr</td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
+    @foreach (var bostad in bostäder)
+    {
+        <div class="col-md-3 mb-2">
+            <a href="/BostadsDetaljer/@bostad.Id">
+                <div class="card">
+                    @if (HasImagesForBostad(bostad))
+                    {
+                        <img class="thumbnail" src=@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
+                    }
+                    else
+                    {
+                        <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            @bostad.Adress
+                        </h5>
+                        <p class="card-text">
+                            @bostad.Utgångspris.ToString("C0", new System.Globalization.CultureInfo("sv-SE"))
+                        </p>
+                        <p>
+                            <b>@bostad.Kommun</b>
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
 }
 else
 {
@@ -39,15 +44,20 @@ else
 
 @code {
     private List<BostadDto> bostäder;
+    private List<BostadBildDto> bostadsBilder;
 
     protected override async Task OnInitializedAsync()
     {
         bostäder = await BostadDtoService.GetBostäderAsync();
-
+        bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
 
     }
 
-    private List<BostadBildDto> bostadsBilder;
+    private bool HasImagesForBostad(BostadDto bostad)
+    {
+        return bostadsBilder.Any(p => p.BostadId == bostad.Id);
+    }
+
 
     private void BostadsDetaljer(BostadDto bostad)
     {

@@ -99,7 +99,6 @@ namespace API_Juliet.Repositorys
         {
             Bostad bostad = new Bostad()
             {
-                Id = bostadDto.Id,
                 Utgångspris = bostadDto.Utgångspris,
                 Boarea = bostadDto.Boarea,
                 Biarea = bostadDto.Biarea,
@@ -109,8 +108,7 @@ namespace API_Juliet.Repositorys
                 Driftkonstnad = bostadDto.Driftkonstnad,
                 Byggår = bostadDto.Byggår,
                 Adress = bostadDto.Adress,
-                Objektbeskrivning = bostadDto.Objektbeskrivning
-
+                Objektbeskrivning = bostadDto.Objektbeskrivning,
             };
             _context.Bostäder.Add(bostad);
             await _context.SaveChangesAsync();

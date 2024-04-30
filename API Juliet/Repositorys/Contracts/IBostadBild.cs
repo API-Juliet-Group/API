@@ -1,4 +1,5 @@
 ﻿using API_Juliet.Models;
+using BaseLibrary.DTO;
 
 namespace API_Juliet.Repositorys.Contracts
 {
@@ -9,5 +10,8 @@ namespace API_Juliet.Repositorys.Contracts
         Task AddAsync(BostadBild bostadBild);
         Task UpdateAsync(BostadBild bostadBild);
         Task DeleteAsync(BostadBild bostadBild);
+
+
+        Task<IEnumerable<BostadBildDto>> GetBostadsBilderDtosAsync();
     }
 }

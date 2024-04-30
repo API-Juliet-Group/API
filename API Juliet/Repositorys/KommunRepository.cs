@@ -2,6 +2,7 @@
 using API_Juliet.Repositorys.Contracts;
 using API_Juliet.Models;
 using Microsoft.EntityFrameworkCore;
+using BaseLibrary.DTO;
 
 namespace API_Juliet.Repositorys
 {
@@ -40,6 +41,22 @@ namespace API_Juliet.Repositorys
         {
             _context.Kommuner.Remove(kommun);
             await _context.SaveChangesAsync();
+        }
+
+
+
+        //DTO
+
+
+        public async Task<IEnumerable<KommunDto>> GetAllKommunDtosAsync()
+        {
+            return await _context.Kommuner
+                .Select(k => new KommunDto
+                {
+                    Id = k.Id,
+                    Namn = k.Namn,
+                })
+                .ToListAsync();
         }
     }
 }

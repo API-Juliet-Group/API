@@ -8,34 +8,7 @@
 
 @if (bostäder != null)
 {
-    @foreach (var bostad in bostäder)
-    {
-        <div class="col-md-3 mb-2">
-            <a href="/BostadsDetaljer/@bostad.Id">
-                <div class="card">
-                    @if (HasImagesForBostad(bostad))
-                    {
-                        <img class="thumbnail" src=@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
-                    }
-                    else
-                    {
-                        <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">
-                            @bostad.Adress
-                        </h5>
-                        <p class="card-text">
-                            @bostad.Utgångspris.ToString("C0", new System.Globalization.CultureInfo("sv-SE"))
-                        </p>
-                        <p>
-                            <b>@bostad.Kommun</b>
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    }
+    <DisplayBostäder Bostäder="@bostäder" BostadsBilder="@bostadsBilder"></DisplayBostäder>
 }
 else
 {
@@ -43,24 +16,13 @@ else
 }
 
 @code {
-    private List<BostadDto> bostäder;
-    private List<BostadBildDto> bostadsBilder;
+    private IEnumerable<BostadDto> bostäder;
+    private IEnumerable<BostadBildDto> bostadsBilder;
 
     protected override async Task OnInitializedAsync()
     {
         bostäder = await BostadDtoService.GetBostäderAsync();
         bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
 
-    }
-
-    private bool HasImagesForBostad(BostadDto bostad)
-    {
-        return bostadsBilder.Any(p => p.BostadId == bostad.Id);
-    }
-
-
-    private void BostadsDetaljer(BostadDto bostad)
-    {
-        NavigationManager.NavigateTo($"/BostadsDetaljer/{bostad.Id}");
     }
 }

@@ -11,11 +11,11 @@ public class BostadDtoService
         _httpClient = httpClient;
     }
 
-    public async Task<List<BostadDto>> GetBostäderAsync()
+    public async Task<IEnumerable<BostadDto>> GetBostäderAsync()
     {
         try
         {
-            var bostäder = await _httpClient.GetFromJsonAsync<List<BostadDto>>("api/BostadDto");
+            var bostäder = await _httpClient.GetFromJsonAsync<IEnumerable<BostadDto>>("api/BostadDto");
             return bostäder;
         }
         catch (Exception)

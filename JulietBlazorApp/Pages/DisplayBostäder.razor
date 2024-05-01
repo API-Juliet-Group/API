@@ -1,0 +1,44 @@
+﻿﻿@using Microsoft.AspNetCore.Components;
+@using BaseLibrary.DTO
+
+@foreach (var bostad in Bostäder)
+{
+    <div class="col-md-3 mb-2">
+        <a href="/BostadsDetaljer/@bostad.Id">
+            <div class="card">
+                @if (HasImagesForBostad(bostad))
+                {
+                    <img class="thumbnail" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
+                }
+                else
+                {
+                    <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
+                }
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        @bostad.Adress
+                    </h5>
+                    <p class="card-text">
+                        @bostad.Utgångspris.ToString("C0", new System.Globalization.CultureInfo("sv-SE"))
+                    </p>
+                    <p>
+                        <b>@bostad.Kommun</b>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<BostadDto> Bostäder { get; set; }
+
+    [Parameter]
+    public IEnumerable<BostadBildDto> BostadsBilder { get; set; }
+
+    private bool HasImagesForBostad(BostadDto Bostad)
+    {
+        return BostadsBilder.Any(p => p.BostadId == Bostad.Id);
+    }
+}

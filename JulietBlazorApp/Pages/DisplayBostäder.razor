@@ -3,26 +3,36 @@
 
 @foreach (var bostad in Bostäder)
 {
-    <div class="col-md-3 mb-2">
+    <div class="col-md-2 mb-2">
         <a href="/BostadsDetaljer/@bostad.Id">
             <div class="card">
-                @if (HasImagesForBostad(bostad))
-                {
-                    <img class="thumbnail" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
-                }
-                else
-                {
-                    <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
-                }
+                    @if (HasImagesForBostad(bostad))
+                    {
+                        <img class="thumbnail" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
+                    }
+                    else
+                    {
+                        <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
+                    }
                 <div class="card-body">
-                    <h5 class="card-title mb-3">
+                    <h5 class="mb-3">
                         @bostad.Adress
                     </h5>
-                    <p class="card-text">
-                        @bostad.Utgångspris.ToString("C0", new System.Globalization.CultureInfo("sv-SE"))
-                    </p>
+                    @if (bostad.Månadsavgift != null)
+                    {
+                        <p>
+                            Utgångspris: @bostad.Utgångspris.ToString("N0") kr<br/>
+                            Månadsavgift: @(((decimal)bostad.Månadsavgift).ToString("N0"))
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            Utgångspris: @bostad.Utgångspris.ToString("N0") kr
+                        </p>
+                    }
                     <p>
-                        <b>@bostad.Kommun</b>
+                        <b>@bostad.Kategori</b>
                     </p>
                 </div>
             </div>

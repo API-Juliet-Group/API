@@ -4,11 +4,21 @@
 @inject BostadBildDtoService BostadBildDtoService
 @inject NavigationManager NavigationManager
 
-<h1>Alla Bostäder</h1>
+
+<h1>Bostäder</h1>
 
 @if (bostäder != null)
 {
-    <DisplayBostäder Bostäder="@bostäder" BostadsBilder="@bostadsBilder"></DisplayBostäder>
+    var bostadCount = bostäder.Count();
+
+    @for (int i = 0; i < bostadCount; i += bostäderPerRow)
+    {
+        var bostadRowList = bostäder.Skip(i).Take(bostäderPerRow).ToList();
+
+        <div class="row mt-3">
+            <DisplayBostäder Bostäder="@bostadRowList" BostadsBilder="@bostadsBilder"></DisplayBostäder>
+        </div>
+    }
 }
 else
 {
@@ -18,6 +28,8 @@ else
 @code {
     private IEnumerable<BostadDto> bostäder;
     private IEnumerable<BostadBildDto> bostadsBilder;
+
+    const int bostäderPerRow = 4;
 
     protected override async Task OnInitializedAsync()
     {

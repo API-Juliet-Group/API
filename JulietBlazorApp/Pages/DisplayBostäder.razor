@@ -3,9 +3,10 @@
 
 @foreach (var bostad in Bostäder)
 {
-    <div class="col-md-2 mb-2">
+    <div class="col-md-3 mb-2">
         <a href="/BostadsDetaljer/@bostad.Id">
             <div class="card">
+                <div class="thumbnail-container">
                     @if (HasImagesForBostad(bostad))
                     {
                         <img class="thumbnail" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
@@ -14,9 +15,11 @@
                     {
                         <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
                     }
+                </div>
                 <div class="card-body">
-                    <h5 class="mb-3">
-                        @bostad.Adress
+                    <h5 class="mb-4 address">
+                        @bostad.Gatuadress<br />
+                        <span class="ortColor">@bostad.Ort</span>
                     </h5>
                     @if (bostad.Månadsavgift != null)
                     {
@@ -28,7 +31,8 @@
                     else
                     {
                         <p>
-                            Utgångspris: @bostad.Utgångspris.ToString("N0") kr
+                            Utgångspris: @bostad.Utgångspris.ToString("N0") kr<br/>
+                            &nbsp;
                         </p>
                     }
                     <p>

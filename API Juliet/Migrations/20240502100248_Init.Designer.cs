@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_Juliet.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240430000857_Init")]
+    [Migration("20240502100248_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -33,9 +33,6 @@ namespace API_Juliet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Antalrum")
                         .HasColumnType("int");
 
@@ -51,6 +48,9 @@ namespace API_Juliet.Migrations
                     b.Property<int>("Driftkonstnad")
                         .HasColumnType("int");
 
+                    b.Property<string>("Gatuadress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("KategoriId")
                         .HasColumnType("int");
 
@@ -64,6 +64,9 @@ namespace API_Juliet.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Objektbeskrivning")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ort")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Tomtarea")

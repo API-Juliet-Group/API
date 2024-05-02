@@ -72,11 +72,11 @@ namespace API_Juliet.SeedData
         {
             var bostadList = new List<Bostad>
             {
-                new Bostad { Utgångspris = 2500000, Boarea = 63, Biarea = 25, Tomtarea = 629, Antalrum = 2, Månadsavgift = null, Driftkonstnad = 29407, Byggår = 2020, Adress = "Tegelbruksvägen x, Duved", Objektbeskrivning = "Huset är uppdelat i zoner där entrén ligger som en central del.", KategoriId = 4, KommunId = 270,},
-                new Bostad { Utgångspris = 3400000, Boarea = 101, Biarea = 15, Tomtarea = 889, Antalrum = 4, Månadsavgift = null, Driftkonstnad = 31024, Byggår = 2018, Adress = "Nystrandsvägen x, Hemse", Objektbeskrivning = "Husets öppna planlösning drar full nytta av de stora ljusinsläppen.", KategoriId = 4, KommunId = 52,},
-                new Bostad { Utgångspris = 4600000, Boarea = 133, Biarea = 22, Tomtarea = 400, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 32156, Byggår = 2012, Adress = "Morellgången x, Göteborg", Objektbeskrivning = "Ett trivsamt gavelställt tvåplanshus.", KategoriId = 3, KommunId = 58,},
-                new Bostad { Utgångspris = 1600000, Boarea = 30, Biarea = 6, Tomtarea = 0, Antalrum = 1, Månadsavgift = 2129, Driftkonstnad = 5354, Byggår = 1939, Adress = "Gamla Tanneforsvägen x, Tannefors", Objektbeskrivning = "Toppmodern etta med coola vinklar", KategoriId = 1, KommunId = 125,},
-                new Bostad { Utgångspris = 5650000, Boarea = 141, Biarea = 172, Tomtarea = 644, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 51227, Byggår = 1900, Adress = "Solrosvägen x, Viken", Objektbeskrivning = "Ett flexibelt boende i lugnt och tryggt område.", KategoriId = 2, KommunId = 84,}
+                new Bostad { Utgångspris = 2500000, Boarea = 63, Biarea = 25, Tomtarea = 629, Antalrum = 2, Månadsavgift = null, Driftkonstnad = 29407, Byggår = 2020, Gatuadress = "Tegelbruksvägen x", Ort ="Duved", Objektbeskrivning = "Huset är uppdelat i zoner där entrén ligger som en central del.", KategoriId = 4, KommunId = 270,},
+                new Bostad { Utgångspris = 3400000, Boarea = 101, Biarea = 15, Tomtarea = 889, Antalrum = 4, Månadsavgift = null, Driftkonstnad = 31024, Byggår = 2018, Gatuadress = "Nystrandsvägen x", Ort ="Hemse", Objektbeskrivning = "Husets öppna planlösning drar full nytta av de stora ljusinsläppen.", KategoriId = 4, KommunId = 52,},
+                new Bostad { Utgångspris = 4600000, Boarea = 133, Biarea = 22, Tomtarea = 400, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 32156, Byggår = 2012, Gatuadress = "Morellgången x", Ort ="Göteborg", Objektbeskrivning = "Ett trivsamt gavelställt tvåplanshus.", KategoriId = 3, KommunId = 58,},
+                new Bostad { Utgångspris = 1600000, Boarea = 30, Biarea = 6, Tomtarea = 0, Antalrum = 1, Månadsavgift = 2129, Driftkonstnad = 5354, Byggår = 1939, Gatuadress = "Gamla Tanneforsvägen x", Ort ="Tannefors", Objektbeskrivning = "Toppmodern etta med coola vinklar", KategoriId = 1, KommunId = 125,},
+                new Bostad { Utgångspris = 5650000, Boarea = 141, Biarea = 172, Tomtarea = 644, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 51227, Byggår = 1900, Gatuadress = "Solrosvägen x", Ort ="Viken", Objektbeskrivning = "Ett flexibelt boende i lugnt och tryggt område.", KategoriId = 2, KommunId = 84,}
 
             };
             return bostadList;

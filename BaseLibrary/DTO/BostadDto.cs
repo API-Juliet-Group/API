@@ -13,7 +13,8 @@
         public int Driftkonstnad { get; set; }
         public int Byggår { get; set; }
 
-        public string? Adress { get; set; }
+        public string? Gatuadress { get; set; }
+        public string? Ort { get; set; }
         public string? Objektbeskrivning { get; set; }
 
 

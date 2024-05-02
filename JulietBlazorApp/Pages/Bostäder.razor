@@ -4,7 +4,7 @@
 @inject BostadBildDtoService BostadBildDtoService
 @inject NavigationManager NavigationManager
 
-
+<div class="container">
 <h1>Bostäder</h1>
 
 @if (bostäder != null)
@@ -24,6 +24,7 @@ else
 {
     <p>Loading...</p>
 }
+</div>
 
 @code {
     private IEnumerable<BostadDto> bostäder;

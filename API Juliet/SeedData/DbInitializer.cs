@@ -76,8 +76,13 @@ namespace API_Juliet.SeedData
                 new Bostad { Utgångspris = 3400000, Boarea = 101, Biarea = 15, Tomtarea = 889, Antalrum = 4, Månadsavgift = null, Driftkonstnad = 31024, Byggår = 2018, Gatuadress = "Nystrandsvägen x", Ort ="Hemse", Objektbeskrivning = "Husets öppna planlösning drar full nytta av de stora ljusinsläppen.", KategoriId = 4, KommunId = 52,},
                 new Bostad { Utgångspris = 4600000, Boarea = 133, Biarea = 22, Tomtarea = 400, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 32156, Byggår = 2012, Gatuadress = "Morellgången x", Ort ="Göteborg", Objektbeskrivning = "Ett trivsamt gavelställt tvåplanshus.", KategoriId = 3, KommunId = 58,},
                 new Bostad { Utgångspris = 1600000, Boarea = 30, Biarea = 6, Tomtarea = 0, Antalrum = 1, Månadsavgift = 2129, Driftkonstnad = 5354, Byggår = 1939, Gatuadress = "Gamla Tanneforsvägen x", Ort ="Tannefors", Objektbeskrivning = "Toppmodern etta med coola vinklar", KategoriId = 1, KommunId = 125,},
-                new Bostad { Utgångspris = 5650000, Boarea = 141, Biarea = 172, Tomtarea = 644, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 51227, Byggår = 1900, Gatuadress = "Solrosvägen x", Ort ="Viken", Objektbeskrivning = "Ett flexibelt boende i lugnt och tryggt område.", KategoriId = 2, KommunId = 84,}
-
+                new Bostad { Utgångspris = 5650000, Boarea = 141, Biarea = 172, Tomtarea = 644, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 51227, Byggår = 1900, Gatuadress = "Solrosvägen x", Ort ="Viken", Objektbeskrivning = "Ett flexibelt boende i lugnt och tryggt område.", KategoriId = 2, KommunId = 84,},
+                new Bostad { Utgångspris = 2000000, Boarea = 100, Biarea = 25, Tomtarea = 700, Antalrum = 4, Månadsavgift = null, Driftkonstnad = 29000, Byggår = 2011, Gatuadress = "Norum x", Ort ="Bjästa", Objektbeskrivning = "Den klassiska husdrömmen.", KategoriId = 3, KommunId = 284,},
+                new Bostad { Utgångspris = 2000000, Boarea = 150, Biarea = 30, Tomtarea = 400, Antalrum = 6, Månadsavgift = null, Driftkonstnad = 31000, Byggår = 2004, Gatuadress = "Pennyvägen x", Ort ="Själevad", Objektbeskrivning = "Ett enplanshus för den stora familjen", KategoriId = 3, KommunId = 284,},
+                new Bostad { Utgångspris = 2000000, Boarea = 148, Biarea = 35, Tomtarea = 680, Antalrum = 7, Månadsavgift = null, Driftkonstnad = 32156, Byggår = 2012, Gatuadress = "Kläppavägen x", Ort ="Köpmanholmen", Objektbeskrivning = "Rum för hela familjen.", KategoriId = 3, KommunId = 284,},
+                new Bostad { Utgångspris = 2000000, Boarea = 134, Biarea = 10, Tomtarea = 350, Antalrum = 5, Månadsavgift = null, Driftkonstnad = 34000, Byggår = 2015, Gatuadress = "Samhällsvägen x", Ort ="Domsjö", Objektbeskrivning = "Huset är verkligen något extra.", KategoriId = 3, KommunId = 284,},
+                new Bostad { Utgångspris = 3200000, Boarea = 97, Biarea = 5, Tomtarea = 0, Antalrum = 3, Månadsavgift = 3307, Driftkonstnad = 32156, Byggår = 1945, Gatuadress = "Framnäsgatan x", Ort ="Örnsköldsvik", Objektbeskrivning = "Modern trea med ett okej läge.", KategoriId = 1, KommunId = 284,},
+                new Bostad { Utgångspris = 890000, Boarea = 59, Biarea = 11, Tomtarea = 540, Antalrum = 2, Månadsavgift = null, Driftkonstnad = 12000, Byggår = 2000, Gatuadress = "Tomtevägenvägen x", Ort ="Själevad", Objektbeskrivning = "Det går bara inte att fotografera det här huset...", KategoriId = 3, KommunId = 284,}
             };
             return bostadList;
         }
@@ -90,7 +95,12 @@ namespace API_Juliet.SeedData
                 new BostadBild { BildURL = "images/GråttFritidshus.jpg", BostadId = 2 },
                 new BostadBild { BildURL = "images/GrönVilla.jpg", BostadId = 3 },
                 new BostadBild { BildURL = "images/Lägenhet.jpg", BostadId = 4 },
-                new BostadBild { BildURL = "images/Radhus.jpg", BostadId = 5 }
+                new BostadBild { BildURL = "images/Radhus.jpg", BostadId = 5 },
+                new BostadBild { BildURL = "images/Bjästa.jpg", BostadId = 6 },
+                new BostadBild { BildURL = "images/Själevad.jpg", BostadId = 7 },
+                new BostadBild { BildURL = "images/Köpmanholmen.jpg", BostadId = 8 },
+                new BostadBild { BildURL = "images/Domsjö.jpg", BostadId = 9 },
+                new BostadBild { BildURL = "images/Lägenhet2.jpg", BostadId = 10 }
             };
             return bildList;
         }

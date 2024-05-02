@@ -5,15 +5,38 @@
 @inject NavigationManager NavigationManager
 
 <div class="container">
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <input type="text" placeholder="Kommun" @bind="selectedKommun" />
+        </div>
+        <div class="col-md-3">
+            <input type="text" placeholder="Kategori" @bind="selectedKategori" />
+        </div>
+        <div class="col-md-3">
+            <input type="number" placeholder="Min Utgångspris" @bind="minUtgangsPris" />
+            <input type="number" placeholder="Max Utgångspris" @bind="maxUtgangsPris" />
+        </div>
+        <div class="col-md-3">
+            <input type="number" placeholder="Min BoArea" @bind="minBoArea" />
+            <input type="number" placeholder="Max BoArea" @bind="maxBoArea" />
+        </div>
+        <div class="col-md-3">
+            <input type="number" placeholder="Min Rum" @bind="minRum" />
+            <input type="number" placeholder="Max Rum" @bind="maxRum" />
+        </div>
+    </div>
+
 <h1>Bostäder</h1>
 
 @if (bostäder != null)
 {
-    var bostadCount = bostäder.Count();
+    var filteredBostader = FilterBostader(bostäder);
+
+        var bostadCount = filteredBostader.Count();
 
     @for (int i = 0; i < bostadCount; i += bostäderPerRow)
     {
-        var bostadRowList = bostäder.Skip(i).Take(bostäderPerRow).ToList();
+            var bostadRowList = filteredBostader.Skip(i).Take(bostäderPerRow).ToList();
 
         <div class="row mt-3">
             <DisplayBostäder Bostäder="@bostadRowList" BostadsBilder="@bostadsBilder"></DisplayBostäder>
@@ -30,6 +53,15 @@ else
     private IEnumerable<BostadDto> bostäder;
     private IEnumerable<BostadBildDto> bostadsBilder;
 
+    private string selectedKommun;
+    private string selectedKategori;
+    private decimal minUtgangsPris;
+    private decimal maxUtgangsPris;
+    private decimal minBoArea;
+    private decimal maxBoArea;
+    private decimal minRum;
+    private decimal maxRum;
+
     const int bostäderPerRow = 4;
 
     protected override async Task OnInitializedAsync()
@@ -37,5 +69,28 @@ else
         bostäder = await BostadDtoService.GetBostäderAsync();
         bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
 
+    }
+
+    private IEnumerable<BostadDto> FilterBostader(IEnumerable<BostadDto> bostader)
+    {
+        // Apply filters based on selected parameters
+        var filteredBostader = bostader;
+
+        if (!string.IsNullOrEmpty(selectedKommun))
+        {
+            filteredBostader = filteredBostader.Where(b => b.Kommun == selectedKommun);
+        }
+
+        if (!string.IsNullOrEmpty(selectedKategori))
+        {
+            filteredBostader = filteredBostader.Where(b => b.Kategori == selectedKategori);
+        }
+
+        filteredBostader = filteredBostader.Where(b =>
+            b.Utgångspris >= minUtgangsPris && b.Utgångspris <= maxUtgangsPris &&
+            b.Boarea >= minBoArea && b.Boarea <= maxBoArea &&
+            b.Antalrum >= minRum && b.Antalrum <= maxRum);
+
+        return filteredBostader;
     }
 }

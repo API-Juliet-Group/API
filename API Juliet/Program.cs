@@ -29,6 +29,7 @@ namespace API_Juliet
             builder.Services.AddTransient<IKommun, KommunRepository>();
             builder.Services.AddTransient<IMäklarbyrå, MäklarbyråRepository>();
             builder.Services.AddTransient<IMäklare, MäklareRepository>();
+            builder.Services.AddTransient<IBostadKategori, BostadKategoriRepository>();
 
             var app = builder.Build();
 

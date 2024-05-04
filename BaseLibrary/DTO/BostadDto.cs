@@ -20,6 +20,8 @@
 
         public string Kategori { get; set; }
         public string Kommun { get; set; }
+
+        public int? MäklarId { get; set; }
         public string? Mäklare { get; set; }
     }
 }

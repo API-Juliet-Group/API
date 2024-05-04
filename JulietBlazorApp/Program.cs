@@ -7,6 +7,8 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<BostadDtoService>();
 builder.Services.AddScoped<BostadBildDtoService>();
+builder.Services.AddScoped<BostadKategoriDtoService>();
+builder.Services.AddScoped<KommunDtoService>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7045/") });
 

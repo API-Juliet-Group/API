@@ -63,6 +63,7 @@ namespace API_Juliet.Repositorys
                     Objektbeskrivning = b.Objektbeskrivning,
                     Kategori = b.BostadKategori.Namn,
                     Kommun = b.Kommun.Namn,
+                    MäklarId = b.MäklareId,
                     Mäklare = b.Mäklare.Förnamn + " " + b.Mäklare.Efternamn
                 })
                 .ToListAsync();
@@ -91,6 +92,7 @@ namespace API_Juliet.Repositorys
                     Objektbeskrivning = b.Objektbeskrivning,
                     Kategori = b.BostadKategori.Namn,
                     Kommun = b.Kommun.Namn,
+                    MäklarId = b.MäklareId,
                     Mäklare = b.Mäklare.Förnamn + " " + b.Mäklare.Efternamn
                 })
                 .SingleOrDefaultAsync(c => c.Id == id);

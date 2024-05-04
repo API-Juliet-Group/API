@@ -23,5 +23,18 @@ public class BostadDtoService
             throw;
         }
     }
+
+    public async Task<BostadDto> GetBostadAsync(int id)
+    {
+        try
+        {
+            var bostad = await _httpClient.GetFromJsonAsync<BostadDto>($"api/BostadDto/{id}");
+            return bostad;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 }
 

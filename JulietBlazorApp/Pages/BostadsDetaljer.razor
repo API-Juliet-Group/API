@@ -1,8 +1,48 @@
-﻿@page "/BostadsDetaljer/{bostadId}"
-@inject NavigationManager NavigationManager
+﻿@page "/BostadsDetaljer/{Id:int}"
+@using BaseLibrary.DTO
+@inject BostadDtoService BostadDtoService
+@inject BostadBildDtoService BostadBildDtoService
 
-<h3>BostadsDetaljer</h3>
+@if(bostad != null)
+{
+    <section>
+        <div class="thumbnail-container">
+            @if (bostadensBilder != null)
+            {
+                <img class="thumbnail" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
+            }
+            else
+            {
+                <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
+            }
+        </div>
+    </section>
+}
+else
+{
+    <p>Laddar...</p>
+}
+
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private BostadDto bostad;
+    private IEnumerable<BostadBildDto> bostadensBilder;
+
+    protected override async Task OnInitializedAsync()
+    {
+        bostad = await BostadDtoService.GetBostadAsync(Id);
+
+        IEnumerable<BostadBildDto> bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
+
+        bostadensBilder = GetBostadensBilder(bostad.Id, bostadsBilder);
+    }
+
+    private IEnumerable<BostadBildDto> GetBostadensBilder(int id, IEnumerable<BostadBildDto> bostadsBilder)
+    {
+        return bostadsBilder.Where(p => p.BostadId == id);
+    }
 
 }

@@ -17,24 +17,28 @@
                     }
                 </div>
                 <div class="card-body">
-                    <h5 class="mb-4 address">
+                    <h5 class="mb-3 address">
                         @bostad.Gatuadress<br />
                         <span class="ortColor">@bostad.Ort</span>
                     </h5>
                     @if (bostad.Månadsavgift != null)
                     {
                         <p>
-                            Utgångspris: @bostad.Utgångspris.ToString("N0") kr<br/>
-                            Månadsavgift: @(((decimal)bostad.Månadsavgift).ToString("N0"))
+                            @bostad.Utgångspris.ToString("N0") kr<br/>
+                            @(((decimal)bostad.Månadsavgift).ToString("N0")) kr/mån
                         </p>
                     }
                     else
                     {
                         <p>
-                            Utgångspris: @bostad.Utgångspris.ToString("N0") kr<br/>
+                            @bostad.Utgångspris.ToString("N0") kr<br/>
                             &nbsp;
                         </p>
                     }
+                    <p>
+                        @bostad.Boarea m2<br />
+                        @bostad.Antalrum rum <br />
+                    </p>
                     <p>
                         <b>@bostad.Kategori</b>
                     </p>

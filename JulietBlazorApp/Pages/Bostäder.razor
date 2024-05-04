@@ -1,66 +1,106 @@
 ﻿@page "/bostäder"
 @using BaseLibrary.DTO
+@using JulietBlazorApp.Classes
 @inject BostadDtoService BostadDtoService
 @inject BostadBildDtoService BostadBildDtoService
-@inject NavigationManager NavigationManager
+@inject BostadKategoriDtoService BostadKategoriDtoService
 
-<div class="container">
-    <div class="row mt-3">
+
+<section id="Bostads-Filter">
+    <div class="row">
         <div class="col-md-3">
-            <input type="text" placeholder="Kommun" @bind="selectedKommun" />
+            @if(kommuner != null)
+            {
+                <select @bind="selectedKommun" class="form-select">
+                    <option value="">-- Alla Kommuner --</option>
+                    @foreach (var kommun in kommuner)
+                    {
+                        <option value="@kommun.KommunNamn">@kommun.VisningsNamn</option>
+                    }
+                </select>
+            }
+
+            @if (bostadKategorier != null)
+            {
+                <div class="col mt-3">
+                    @foreach (var kategori in bostadKategorier)
+                    {
+                        <div>
+                            <input type="checkbox" id="@kategori.Namn" checked="@selectedKategorier.Contains(kategori.Namn)" @onchange="@(e => ToggleKategori(kategori.Namn))" />
+                            <label for="@kategori.Namn">@kategori.Namn</label>
+                        </div>
+                    }
+                </div>
+            }
         </div>
-        <div class="col-md-3">
-            <input type="text" placeholder="Kategori" @bind="selectedKategori" />
-        </div>
-        <div class="col-md-3">
-            <input type="number" placeholder="Min Utgångspris" @bind="minUtgangsPris" />
-            <input type="number" placeholder="Max Utgångspris" @bind="maxUtgangsPris" />
-        </div>
-        <div class="col-md-3">
-            <input type="number" placeholder="Min BoArea" @bind="minBoArea" />
-            <input type="number" placeholder="Max BoArea" @bind="maxBoArea" />
-        </div>
-        <div class="col-md-3">
-            <input type="number" placeholder="Min Rum" @bind="minRum" />
-            <input type="number" placeholder="Max Rum" @bind="maxRum" />
+        <div class="col mt-3">
+            <div class ="row">
+                <div class="form-group">
+                    <label id="utgångsprisLabel" for="UtgångsPrisMin UtgångsPrisMax">Utgångspris</label>
+                    <input type="number" id="UtgångsPrisMin" placeholder="Min Utgångspris" @bind="minUtgangsPris" />
+                    -
+                    <input type="number" id="UtgångsPrisMax" placeholder="Max Utgångspris" @bind="maxUtgangsPris" />
+                    kr
+                </div>
+                <div class="form-group">
+                    <label id="BoArea" for="MinBoArea MaxBoArea">Boarea</label>
+                    <input type="number" id="MinBoArea" placeholder="Min BoArea" @bind="minBoArea" />
+                    -
+                    <input type="number" id="MaxBoArea" placeholder="Max BoArea" @bind="maxBoArea" />
+                    m²
+                </div>
+                <div class="form-group">
+                    <label id="Ruml" for="MinRum MaxRum">Antal rum&nbsp&nbsp&nbsp</label>
+                    <input type="number" id="MinRum" placeholder="Min Rum" @bind="minRum" />
+                    -
+                    <input type="number" id="MaxRum" placeholder="Max Rum" @bind="maxRum" />
+                    st
+                </div>
+            </div>
         </div>
     </div>
+</section>
 
-<h1>Bostäder</h1>
+<section id="Bostäder">
+    <h1>Bostäder</h1>
 
-@if (bostäder != null)
-{
-    var filteredBostader = FilterBostader(bostäder);
-
-        var bostadCount = filteredBostader.Count();
-
-    @for (int i = 0; i < bostadCount; i += bostäderPerRow)
+    @if (bostäder != null)
     {
-            var bostadRowList = filteredBostader.Skip(i).Take(bostäderPerRow).ToList();
+        var filteredBostader = FilterBostader(bostäder);
 
-        <div class="row mt-3">
-            <DisplayBostäder Bostäder="@bostadRowList" BostadsBilder="@bostadsBilder"></DisplayBostäder>
-        </div>
+            var bostadCount = filteredBostader.Count();
+
+        @for (int i = 0; i < bostadCount; i += bostäderPerRow)
+        {
+                var bostadRowList = filteredBostader.Skip(i).Take(bostäderPerRow).ToList();
+
+            <div class="row mt-3">
+                <DisplayBostäder Bostäder="@bostadRowList" BostadsBilder="@bostadsBilder"></DisplayBostäder>
+            </div>
+        }
     }
-}
-else
-{
-    <p>Loading...</p>
-}
-</div>
+    else
+    {
+        <p>Laddar...</p>
+    }
+
+</section>
+
 
 @code {
     private IEnumerable<BostadDto> bostäder;
     private IEnumerable<BostadBildDto> bostadsBilder;
+    private IEnumerable<BostadKategoriDto> bostadKategorier;
+    private IEnumerable<KommunInfo> kommuner;
 
+    private List<string> selectedKategorier = new List<string>();
     private string selectedKommun;
-    private string selectedKategori;
     private decimal minUtgangsPris;
-    private decimal maxUtgangsPris;
+    private decimal maxUtgangsPris = 10000000;
     private decimal minBoArea;
-    private decimal maxBoArea;
+    private decimal maxBoArea = 300;
     private decimal minRum;
-    private decimal maxRum;
+    private decimal maxRum = 10;
 
     const int bostäderPerRow = 4;
 
@@ -69,28 +109,59 @@ else
         bostäder = await BostadDtoService.GetBostäderAsync();
         bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
 
+        kommuner = GetRelevantaKommuner(bostäder);
+        bostadKategorier = await BostadKategoriDtoService.GetBostadKategorierAsync();
+
     }
 
-    private IEnumerable<BostadDto> FilterBostader(IEnumerable<BostadDto> bostader)
+    //Denna metod filtrerar en lista av bostäder baserat på vald kommun, kategorier och even min och max för Utgångspris, BoArea och antal Rum.
+    private IEnumerable<BostadDto> FilterBostader(IEnumerable<BostadDto> bostäder)
     {
-        // Apply filters based on selected parameters
-        var filteredBostader = bostader;
+        var filteredBostäder = bostäder;
 
         if (!string.IsNullOrEmpty(selectedKommun))
         {
-            filteredBostader = filteredBostader.Where(b => b.Kommun == selectedKommun);
+            filteredBostäder = filteredBostäder.Where(b => b.Kommun == selectedKommun);
         }
 
-        if (!string.IsNullOrEmpty(selectedKategori))
+        if (selectedKategorier != null && selectedKategorier.Any())
         {
-            filteredBostader = filteredBostader.Where(b => b.Kategori == selectedKategori);
+            filteredBostäder = filteredBostäder.Where(b => selectedKategorier.Contains(b.Kategori));
         }
 
-        filteredBostader = filteredBostader.Where(b =>
+        filteredBostäder = filteredBostäder.Where(b =>
             b.Utgångspris >= minUtgangsPris && b.Utgångspris <= maxUtgangsPris &&
             b.Boarea >= minBoArea && b.Boarea <= maxBoArea &&
             b.Antalrum >= minRum && b.Antalrum <= maxRum);
 
-        return filteredBostader;
+        return filteredBostäder;
+    }
+
+    //Denna metod skapar en lista med KommunInfo-objekt, där varje objekt representerar en kommun tillsammans med antalet associerade bostäder.
+    private List<KommunInfo> GetRelevantaKommuner(IEnumerable<BostadDto> bostader)
+    {
+        var relevantKommuner = bostader
+            .GroupBy(b => b.Kommun)
+            .Select(group => new KommunInfo
+                {
+                    KommunNamn = group.Key,
+                    BostadCount = group.Count()
+                })
+            .ToList();
+
+        return relevantKommuner;
+    }
+
+    //Hanterar listan av valda kategorier (selectedKategorier) då något händer med checkboxen.
+    private void ToggleKategori(string kategori)
+    {
+        if (selectedKategorier.Contains(kategori))
+        {
+            selectedKategorier.Remove(kategori);
+        }
+        else
+        {
+            selectedKategorier.Add(kategori);
+        }
     }
 }

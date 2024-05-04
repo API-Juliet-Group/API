@@ -10,6 +10,16 @@ a, .btn-link {
     color: #0071c1;
 }
 
+section {
+    margin: auto;
+    max-width: 1000px;
+    padding: 10px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #477071
+}
+
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -27,6 +37,15 @@ a, .btn-link {
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
+.form-group label{
+    min-width: 90px;
+    margin-bottom: 10px
+    
+}
+.form-group input {
+    width: 100px;
+}
+
 
 .invalid {
     outline: 1px solid red;

@@ -6,21 +6,87 @@
 @if(bostad != null)
 {
     <section>
-        <div class="thumbnail-container">
-            @if (bostadensBilder.Count() > 0)
-            {
-                <img class="thumbnail" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
-            }
-            else
-            {
-                <img class="thumbnail" src="/images/placeholder.jpg" alt="Bostadsbild">
-            }
+        <div class="row">
+            <div class="col-md-9">
+                @if (bostadensBilder.Count() > 0)
+                {
+                    <img class="image-gallery" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
+                }
+                else
+                {
+                    <img class="image-gallery" src="/images/placeholder.jpg" alt="Bostadsbild">
+                }
+            </div>
+            <div class="col-md-3">
+                <h4>Kontakta Mäklare</h4>
+                <p>mäklarens bild</p>
+                <p>mäklarens namn</p>
+                <p>mäklarenskontakt info</p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row">
+            <div class="col mt-3">
+                <h3 class="mb-0">@bostad.Gatuadress</h3>
+                <p>@bostad.Ort, @bostad.Kommun</p>
+                <p>
+                    @bostad.Objektbeskrivning blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla.
+                </p>
+            </div>
+            <div class="col mt-3">
+                <h4>@bostad.Utgångspris.ToString("N0") kr</h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Bostadstyp</th>
+                            <td>@bostad.Kategori</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Antal rum</th>
+                            <td>@bostad.Antalrum rum</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Boarea</th>
+                            <td>@bostad.Boarea m²</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Biarea</th>
+                            <td>@bostad.Biarea m²</td>
+                        </tr>
+                        @if (bostad.Tomtarea != 0)
+                        {
+                            <tr>
+                                <th scope="row">Tomtarea</th>
+                                <td>@bostad.Tomtarea m²</td>
+                            </tr>
+                        }
+                        <tr>
+                            <th scope="row">Byggår</th>
+                            <td>@bostad.Byggår</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Driftkonstnad</th>
+                            <td>@bostad.Driftkonstnad kr/år</td>
+                        </tr>
+                        @if (bostad.Månadsavgift != null)
+                        {
+                            <tr>
+                                <th scope="row">Månadsavgift</th>
+                                <td>@bostad.Månadsavgift kr/mån</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 }
 else
 {
-    <p>Laddar...</p>
+    <div class="loading-indicator">
+        <img src="/images/loadingIndicator.gif" alt="Loading..." />
+    </div>
 }
 
 

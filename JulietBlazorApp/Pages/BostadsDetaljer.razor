@@ -7,7 +7,7 @@
 {
     <section>
         <div class="thumbnail-container">
-            @if (bostadensBilder != null)
+            @if (bostadensBilder.Count() > 0)
             {
                 <img class="thumbnail" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
             }

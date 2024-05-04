@@ -8,7 +8,12 @@
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
+
+}
+.juliet-logo {
+    width: 100%;
+    transform: scale(1.5);
+    max-height: 2rem;
 }
 
 .bi {

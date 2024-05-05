@@ -1,0 +1,115 @@
+﻿@page "/BostadsLista/{Id:int}"
+@using BaseLibrary.DTO
+@inject BostadDtoService BostadDtoService
+@inject BostadBildDtoService BostadBildDtoService
+
+<h3>BostadsHantering</h3>
+
+@if(bostäder != null)
+{
+    <table class="table">
+        <thead>
+            @if(bostäder.Count() != 0)
+            {
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Adress</th>
+                    <th>Kommun</th>
+                    <th></th>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            }
+        </thead>
+        <tbody>
+            @foreach (BostadDto bostad in bostäder)
+            {
+                <tr>
+                    @if (HasImagesForBostad(bostad))
+                    {
+                        <td>
+                            <img class="mini-image" src=@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
+                        </td>
+                    }
+                    <td>@bostad.Id</td>
+                    <td>@bostad.Gatuadress, @bostad.Ort</td>
+                    <td>@bostad.Kommun</td>
+                    <td>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-secondary me-2">Ändra</button>
+                            <button class="btn btn-danger" @onclick="() => DeleteBostad(bostad.Id)">Ta Bort</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    <img class="mini-image" src="/images/NewObject.jpg" alt="NewObject">
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary">Ny Bostad</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; } //Då vi har Mäklarens Id, så använder vi det till att hämta dennes bostads-objekt.
+
+    private IEnumerable<BostadDto> bostäder = new List<BostadDto>();
+    private IEnumerable<BostadBildDto> bostadsBilder;
+
+    protected override async Task OnInitializedAsync()
+    {
+        bostäder = await BostadDtoService.GetBostäderAsync();
+        bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
+
+        //bostäder = GetMäklarensBostäder(bostäder); Används då vi har mäklarens id.
+    }
+
+    //Hämtar mäklarens bostads-objekt.
+    private IEnumerable<BostadDto> GetMäklarensBostäder(IEnumerable<BostadDto> bostader)
+    {
+        var mäklarensBostäder = bostader
+            .Where(b => b.MäklarId == Id)
+            .ToList();
+
+        return mäklarensBostäder;
+    }
+
+    private bool HasImagesForBostad(BostadDto Bostad)
+    {
+        return bostadsBilder.Any(p => p.BostadId == Bostad.Id);
+    }
+
+    private async Task DeleteBostad(int id)
+    {
+        await BostadDtoService.DeleteBostadAsync(id);
+    }
+}

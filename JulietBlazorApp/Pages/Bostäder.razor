@@ -33,7 +33,7 @@
                 </div>
             }
         </div>
-        <div class="col mt-3">
+        <div class="col mt-5">
             <div class ="row">
                 <div class="form-group">
                     <label id="utgångsprisLabel" for="UtgångsPrisMin UtgångsPrisMax">Utgångspris</label>
@@ -75,7 +75,7 @@
                 var bostadRowList = filteredBostader.Skip(i).Take(bostäderPerRow).ToList();
 
             <div class="row mt-3">
-                <DisplayBostäder Bostäder="@bostadRowList" BostadsBilder="@bostadsBilder"></DisplayBostäder>
+                <VisaBostäder Bostäder="@bostadRowList" BostadsBilder="@bostadsBilder"></VisaBostäder>
             </div>
         }
     }
@@ -113,7 +113,6 @@
 
         kommuner = GetRelevantaKommuner(bostäder);
         bostadKategorier = await BostadKategoriDtoService.GetBostadKategorierAsync();
-
     }
 
     //Denna metod filtrerar en lista av bostäder baserat på vald kommun, kategorier och even min och max för Utgångspris, BoArea och antal Rum.

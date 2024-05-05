@@ -15,12 +15,19 @@ section {
     max-width: 1000px;
     padding: 10px;
     margin-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     border-bottom: 2px solid #477071
 }
 
 .image-gallery {
     width: 100%;
+}
+
+.mini-image{
+    max-height: 50px;
+    width: auto;
+
+
 }
 
 .btn-primary {
@@ -41,12 +48,12 @@ section {
     outline: 1px solid #26b050;
 }
 .form-group label{
-    min-width: 90px;
+    min-width: 85px;
     margin-bottom: 10px
     
 }
 .form-group input {
-    width: 100px;
+    width: 85px;
 }
 
 

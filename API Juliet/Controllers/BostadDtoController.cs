@@ -38,6 +38,16 @@ namespace API_Juliet.Controllers
 
             return Ok(bostäder);
         }
+
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBostad(int id)
+        {
+            await _bostadRepository.DeleteDtoAsync(id);
+
+            return NoContent();
+        }
     }
 
 

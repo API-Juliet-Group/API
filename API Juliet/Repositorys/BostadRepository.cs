@@ -61,7 +61,9 @@ namespace API_Juliet.Repositorys
                     Gatuadress = b.Gatuadress,
                     Ort = b.Ort,
                     Objektbeskrivning = b.Objektbeskrivning,
+                    KategoriId = b.KategoriId,
                     Kategori = b.BostadKategori.Namn,
+                    KommunId = b.KommunId,
                     Kommun = b.Kommun.Namn,
                     MäklarId = b.MäklareId,
                     Mäklare = b.Mäklare.Förnamn + " " + b.Mäklare.Efternamn
@@ -90,7 +92,9 @@ namespace API_Juliet.Repositorys
                     Gatuadress = b.Gatuadress,
                     Ort = b.Ort,
                     Objektbeskrivning = b.Objektbeskrivning,
+                    KategoriId = b.KategoriId,
                     Kategori = b.BostadKategori.Namn,
+                    KommunId = b.KommunId,
                     Kommun = b.Kommun.Namn,
                     MäklarId = b.MäklareId,
                     Mäklare = b.Mäklare.Förnamn + " " + b.Mäklare.Efternamn
@@ -114,10 +118,25 @@ namespace API_Juliet.Repositorys
                 Gatuadress = bostadDto.Gatuadress,
                 Ort = bostadDto.Ort,
                 Objektbeskrivning = bostadDto.Objektbeskrivning,
+                KategoriId = bostadDto.KategoriId,
+                KommunId = bostadDto.KommunId,
+                MäklareId = bostadDto.MäklarId
             };
             _context.Bostäder.Add(bostad);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteDtoAsync(int id)
+        {
+            Bostad bostad = await _context.Bostäder.FindAsync(id);
+
+            if (bostad != null)
+            {
+                _context.Bostäder.Remove(bostad);
+                await _context.SaveChangesAsync();
+            }
+        }
+
 
     }
 }

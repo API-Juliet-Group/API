@@ -43,6 +43,7 @@ namespace API_Juliet.SeedData
                         context.BostadsBilder.AddRange(GetBildData());
                     }
                     //Här kan det bli Error om datan laddas ojämnt, töm databasen och gö en ny migration.
+                    //Det blir garanterat Error om man raderar alla bostäder och startar om programet.
                     //Bildernas FK till Bostäderna måste stämma, och för det behöver det finnas Bostäder med Id 1,2,3,4 och 5.
                     context.SaveChanges();
                 }

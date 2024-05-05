@@ -36,5 +36,17 @@ public class BostadDtoService
             throw;
         }
     }
+
+    public async Task DeleteBostadAsync(int id)
+    {
+        try
+        {
+            await _httpClient.DeleteAsync($"api/BostadDto/{id}");
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 }
 

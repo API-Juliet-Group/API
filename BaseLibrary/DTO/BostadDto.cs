@@ -17,8 +17,10 @@
         public string? Ort { get; set; }
         public string? Objektbeskrivning { get; set; }
 
-
+        public int KategoriId { get; set; }
         public string Kategori { get; set; }
+
+        public int KommunId { get; set; }
         public string Kommun { get; set; }
 
         public int? MäklarId { get; set; }

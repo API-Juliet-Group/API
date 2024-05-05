@@ -14,5 +14,7 @@ namespace API_Juliet.Repositorys.Contracts
         //BostadDTO
         Task<BostadDto> GetBostadDtoByIdAsync(int id);
         Task<IEnumerable<BostadDto>> GetAllBostadDtosAsync();
+        Task AddBostadDtoAsync(BostadDto bostadDto);
+        Task DeleteDtoAsync(int id);
     }
 }

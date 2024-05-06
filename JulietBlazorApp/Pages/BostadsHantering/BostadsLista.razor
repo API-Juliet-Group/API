@@ -52,7 +52,57 @@
                     <td>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-secondary me-2">Ändra</button>
-                            <button class="btn btn-danger" @onclick="() => DeleteBostad(bostad.Id)">Ta Bort</button>
+                            <button class="btn btn-danger" @onclick="() => ShowDeleteConfirmation(bostad.Id)">Ta Bort</button>
+                            @if (deleteById != -1)
+                            {
+                                <div class="modal" tabindex="-1" style="display:block;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Bekräfta borttagning</h5>
+                                                <button type="button" class="btn-close" @onclick="CancelDeleteConfirmation"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Är du säker på att du vill ta bort den här bostaden?
+                                            </div>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>ID</th>
+                                                        <th>Adress</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            @if (bostadsBilder.Any(p => p.BostadId == deleteById))
+                                                            {
+                                                                <img class="mini-image" src=@bostadsBilder.FirstOrDefault(p=>p.BostadId==deleteById)?.BildURL alt="Bostadsbild">
+                                                            }
+                                                            else
+                                                            {
+                                                                <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            @deleteById
+                                                        </td>
+                                                        <td>
+                                                            @bostäder.FirstOrDefault(b => b.Id == deleteById).Gatuadress
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" @onclick="CancelDeleteConfirmation">Avbryt</button>
+                                                <button type="button" class="btn btn-danger" @onclick="() => DeleteBostad(deleteById)">Ta Bort</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </td>
                 </tr>
@@ -84,6 +134,7 @@ else
 
     private IEnumerable<BostadDto> bostäder = new List<BostadDto>();
     private IEnumerable<BostadBildDto> bostadsBilder;
+    private int deleteById = -1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -110,6 +161,26 @@ else
 
     private async Task DeleteBostad(int id)
     {
-        await BostadDtoService.DeleteBostadAsync(id);
+        bool deletionSuccessful = await BostadDtoService.DeleteBostadAsync(id);
+        if (deletionSuccessful)
+        {
+            var bostadToDelete = bostäder.FirstOrDefault(b => b.Id == id);
+            if (bostadToDelete != null)
+            {
+                bostäder = bostäder.Where(b => b.Id != id).ToList();
+            }
+        }
+
+        deleteById = -1;
+    }
+
+    private void ShowDeleteConfirmation(int id)
+    {
+        deleteById = id;
+    }
+
+    private void CancelDeleteConfirmation()
+    {
+        deleteById = -1;
     }
 }

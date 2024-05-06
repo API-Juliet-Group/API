@@ -37,16 +37,26 @@ public class BostadDtoService
         }
     }
 
-    public async Task DeleteBostadAsync(int id)
+    public async Task<bool> DeleteBostadAsync(int id)
     {
         try
         {
-            await _httpClient.DeleteAsync($"api/BostadDto/{id}");
+            var response = await _httpClient.DeleteAsync($"api/BostadDto/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         catch (Exception)
         {
             throw;
         }
     }
+
 }
 

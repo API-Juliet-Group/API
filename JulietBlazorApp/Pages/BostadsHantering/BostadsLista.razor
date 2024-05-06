@@ -34,18 +34,24 @@
             @foreach (BostadDto bostad in bostäder)
             {
                 <tr>
-                    @if (HasImagesForBostad(bostad))
-                    {
-                        <td>
-                            <img class="mini-image" src=@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL alt="Bostadsbild">
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
-                        </td>
-                    }
+                    <td>
+                        <div>
+                            <button style="border: none; padding: 0;" @onclick="() => ShowDetails(bostad)">
+                                @if (HasImagesForBostad(bostad))
+                                {
+                                    <img class="mini-image" src="@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL" alt="Bostadsbild">
+                                }
+                                else
+                                {
+                                    <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
+                                }
+                            </button>
+                            @if(showBostad != null)
+                            {
+                                <SeDetaljer Bostad="@showBostad" OnCancel="HideDetails" />
+                            }
+                        </div>
+                    </td>
                     <td>@bostad.Id</td>
                     <td>@bostad.Gatuadress, @bostad.Ort</td>
                     <td>@bostad.Kommun</td>
@@ -88,7 +94,9 @@ else
 
     private IEnumerable<BostadDto> bostäder = new List<BostadDto>();
     private IEnumerable<BostadBildDto> bostadsBilder;
+
     private int deleteById = -1;
+    private BostadDto? showBostad;
 
     protected override async Task OnInitializedAsync()
     {
@@ -132,10 +140,17 @@ else
     {
         deleteById = id;
     }
-
     private void CancelDeleteConfirmation()
     {
         deleteById = -1;
     }
 
+    private void ShowDetails(BostadDto bostad)
+    {
+        showBostad = bostad;
+    }
+    private void HideDetails()
+    {
+        showBostad = null;
+    }
 }

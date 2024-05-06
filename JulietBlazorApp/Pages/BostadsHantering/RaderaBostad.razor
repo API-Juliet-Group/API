@@ -10,37 +10,38 @@
             </div>
             <div class="modal-body">
                 Är du säker på att du vill ta bort den här bostaden?
+            
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Adress</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @if (BostadsBilder.Any(p => p.BostadId == DeleteById))
+                                {
+                                    <img class="mini-image" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==DeleteById)?.BildURL alt="Bostadsbild">
+                                }
+                                else
+                                {
+                                    <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
+                                }
+                            </td>
+                            <td>
+                                @DeleteById
+                            </td>
+                            <td>
+                                @Bostäder.FirstOrDefault(b => b.Id == DeleteById)?.Gatuadress
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>ID</th>
-                        <th>Adress</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            @if (BostadsBilder.Any(p => p.BostadId == DeleteById))
-                            {
-                                <img class="mini-image" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==DeleteById)?.BildURL alt="Bostadsbild">
-                            }
-                            else
-                            {
-                                <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
-                            }
-                        </td>
-                        <td>
-                            @DeleteById
-                        </td>
-                        <td>
-                            @Bostäder.FirstOrDefault(b => b.Id == DeleteById)?.Gatuadress
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" @onclick="ClickCancel">Avbryt</button>
                 <button type="button" class="btn btn-danger" @onclick="ClickDelete">Ta Bort</button>

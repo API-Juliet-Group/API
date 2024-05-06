@@ -1,0 +1,124 @@
+﻿@using BaseLibrary.DTO
+@inject BostadBildDtoService BostadBildDtoService
+
+
+
+<div class="modal" tabindex="-1" style="display:block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bostad</h5>
+                <button type="button" class="btn-close" @onclick="ClickClose"></button>
+            </div>
+            <div class="modal-body">
+                @if (Bostad != null)
+                {
+                    <section>
+                        <div class="row">
+                            <div>
+                                @if (bostadensBilder != null)
+                                {
+                                    <img class="image-gallery" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==Bostad.Id)?.BildURL alt="Bostadsbild">
+                                }
+                                else
+                                {
+                                    <img class="image-gallery" src="/images/placeholder.jpg" alt="Bostadsbild">
+                                }
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div>
+                            <div class="col mt-3">
+                                <h3 class="mb-0">@Bostad.Gatuadress</h3>
+                                <p>@Bostad.Ort, @Bostad.Kommun</p>
+                                <h4>@Bostad.Utgångspris.ToString("N0") kr</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Bostadstyp</th>
+                                            <td>@Bostad.Kategori</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Antal rum</th>
+                                            <td>@Bostad.Antalrum rum</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Boarea</th>
+                                            <td>@Bostad.Boarea m²</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Biarea</th>
+                                            <td>@Bostad.Biarea m²</td>
+                                        </tr>
+                                        @if (Bostad.Tomtarea != 0)
+                                        {
+                                            <tr>
+                                                <th scope="row">Tomtarea</th>
+                                                <td>@Bostad.Tomtarea m²</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <th scope="row">Byggår</th>
+                                            <td>@Bostad.Byggår</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Driftkonstnad</th>
+                                            <td>@Bostad.Driftkonstnad kr/år</td>
+                                        </tr>
+                                        @if (Bostad.Månadsavgift != null)
+                                        {
+                                            <tr>
+                                                <th scope="row">Månadsavgift</th>
+                                                <td>@Bostad.Månadsavgift kr/mån</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col mt-3">
+                                <p>
+                                    @Bostad.Objektbeskrivning blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                }
+                else
+                {
+                    <div class="loading-indicator">
+                        <img src="/images/loadingIndicator.gif" alt="Loading..." />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public BostadDto Bostad { get; set; }
+
+    private IEnumerable<BostadBildDto> bostadensBilder;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IEnumerable<BostadBildDto> bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
+
+        bostadensBilder = GetBostadensBilder(Bostad.Id, bostadsBilder);
+    }
+
+    private IEnumerable<BostadBildDto> GetBostadensBilder(int id, IEnumerable<BostadBildDto> bostadsBilder)
+    {
+        return bostadsBilder.Where(p => p.BostadId == id);
+    }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private async Task ClickClose()
+    {
+        await OnCancel.InvokeAsync();
+    }
+}

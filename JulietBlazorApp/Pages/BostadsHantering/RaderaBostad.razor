@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Bekräfta borttagning</h5>
-                <button type="button" class="btn-close" @onclick="CancelDeleteConfirmation"></button>
+                <button type="button" class="btn-close" @onclick="ClickCancel"></button>
             </div>
             <div class="modal-body">
                 Är du säker på att du vill ta bort den här bostaden?
@@ -42,7 +42,7 @@
                 </tbody>
             </table>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @onclick="CancelDeleteConfirmation">Avbryt</button>
+                <button type="button" class="btn btn-secondary" @onclick="ClickCancel">Avbryt</button>
                 <button type="button" class="btn btn-danger" @onclick="ClickDelete">Ta Bort</button>
             </div>
         </div>
@@ -62,15 +62,17 @@
     [Parameter]
     public EventCallback<int> OnDelete { get; set; }
 
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
 
-    private void CancelDeleteConfirmation()
-    {
-        DeleteById = -1;
-    }
 
     private async Task ClickDelete()
     {
         await OnDelete.InvokeAsync(DeleteById);
-        DeleteById = -1;
+    }
+
+    private async Task ClickCancel()
+    {
+        await OnCancel.InvokeAsync();
     }
 }

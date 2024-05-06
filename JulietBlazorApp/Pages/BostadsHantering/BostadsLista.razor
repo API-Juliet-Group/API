@@ -55,7 +55,7 @@
                             <button class="btn btn-danger" @onclick="() => ShowDeleteConfirmation(bostad.Id)">Ta Bort</button>
                             @if (deleteById != -1)
                             {
-                                <RaderaBostad DeleteById="@deleteById" BostadsBilder="@bostadsBilder" Bostäder="@bostäder" OnDelete="DeleteBostad" />
+                                <RaderaBostad DeleteById="@deleteById" BostadsBilder="@bostadsBilder" Bostäder="@bostäder" OnCancel="CancelDeleteConfirmation" OnDelete="DeleteBostad" />
                             }
                         </div>
                     </td>
@@ -131,6 +131,11 @@ else
     private void ShowDeleteConfirmation(int id)
     {
         deleteById = id;
+    }
+
+    private void CancelDeleteConfirmation()
+    {
+        deleteById = -1;
     }
 
 }

@@ -1,5 +1,76 @@
-﻿<h3>RaderaBostad</h3>
+﻿@using BaseLibrary.DTO
+
+
+<div class="modal" tabindex="-1" style="display:block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bekräfta borttagning</h5>
+                <button type="button" class="btn-close" @onclick="CancelDeleteConfirmation"></button>
+            </div>
+            <div class="modal-body">
+                Är du säker på att du vill ta bort den här bostaden?
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Adress</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @if (BostadsBilder.Any(p => p.BostadId == DeleteById))
+                            {
+                                <img class="mini-image" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==DeleteById)?.BildURL alt="Bostadsbild">
+                            }
+                            else
+                            {
+                                <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
+                            }
+                        </td>
+                        <td>
+                            @DeleteById
+                        </td>
+                        <td>
+                            @Bostäder.FirstOrDefault(b => b.Id == DeleteById)?.Gatuadress
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @onclick="CancelDeleteConfirmation">Avbryt</button>
+                <button type="button" class="btn btn-danger" @onclick="ClickDelete">Ta Bort</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    [Parameter]
+    public int DeleteById { get; set; }
 
+    [Parameter]
+    public IEnumerable<BostadBildDto> BostadsBilder { get; set; }
+
+    [Parameter]
+    public IEnumerable<BostadDto> Bostäder { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnDelete { get; set; }
+
+
+    private void CancelDeleteConfirmation()
+    {
+        DeleteById = -1;
+    }
+
+    private async Task ClickDelete()
+    {
+        await OnDelete.InvokeAsync(DeleteById);
+        DeleteById = -1;
+    }
 }

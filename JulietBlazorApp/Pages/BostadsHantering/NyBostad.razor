@@ -2,6 +2,7 @@
 @inject BostadBildDtoService BostadBildDtoService
 
 
+
 <div class="modal" tabindex="-1" style="display:block;">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -15,14 +16,7 @@
                     <section>
                         <div class="row">
                             <div>
-                                @if (bostadensBilder != null)
-                                {
-                                    <img class="image-gallery" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==Bostad.Id)?.BildURL alt="Bostadsbild">
-                                }
-                                else
-                                {
-                                    <img class="image-gallery" src="/images/placeholder.jpg" alt="Bostadsbild">
-                                }
+                                <img class="image-gallery" src="/images/NewObject.jpg" alt="Bostadsbild">
                             </div>
                         </div>
                     </section>
@@ -77,7 +71,7 @@
                             </div>
                             <div class="col mt-3">
                                 <p>
-                                    @Bostad.Objektbeskrivning blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla .
+                                    @Bostad.Objektbeskrivning blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blablablablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blablablablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blablablablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla.
                                 </p>
                             </div>
                         </div>
@@ -95,23 +89,10 @@
 </div>
 
 
+
 @code {
-    [Parameter]
-    public BostadDto Bostad { get; set; }
+    public BostadDto Bostad = new BostadDto();
 
-    private IEnumerable<BostadBildDto> bostadensBilder;
-
-    protected override async Task OnInitializedAsync()
-    {
-        IEnumerable<BostadBildDto> bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
-
-        bostadensBilder = GetBostadensBilder(Bostad.Id, bostadsBilder);
-    }
-
-    private IEnumerable<BostadBildDto> GetBostadensBilder(int id, IEnumerable<BostadBildDto> bostadsBilder)
-    {
-        return bostadsBilder.Where(p => p.BostadId == id);
-    }
 
     [Parameter]
     public EventCallback OnCancel { get; set; }

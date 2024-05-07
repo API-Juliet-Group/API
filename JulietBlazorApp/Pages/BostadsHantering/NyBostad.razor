@@ -1,5 +1,7 @@
 ﻿@using BaseLibrary.DTO
 @inject BostadBildDtoService BostadBildDtoService
+@inject BostadKategoriDtoService BostadKategoriDtoService
+@inject KommunDtoService KommunDtoService
 
 
 
@@ -7,83 +9,110 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Bostad</h5>
+                <h5 class="modal-title">Ny Bostad</h5>
                 <button type="button" class="btn-close" @onclick="ClickClose"></button>
             </div>
-            <div class="modal-body">
-                @if (Bostad != null)
-                {
-                    <section>
+                <form>
+                    <div class="modal-body">
                         <div class="row">
-                            <div>
-                                <img class="image-gallery" src="/images/NewObject.jpg" alt="Bostadsbild">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="utgångspris" class="form-label mb-1">Utgångspris</label>
+                                    <input type="number" class="form-control" id="utgångspris" @bind="utgångspris" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label for="månadsavgift" class="form-label mb-1">Månadsavgift</label>
+                                    <input type="number" class="form-control" id="månadsavgift" @bind="månadsavgift">
+                                </div>
+
+                                <div class="mb-2">
+                                    <label for="driftkonstnad" class="form-label mb-1">Driftkonstnad</label>
+                                    <input type="number" class="form-control" id="driftkonstnad" @bind="driftkonstnad">
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                    <section>
-                        <div>
-                            <div class="col mt-3">
-                                <h3 class="mb-0">@Bostad.Gatuadress</h3>
-                                <p>@Bostad.Ort, @Bostad.Kommun</p>
-                                <h4>@Bostad.Utgångspris.ToString("N0") kr</h4>
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">Bostadstyp</th>
-                                            <td>@Bostad.Kategori</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Antal rum</th>
-                                            <td>@Bostad.Antalrum rum</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Boarea</th>
-                                            <td>@Bostad.Boarea m²</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Biarea</th>
-                                            <td>@Bostad.Biarea m²</td>
-                                        </tr>
-                                        @if (Bostad.Tomtarea != 0)
+
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="gatuadress" class="form-label mb-1">Gatuadress</label>
+                                    <input type="text" class="form-control" id="gatuadress" @bind="gatuadress" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label for="ort" class="form-label mb-1">Ort</label>
+                                    <input type="text" class="form-control" id="ort" @bind="ort" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label for="kommunId" class="form-label mb-1">Kommun</label>
+                                    @if (kommuner != null)
+                                    {
+                                        <select @bind="kommunId" class="form-select" id="kommunId" required>
+                                            @foreach (var kommun in kommuner)
+                                            {
+                                                <option value="@kommun.Id">@kommun.Namn</option>
+                                            }
+                                        </select>
+                                    }
+                                </div>
+
+                            </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <div class="mb-2">
+                                        <label for="boarea" class="form-label mb-1">Boarea</label>
+                                        <input type="number" class="form-control" id="boarea" @bind="boarea" required>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="biarea" class="form-label mb-1">Biarea</label>
+                                        <input type="number" class="form-control" id="biarea" @bind="biarea">
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="tomtarea" class="form-label mb-1">Tomtarea</label>
+                                        <input type="number" class="form-control" id="tomtarea" @bind="tomtarea">
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="mb-2">
+                                        <label for="antalrum" class="form-label mb-1">Antalrum</label>
+                                        <input type="number" class="form-control" id="antalrum" @bind="antalrum">
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="byggår" class="form-label mb-1">Byggår</label>
+                                        <input type="number" class="form-control" id="byggår" @bind="byggår" required>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="kategoriId" class="form-label mb-1">Kategori</label>
+                                        @if (bostadKategorier != null)
                                         {
-                                            <tr>
-                                                <th scope="row">Tomtarea</th>
-                                                <td>@Bostad.Tomtarea m²</td>
-                                            </tr>
+                                            <select @bind="kategoriId" class="form-select" id="kategoriId" required>
+                                                @foreach (var kategori in bostadKategorier)
+                                                {
+                                                    <option value="@kategori.Id">@kategori.Namn</option>
+                                                }
+                                            </select>
                                         }
-                                        <tr>
-                                            <th scope="row">Byggår</th>
-                                            <td>@Bostad.Byggår</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Driftkonstnad</th>
-                                            <td>@Bostad.Driftkonstnad.ToString("N0") kr/år</td>
-                                        </tr>
-                                        @if (Bostad.Månadsavgift != null)
-                                        {
-                                            <tr>
-                                                <th scope="row">Månadsavgift</th>
-                                                <td>@(((decimal)Bostad.Månadsavgift).ToString("N0")) kr/mån</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col mt-3">
-                                <p>
-                                    @Bostad.Objektbeskrivning blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blablablablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blablablablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blablablablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla blablabla bla bla blabla blabla bla blablabla blablablabla blabla bla bla bla blabla.
-                                </p>
+
+                            <div class="mb-3 mt-4">
+                                <label for="objektbeskrivning" class="form-label mb-1">Objektbeskrivning</label>
+                                <textarea class="form-control" id="objektbeskrivning" @bind="objektbeskrivning" rows="5" required></textarea>
                             </div>
-                        </div>
-                    </section>
-                }
-                else
-                {
-                    <div class="loading-indicator">
-                        <img src="/images/loadingIndicator.gif" alt="Loading..." />
+
                     </div>
-                }
-            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="ClickClose">Avbryt</button>
+                        <button type="submit" class="btn btn-primary" @onclick="ClickCreate">Skapa</button>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
@@ -91,14 +120,62 @@
 
 
 @code {
-    public BostadDto Bostad = new BostadDto();
+    private BostadDto Bostad;
+    private IEnumerable<BostadKategoriDto> bostadKategorier;
+    private IEnumerable<KommunDto> kommuner;
+
+    private int utgångspris;
+    private int boarea;
+    private int biarea;
+    private int tomtarea;
+    private int antalrum;
+    private int? månadsavgift;
+    private int driftkonstnad;
+    private int byggår;
+
+    private string? gatuadress;
+    private string? ort;
+    private string? objektbeskrivning;
+
+    private int kategoriId;
+    private int kommunId;
+    private int? mäklarId;//no form for this, it will be used later.
 
 
     [Parameter]
     public EventCallback OnCancel { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        bostadKategorier = await BostadKategoriDtoService.GetBostadKategorierAsync();
+        kommuner = await KommunDtoService.GetkommunerAsync();
+    }
+
     private async Task ClickClose()
     {
         await OnCancel.InvokeAsync();
+    }
+
+    private void ClickCreate()
+    {
+        Bostad = new BostadDto
+        {
+            Utgångspris = utgångspris,
+            Boarea = boarea,
+            Biarea = biarea,
+            Tomtarea = tomtarea,
+            Antalrum = antalrum,
+            Månadsavgift = månadsavgift,
+            Driftkonstnad = driftkonstnad,
+            Byggår = byggår,
+            Gatuadress = gatuadress,
+            Ort = ort,
+            Objektbeskrivning = objektbeskrivning,
+            KategoriId = kategoriId,
+            KommunId = kommunId,
+            MäklarId = mäklarId
+        };
+
+        //I will Call the service here later.
     }
 }

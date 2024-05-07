@@ -15,13 +15,16 @@
                     <section>
                         <div class="row">
                             <div>
-                                @if (bostadensBilder != null)
+                                @if(bostadensBilder != null)
                                 {
-                                    <img class="image-gallery" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==Bostad.Id)?.BildURL alt="Bostadsbild">
-                                }
-                                else
-                                {
-                                    <img class="image-gallery" src="/images/placeholder.jpg" alt="Bostadsbild">
+                                    @if (bostadensBilder.Count() > 0)
+                                    {
+                                        <img class="image-gallery" src=@bostadensBilder.FirstOrDefault(p=>p.BostadId==Bostad.Id)?.BildURL alt="Bostadsbild">
+                                    }
+                                    else
+                                    {
+                                        <img class="image-gallery" src="/images/placeholder.jpg" alt="Bostadsbild">
+                                    }
                                 }
                             </div>
                         </div>

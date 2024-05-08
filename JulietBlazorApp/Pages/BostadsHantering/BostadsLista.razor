@@ -2,11 +2,14 @@
 @using BaseLibrary.DTO
 @inject BostadDtoService BostadDtoService
 @inject BostadBildDtoService BostadBildDtoService
+@inject BostadKategoriDtoService BostadKategoriDtoService
+@inject KommunDtoService KommunDtoService
+
 
 @if(showCreateBostad)
 {
     <div class="modal-backdrop">
-        <NyBostad OnCancel="HideCreateBostad" />
+        <NyBostad Kommuner="@kommuner" BostadKategorier="@bostadKategorier" OnCancel="HideCreateBostad" />
     </div>
 }
 @if (deleteById != -1)
@@ -106,15 +109,21 @@ else
 
     private IEnumerable<BostadDto> bostäder = new List<BostadDto>();
     private IEnumerable<BostadBildDto> bostadsBilder;
+    private IEnumerable<BostadKategoriDto> bostadKategorier;
+    private IEnumerable<KommunDto> kommuner;
 
     private int deleteById = -1;
     private BostadDto? showBostad;
     private bool showCreateBostad = false;
+    private string? message = null;
 
     protected override async Task OnInitializedAsync()
     {
         bostäder = await BostadDtoService.GetBostäderAsync();
         bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
+
+        bostadKategorier = await BostadKategoriDtoService.GetBostadKategorierAsync();
+        kommuner = await KommunDtoService.GetkommunerAsync();
 
         //bostäder = GetMäklarensBostäder(bostäder); Används då vi har mäklarens id.
     }
@@ -148,6 +157,7 @@ else
 
         deleteById = -1;
     }
+
 
     private void ShowDeleteConfirmation(int id)
     {

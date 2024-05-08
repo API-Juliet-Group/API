@@ -14,8 +14,8 @@ namespace API_Juliet.Models
         public string? BildURL { get; set; }
 
 
-        public int MäklarbyråId { get; set; }
+        public int? MäklarbyråId { get; set; }
         [ForeignKey("MäklarbyråId")]
-        public Mäklarbyrå Mäklarbyrå { get; set; }
+        public Mäklarbyrå? Mäklarbyrå { get; set; }
     }
 }

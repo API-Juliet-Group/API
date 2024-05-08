@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace API_Juliet.Migrations
 {
     /// <inheritdoc />
-    public partial class Identity : Migration
+    public partial class SeededDefaultUsersAndRoles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -95,10 +97,8 @@ namespace API_Juliet.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Epostadress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefonnummer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BildURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MäklarbyråId = table.Column<int>(type: "int", nullable: false),
+                    MäklarbyråId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -121,8 +121,7 @@ namespace API_Juliet.Migrations
                         name: "FK_AspNetUsers_Mäklarbyråer_MäklarbyråId",
                         column: x => x.MäklarbyråId,
                         principalTable: "Mäklarbyråer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -271,6 +270,33 @@ namespace API_Juliet.Migrations
                         principalTable: "Bostäder",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "0a266c2d-db5e-4cf8-a968-c4e553775127", null, "SuperAdmin", "SUPERADMIN" },
+                    { "b18549c3-dafa-45b3-a75c-f6813af1b6af", null, "Mäklare", "MÄKLARE" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "BildURL", "ConcurrencyStamp", "Efternamn", "Email", "EmailConfirmed", "Förnamn", "LockoutEnabled", "LockoutEnd", "MäklarbyråId", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "1", 0, null, "4d1076c7-5880-455f-a7d1-ba5a5e566202", "Bostäder.se", "admin@bostäder.se", true, "Admin", false, null, null, "ADMIN@BOSTÄDER.SE", "ADMIN@BOSTÄDER.SE", "AQAAAAIAAYagAAAAELQwqE8wJfb3z2laH3GdMc4AaeLbMwIW6rBbyIE6CnBEyxntasMO51TpsO+gYROO8g==", null, false, "ad0eab94-0673-4078-8c31-058b152264d5", false, "admin@bostäder.se" },
+                    { "2", 0, null, "7189b41d-55da-43d2-8f19-052d89ce5756", "Bostäder.se", "mäklare@bostäder.se", true, "Mäklare", false, null, null, "MÄKLARE@BOSTÄDER.SE", "MÄKLARE@BOSTÄDER.SE", "AQAAAAIAAYagAAAAEP6gQ8rm7HfYWGvz7X/xucRkhlKxcZ4K2ywA0u0jxD2NbV0PytRSW+Jg+NygDwqICQ==", null, false, "c37be430-d548-4428-8a85-4e65a4f1eca2", false, "mäklare@bostäder.se" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "0a266c2d-db5e-4cf8-a968-c4e553775127", "1" },
+                    { "b18549c3-dafa-45b3-a75c-f6813af1b6af", "2" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_Juliet.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240508021440_Identity")]
-    partial class Identity
+    [Migration("20240508025724_SeededDefaultUsersAndRoles")]
+    partial class SeededDefaultUsersAndRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,10 +193,6 @@ namespace API_Juliet.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Epostadress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Förnamn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -207,7 +203,7 @@ namespace API_Juliet.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("MäklarbyråId")
+                    b.Property<int?>("MäklarbyråId")
                         .HasColumnType("int");
 
                     b.Property<string>("NormalizedEmail")
@@ -230,9 +226,6 @@ namespace API_Juliet.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Telefonnummer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -253,6 +246,44 @@ namespace API_Juliet.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4d1076c7-5880-455f-a7d1-ba5a5e566202",
+                            Efternamn = "Bostäder.se",
+                            Email = "admin@bostäder.se",
+                            EmailConfirmed = true,
+                            Förnamn = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@BOSTÄDER.SE",
+                            NormalizedUserName = "ADMIN@BOSTÄDER.SE",
+                            PasswordHash = "AQAAAAIAAYagAAAAELQwqE8wJfb3z2laH3GdMc4AaeLbMwIW6rBbyIE6CnBEyxntasMO51TpsO+gYROO8g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ad0eab94-0673-4078-8c31-058b152264d5",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@bostäder.se"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7189b41d-55da-43d2-8f19-052d89ce5756",
+                            Efternamn = "Bostäder.se",
+                            Email = "mäklare@bostäder.se",
+                            EmailConfirmed = true,
+                            Förnamn = "Mäklare",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MÄKLARE@BOSTÄDER.SE",
+                            NormalizedUserName = "MÄKLARE@BOSTÄDER.SE",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP6gQ8rm7HfYWGvz7X/xucRkhlKxcZ4K2ywA0u0jxD2NbV0PytRSW+Jg+NygDwqICQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c37be430-d548-4428-8a85-4e65a4f1eca2",
+                            TwoFactorEnabled = false,
+                            UserName = "mäklare@bostäder.se"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -280,6 +311,20 @@ namespace API_Juliet.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "0a266c2d-db5e-4cf8-a968-c4e553775127",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SUPERADMIN"
+                        },
+                        new
+                        {
+                            Id = "b18549c3-dafa-45b3-a75c-f6813af1b6af",
+                            Name = "Mäklare",
+                            NormalizedName = "MÄKLARE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -367,6 +412,18 @@ namespace API_Juliet.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "0a266c2d-db5e-4cf8-a968-c4e553775127"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "b18549c3-dafa-45b3-a75c-f6813af1b6af"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -428,9 +485,7 @@ namespace API_Juliet.Migrations
                 {
                     b.HasOne("API_Juliet.Models.Mäklarbyrå", "Mäklarbyrå")
                         .WithMany()
-                        .HasForeignKey("MäklarbyråId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MäklarbyråId");
 
                     b.Navigation("Mäklarbyrå");
                 });

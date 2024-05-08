@@ -23,7 +23,14 @@ namespace API_Juliet
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddCors( options =>
+            {
+                options.AddPolicy("AllowAll",
+                    b => b.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    );
+            });
             builder.Services.AddTransient<IBostad, BostadRepository>();
             builder.Services.AddTransient<IBostadBild, BostadBildRepository>();
             builder.Services.AddTransient<IKommun, KommunRepository>();
@@ -48,7 +55,7 @@ namespace API_Juliet
             );
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowAll");
             app.UseAuthorization();
 
 

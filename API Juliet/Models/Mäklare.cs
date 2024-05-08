@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Juliet.Models
 {
-    public class Mäklare
+    public class Mäklare : IdentityUser
     {
-        public int Id { get; set; }
-
         [Required]
         public string Förnamn { get; set; }
         [Required]

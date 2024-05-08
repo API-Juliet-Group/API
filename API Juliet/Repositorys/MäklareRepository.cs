@@ -21,7 +21,7 @@ namespace API_Juliet.Repositorys
 
         public async Task<Mäklare> GetByIdAsync(int id)
         {
-            return await _context.Mäklare.FindAsync(id);
+            return await _context.Mäklare.FindAsync(id.ToString());
         }
 
         public async Task AddAsync(Mäklare mäklare)

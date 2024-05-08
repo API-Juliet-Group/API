@@ -1,8 +1,10 @@
 
 using API_Juliet.Data;
+using API_Juliet.Models;
 using API_Juliet.Repositorys;
 using API_Juliet.Repositorys.Contracts;
 using API_Juliet.SeedData;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using static System.Net.WebRequestMethods;
@@ -18,7 +20,9 @@ namespace API_Juliet
             // Add services to the container.
             builder.Services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("DataDbContext") ?? throw new InvalidOperationException("Connection string 'DataDbContext' not found.")));
-
+            builder.Services.AddIdentityCore<Mäklare>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

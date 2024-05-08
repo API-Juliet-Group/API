@@ -1,10 +1,11 @@
 ﻿using API_Juliet.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace API_Juliet.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<Mäklare>
     {
         public DbSet<Bostad> Bostäder {  get; set; }
         public DbSet<BostadBild> BostadsBilder { get; set; }

@@ -50,7 +50,7 @@ namespace API_Juliet.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMäklare(int id, Mäklare mäklare)
         {
-            if (id != mäklare.Id)
+            if (id != int.Parse(mäklare.Id))
             {
                 return BadRequest();
             }

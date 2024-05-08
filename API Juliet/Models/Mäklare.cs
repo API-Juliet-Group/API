@@ -6,6 +6,7 @@ namespace API_Juliet.Models
 {
     public class Mäklare : IdentityUser
     {
+        public override string Id { get => base.Id; set => base.Id = value; }
         [Required]
         public string Förnamn { get; set; }
         [Required]

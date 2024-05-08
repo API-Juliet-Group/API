@@ -11,10 +11,6 @@ namespace API_Juliet.Models
         public string Förnamn { get; set; }
         [Required]
         public string Efternamn { get; set; }
-        [EmailAddress]
-        public string Epostadress {  get; set; }
-
-        public string? Telefonnummer { get; set; }
         public string? BildURL { get; set; }
 
 

@@ -1,4 +1,6 @@
-﻿using API_Juliet.Repositorys.Contracts;
+﻿using API_Juliet.Models;
+using API_Juliet.Repositorys;
+using API_Juliet.Repositorys.Contracts;
 using BaseLibrary.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +49,27 @@ namespace API_Juliet.Controllers
             await _bostadRepository.DeleteDtoAsync(id);
 
             return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<BostadDto>> CreateBostad(BostadDto bostadDto)
+        {
+            if (bostadDto == null)
+            {
+                return BadRequest("BostadDto is null");
+            }
+
+            try
+            {
+                await _bostadRepository.AddBostadDtoAsync(bostadDto);
+
+                return CreatedAtAction(nameof(GetBostad), new { id = bostadDto.Id }, bostadDto);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 

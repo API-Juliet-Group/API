@@ -1,8 +1,7 @@
 ﻿@using BaseLibrary.DTO
 @inject BostadBildDtoService BostadBildDtoService
-@inject BostadKategoriDtoService BostadKategoriDtoService
-@inject KommunDtoService KommunDtoService
-
+@inject BostadDtoService BostadDtoService
+@inject NavigationManager NavigationManager
 
 
 <div class="modal" tabindex="-1" style="display:block;">
@@ -12,51 +11,57 @@
                 <h5 class="modal-title">Ny Bostad</h5>
                 <button type="button" class="btn-close" @onclick="ClickClose"></button>
             </div>
-                <form>
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="modal-body">
+                    @successMessage
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="ClickClose">Avbryt</button>
+                </div>
+            }
+            else
+            {
+                <form @onsubmit:preventDefault="true" @onsubmit="SubmitForm">
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-2">
-                                    <label for="utgångspris" class="form-label mb-1">Utgångspris</label>
-                                    <input type="number" class="form-control" id="utgångspris" @bind="utgångspris" required>
+                        <section>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-2">
+                                        <label for="utgångspris" class="form-label mb-1">Utgångspris</label>
+                                        <input type="number" class="form-control" id="utgångspris" @bind="utgångspris" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="månadsavgift" class="form-label mb-1">Månadsavgift</label>
+                                        <input type="number" class="form-control" id="månadsavgift" @bind="månadsavgift">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="driftkonstnad" class="form-label mb-1">Driftkonstnad</label>
+                                        <input type="number" class="form-control" id="driftkonstnad" @bind="driftkonstnad">
+                                    </div>
                                 </div>
-
-                                <div class="mb-2">
-                                    <label for="månadsavgift" class="form-label mb-1">Månadsavgift</label>
-                                    <input type="number" class="form-control" id="månadsavgift" @bind="månadsavgift">
+                                <div class="col">
+                                    <div class="mb-2 form-group">
+                                        <label for="gatuadress" class="form-label mb-1">Gatuadress</label>
+                                        <input type="text" class="form-control" id="gatuadress" placeholder="Gata nr" @bind="gatuadress" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="ort" class="form-label mb-1">Ort</label>
+                                        <input type="text" class="form-control" id="ort" @bind="ort" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="kommunId" class="form-label mb-1">Kommun</label>
+                                        @if (Kommuner != null)
+                                        {
+                                            <select @bind="kommunId" class="form-select" id="kommunId" required>
+                                                @foreach (var kommun in Kommuner)
+                                                {
+                                                    <option value="@kommun.Id">@kommun.Namn</option>
+                                                }
+                                            </select>
+                                        }
+                                    </div>
                                 </div>
-
-                                <div class="mb-2">
-                                    <label for="driftkonstnad" class="form-label mb-1">Driftkonstnad</label>
-                                    <input type="number" class="form-control" id="driftkonstnad" @bind="driftkonstnad">
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="mb-2">
-                                    <label for="gatuadress" class="form-label mb-1">Gatuadress</label>
-                                    <input type="text" class="form-control" id="gatuadress" @bind="gatuadress" required>
-                                </div>
-
-                                <div class="mb-2">
-                                    <label for="ort" class="form-label mb-1">Ort</label>
-                                    <input type="text" class="form-control" id="ort" @bind="ort" required>
-                                </div>
-
-                                <div class="mb-2">
-                                    <label for="kommunId" class="form-label mb-1">Kommun</label>
-                                    @if (kommuner != null)
-                                    {
-                                        <select @bind="kommunId" class="form-select" id="kommunId" required>
-                                            @foreach (var kommun in kommuner)
-                                            {
-                                                <option value="@kommun.Id">@kommun.Namn</option>
-                                            }
-                                        </select>
-                                    }
-                                </div>
-
-                            </div>
                             </div>
                             <div class="row mt-4">
                                 <div class="col">
@@ -75,24 +80,26 @@
                                         <input type="number" class="form-control" id="tomtarea" @bind="tomtarea">
                                     </div>
                                 </div>
-
                                 <div class="col">
                                     <div class="mb-2">
                                         <label for="antalrum" class="form-label mb-1">Antalrum</label>
-                                        <input type="number" class="form-control" id="antalrum" @bind="antalrum">
+                                        <select @bind="antalrum" class="form-select" id="antalrum" required>
+                                            @for (int i = 1; i < 11; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
                                     </div>
-
                                     <div class="mb-2">
                                         <label for="byggår" class="form-label mb-1">Byggår</label>
                                         <input type="number" class="form-control" id="byggår" @bind="byggår" required>
                                     </div>
-
                                     <div class="mb-2">
                                         <label for="kategoriId" class="form-label mb-1">Kategori</label>
-                                        @if (bostadKategorier != null)
+                                        @if (BostadKategorier != null)
                                         {
                                             <select @bind="kategoriId" class="form-select" id="kategoriId" required>
-                                                @foreach (var kategori in bostadKategorier)
+                                                @foreach (var kategori in BostadKategorier)
                                                 {
                                                     <option value="@kategori.Id">@kategori.Namn</option>
                                                 }
@@ -101,18 +108,18 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="mb-3 mt-4">
                                 <label for="objektbeskrivning" class="form-label mb-1">Objektbeskrivning</label>
                                 <textarea class="form-control" id="objektbeskrivning" @bind="objektbeskrivning" rows="5" required></textarea>
                             </div>
-
+                        </section>
                     </div>
                     <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Skapa</button>
                         <button type="button" class="btn btn-secondary" @onclick="ClickClose">Avbryt</button>
-                        <button type="submit" class="btn btn-primary" @onclick="ClickCreate">Skapa</button>
                     </div>
                 </form>
+            }
         </div>
     </div>
 </div>
@@ -120,9 +127,12 @@
 
 
 @code {
-    private BostadDto Bostad;
-    private IEnumerable<BostadKategoriDto> bostadKategorier;
-    private IEnumerable<KommunDto> kommuner;
+    [Parameter]
+    public IEnumerable<BostadKategoriDto> BostadKategorier { get; set; }
+    [Parameter]
+    public IEnumerable<KommunDto> Kommuner { get; set; }
+
+    private BostadDto bostad;
 
     private int utgångspris;
     private int boarea;
@@ -139,43 +149,53 @@
 
     private int kategoriId;
     private int kommunId;
-    private int? mäklarId;//no form for this, it will be used later.
+    private int? mäklarId;
+
+    private string? successMessage;
 
 
     [Parameter]
     public EventCallback OnCancel { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        bostadKategorier = await BostadKategoriDtoService.GetBostadKategorierAsync();
-        kommuner = await KommunDtoService.GetkommunerAsync();
-    }
 
     private async Task ClickClose()
     {
         await OnCancel.InvokeAsync();
     }
 
-    private void ClickCreate()
+    private async Task SubmitForm()
     {
-        Bostad = new BostadDto
+        try
         {
-            Utgångspris = utgångspris,
-            Boarea = boarea,
-            Biarea = biarea,
-            Tomtarea = tomtarea,
-            Antalrum = antalrum,
-            Månadsavgift = månadsavgift,
-            Driftkonstnad = driftkonstnad,
-            Byggår = byggår,
-            Gatuadress = gatuadress,
-            Ort = ort,
-            Objektbeskrivning = objektbeskrivning,
-            KategoriId = kategoriId,
-            KommunId = kommunId,
-            MäklarId = mäklarId
-        };
+            bostad = new BostadDto
+                {
+                    Utgångspris = utgångspris,
+                    Boarea = boarea,
+                    Biarea = biarea,
+                    Tomtarea = tomtarea,
+                    Antalrum = antalrum,
+                    Månadsavgift = månadsavgift,
+                    Driftkonstnad = driftkonstnad,
+                    Byggår = byggår,
+                    Gatuadress = gatuadress,
+                    Ort = ort,
+                    Objektbeskrivning = objektbeskrivning,
+                    KategoriId = kategoriId,
+                    KommunId = kommunId,
+                    MäklarId = mäklarId
 
-        //I will Call the service here later.
+                };
+
+            bool createSuccessful = await BostadDtoService.AddBostadAsync(bostad);
+
+            if (createSuccessful)
+            {
+                successMessage = $"Ny bostad på {bostad.Gatuadress}, har lagts till";
+            }
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using BaseLibrary.DTO;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json.Serialization;
 
 
 public class BostadDtoService
@@ -30,6 +32,27 @@ public class BostadDtoService
         {
             var bostad = await _httpClient.GetFromJsonAsync<BostadDto>($"api/BostadDto/{id}");
             return bostad;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public async Task<bool> AddBostadAsync(BostadDto bostadDto)
+    {
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync($"api/BostadDto",bostadDto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         catch (Exception)
         {

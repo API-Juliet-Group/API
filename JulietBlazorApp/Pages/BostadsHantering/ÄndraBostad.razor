@@ -137,46 +137,43 @@
                             }
                         </div>
                         <div>
-                            <div>
-                                @if (bostadensBilder != null)
+                            @if (bostadensBilder != null)
+                            {
+                                var numberOfBilder = bostadensBilder.Count();
+                                //4 bilder i rad
+                                for (int i = 0; i < numberOfBilder; i+= 4)
                                 {
-                                    var numberOfBilder = bostadensBilder.Count();
-                                    //4 bilder i rad
-                                    for (int i = 0; i < numberOfBilder; i+= 4)
-                                    {
-                                        var bildRow = bostadensBilder.Skip(i).Take(4).ToList();
+                                    var bildRow = bostadensBilder.Skip(i).Take(4).ToList();
 
-                                        <div class="row mt-4">
-                                            @foreach (BostadBildDto bild in bildRow)
+                                    <div class="row mt-4">
+                                        @foreach (BostadBildDto bild in bildRow)
+                                        {
+                                            if (imageAlternative != bild.Id)
                                             {
-                                                if (imageAlternative != bild.Id)
-                                                {
-                                                    <div class="col-md-3">
-                                                        <button type="button" class="image-button" @onclick="()=>ToggleImageAlternatives(bild.Id)">
-                                                            <img class="full-image" src="@bild.BildURL" alt="Bostadsbild">
-                                                        </button>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="col-md-3">
-                                                        <div class="image-button">
-                                                            <div class="emty-room" style="background-image: url('@bild.BildURL');">
-                                                                <div class="button-container">
-                                                                    <button type="button" class="btn-secondary cancel-button" @onclick="ToggleOffImageAlternatives"><i class="bi bi-x h4"></i></button>
-                                                                    <button type="button" class="btn-danger remove-button" @onclick="()=>RemoveImage(bild.Id)"><i class="bi bi-trash h4"></i></button>
-                                                                </div>
+                                                <div class="col-md-3">
+                                                    <button type="button" class="image-button" @onclick="()=>ToggleImageAlternatives(bild.Id)">
+                                                        <img class="full-image" src="@bild.BildURL" alt="Bostadsbild">
+                                                    </button>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-3">
+                                                    <div class="image-button">
+                                                        <div class="emty-room" style="background-image: url('@bild.BildURL');">
+                                                            <div class="button-container">
+                                                                <button type="button" class="btn-secondary cancel-button" @onclick="ToggleOffImageAlternatives"><i class="bi bi-x h4"></i></button>
+                                                                <button type="button" class="btn-danger remove-button" @onclick="()=>RemoveImage(bild.Id)"><i class="bi bi-trash h4"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                }
+                                                </div>
                                             }
-                                        </div>
-                                    }
+                                        }
+                                    </div>
                                 }
-                            </div>
+                            }
                         </div>
-
                     </div>
                     <div class="modal-footer">
                     </div>
@@ -234,12 +231,15 @@
 
     private async void AddImage()
     {
-        BostadBildDto newBostadBild = new BostadBildDto { BildURL = newPictureURL, BostadId = bostad.Id };
-
-        bool successful = await BostadBildDtoService.AddBostadBildAsync(newBostadBild);
-        if (successful)
+        if (!string.IsNullOrEmpty(newPictureURL))
         {
-            bostadensBilder = await BostadBildDtoService.GetBostadensBilderAsync(bostad.Id);
+            BostadBildDto newBostadBild = new BostadBildDto { BildURL = newPictureURL, BostadId = bostad.Id };
+
+            bool successful = await BostadBildDtoService.AddBostadBildAsync(newBostadBild);
+            if (successful)
+            {
+                bostadensBilder = await BostadBildDtoService.GetBostadensBilderAsync(bostad.Id);
+            }
         }
         newPictureURL = string.Empty;
     }

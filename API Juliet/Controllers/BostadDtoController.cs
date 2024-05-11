@@ -4,6 +4,7 @@ using API_Juliet.Repositorys.Contracts;
 using BaseLibrary.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_Juliet.Controllers
 {
@@ -23,7 +24,7 @@ namespace API_Juliet.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BostadDto>> GetBostad(int id)
         {
-            bostad = await _bostadRepository.GetBostadDtoByIdAsync(id);
+            bostad = await _bostadRepository.GetBostad(id);
 
             if (bostad == null)
             {
@@ -46,7 +47,7 @@ namespace API_Juliet.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBostad(int id)
         {
-            await _bostadRepository.DeleteDtoAsync(id);
+            await _bostadRepository.DeleteBostadAsync(id);
 
             return NoContent();
         }
@@ -54,16 +55,26 @@ namespace API_Juliet.Controllers
         [HttpPost]
         public async Task<ActionResult<BostadDto>> CreateBostad(BostadDto bostadDto)
         {
-            if (bostadDto == null)
-            {
-                return BadRequest("BostadDto is null");
-            }
 
             try
             {
-                await _bostadRepository.AddBostadDtoAsync(bostadDto);
+                var newBostad = await _bostadRepository.AddBostadDtoAsync(bostadDto);
 
-                return CreatedAtAction(nameof(GetBostad), new { id = bostadDto.Id }, bostadDto);
+                if (newBostad == null)
+                {
+                    return NoContent();
+                }
+
+                var newBostadDto = await _bostadRepository.GetBostad(newBostad.Id);
+
+                if (newBostadDto == null)
+                {
+                    throw new Exception("Something went wrong when attempting to retrieve the added bostad");
+                }
+
+
+                return CreatedAtAction(nameof(GetBostad), new { id = newBostadDto.Id }, newBostadDto);
+
 
             }
             catch (Exception ex)
@@ -71,7 +82,25 @@ namespace API_Juliet.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBostad(int id, BostadDto bostadDto)
+        {
+            if (id != bostadDto.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _bostadRepository.UpdateBostad(bostadDto);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
-
-
 }

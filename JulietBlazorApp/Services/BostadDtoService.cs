@@ -39,11 +39,33 @@ public class BostadDtoService
         }
     }
 
-    public async Task<bool> AddBostadAsync(BostadDto bostadDto)
+    public async Task<int?> AddBostadAsync(BostadDto bostadDto)
     {
         try
         {
             var response = await _httpClient.PostAsJsonAsync($"api/BostadDto",bostadDto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var createdBostad = await response.Content.ReadFromJsonAsync<BostadDto>();
+                return createdBostad.Id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public async Task<bool> DeleteBostadAsync(int id)
+    {
+        try
+        {
+            var response = await _httpClient.DeleteAsync($"api/BostadDto/{id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -60,11 +82,11 @@ public class BostadDtoService
         }
     }
 
-    public async Task<bool> DeleteBostadAsync(int id)
+    public async Task<bool> UpdateBostadAsync(BostadDto bostadDto)
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"api/BostadDto/{id}");
+            var response = await _httpClient.PutAsJsonAsync($"api/BostadDto/{bostadDto.Id}", bostadDto);
 
             if (response.IsSuccessStatusCode)
             {

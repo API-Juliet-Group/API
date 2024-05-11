@@ -4,9 +4,9 @@
 <div class="modal" tabindex="-1" style="display:block;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color: rgb(220,53,69); color:white;">
                 <h5 class="modal-title">Bekräfta borttagning</h5>
-                <button type="button" class="btn-close" @onclick="ClickCancel"></button>
+                <button type="button" class="btn-close btn-close-white" @onclick="ClickCancel"></button>
             </div>
             <div class="modal-body">
                 Är du säker på att du vill ta bort den här bostaden?
@@ -25,11 +25,11 @@
                             <td>
                                 @if (BostadsBilder.Any(p => p.BostadId == DeleteById))
                                 {
-                                    <img class="mini-image" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==DeleteById)?.BildURL alt="Bostadsbild">
+                                    <img class="mini-image" style="width: 100px;" src=@BostadsBilder.FirstOrDefault(p=>p.BostadId==DeleteById)?.BildURL alt="Bostadsbild">
                                 }
                                 else
                                 {
-                                    <img class="mini-image" src="/images/placeholder.jpg" alt="Bostadsbild">
+                                    <img class="mini-image" style="width: 100px;" src="/images/placeholder.jpg" alt="Bostadsbild">
                                 }
                             </td>
                             <td>

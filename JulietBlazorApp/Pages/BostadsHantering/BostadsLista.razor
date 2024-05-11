@@ -5,7 +5,12 @@
 @inject BostadKategoriDtoService BostadKategoriDtoService
 @inject KommunDtoService KommunDtoService
 
-
+@if (changeBostad != null)
+{
+    <div class="modal-backdrop">
+        <ÄndraBostad Kommuner="@kommuner" BostadKategorier="@bostadKategorier" bostad="@changeBostad" OnCancel="HideChangeBostad" />
+    </div>
+}
 @if(showCreateBostad)
 {
     <div class="modal-backdrop">
@@ -35,7 +40,7 @@
             @if(bostäder.Count() != 0)
             {
                 <tr>
-                    <th></th>
+                    <th><button class="btn btn-primary btn-sm" @onclick="() => refresh()"><i class="bi bi-arrow-clockwise h5"></i></button></th>
                     <th>ID</th>
                     <th>Adress</th>
                     <th>Kommun</th>
@@ -45,7 +50,7 @@
             else
             {
                 <tr>
-                    <th></th>
+                    <th><button class="btn btn-primary btn-sm" @onclick="() => refresh()"><i class="bi bi-arrow-clockwise h5"></i></button></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -59,7 +64,7 @@
                 <tr>
                     <td>
                         <div class="d-flex">
-                            <button style="border: none; padding: 0;" @onclick="() => ShowDetails(bostad)">
+                            <button class="mini-image-button" @onclick="() => ShowDetails(bostad)">
                                 @if (HasImagesForBostad(bostad))
                                 {
                                     <img class="mini-image" src="@bostadsBilder.FirstOrDefault(p=>p.BostadId==bostad.Id)?.BildURL" alt="Bostadsbild">
@@ -76,22 +81,20 @@
                     <td>@bostad.Kommun</td>
                     <td>
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-secondary me-2">Ändra</button>
-                            <button class="btn btn-danger" @onclick="() => ShowDeleteConfirmation(bostad.Id)">Ta Bort</button>
+                            <button class="btn btn-secondary me-2" @onclick="() => ShowChangeBostad(bostad)"><i class=" bi bi-three-dots"></i></button>
+                            <button class="btn btn-danger" @onclick="() => ShowDeleteConfirmation(bostad.Id)"><i class="bi bi-trash"></i></button>
                         </div>
                     </td>
                 </tr>
             }
             <tr>
-                <td>
-                    <img class="mini-image" src="/images/NewObject.jpg" alt="NewObject">
-                </td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary " @onclick="() => ShowCreateBostad()">Ny Bostad</button>
+                        <button class="btn btn-primary " @onclick="() => ShowCreateBostad()"><i class="bi bi-house-add h3"></i></button>
                     </div>
                 </td>
             </tr>
@@ -114,6 +117,7 @@ else
 
     private int deleteById = -1;
     private BostadDto? showBostad;
+    private BostadDto? changeBostad;
     private bool showCreateBostad = false;
     private string? message = null;
 
@@ -136,6 +140,12 @@ else
             .ToList();
 
         return mäklarensBostäder;
+    }
+
+    private async Task refresh()
+    {
+        bostäder = await BostadDtoService.GetBostäderAsync();
+        bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
     }
 
     private bool HasImagesForBostad(BostadDto Bostad)
@@ -184,5 +194,14 @@ else
     private void HideCreateBostad()
     {
         showCreateBostad = false;
+    }
+
+    private void ShowChangeBostad(BostadDto bostad)
+    {
+        changeBostad = bostad;
+    }
+    private void HideChangeBostad()
+    {
+        changeBostad = null;
     }
 }

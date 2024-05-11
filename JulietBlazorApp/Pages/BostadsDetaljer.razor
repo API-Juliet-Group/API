@@ -3,6 +3,23 @@
 @inject BostadDtoService BostadDtoService
 @inject BostadBildDtoService BostadBildDtoService
 
+@if(imageToSee != -1)
+{
+    <div class="modal" tabindex="-1" style="display:block;">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" @onclick="ClickClose"></button>
+                </div>
+                <div class="modal-body">
+                    <img class="image-gallery" src=@bostadensBilder.FirstOrDefault(p=>p.Id==imageToSee)?.BildURL alt="Bostadsbild saknas">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 @if(bostad != null)
 {
     <section>
@@ -81,6 +98,29 @@
             </div>
         </div>
     </section>
+    <section>
+        @if (bostadensBilder != null)
+        {
+            var leftOfBilder = bostadensBilder.Skip(1).ToList();
+            var numberOfBilder = leftOfBilder.Count();
+            //4 bilder i rad
+            for (int i = 0; i < numberOfBilder; i += 4)
+            {
+                var bildRow = leftOfBilder.Skip(i).Take(4).ToList();
+
+                <div class="row mt-4">
+                    @foreach (BostadBildDto bild in bildRow)
+                    {
+                        <div class="col-md-3">
+                            <button type="button" class="image-button" @onclick="()=>SeeImage(bild.Id)">
+                                <img class="full-image" src="@bild.BildURL" alt="Bostadsbild">
+                            </button>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </section>
 }
 else
 {
@@ -97,10 +137,21 @@ else
     private BostadDto bostad;
     private IEnumerable<BostadBildDto> bostadensBilder;
 
+    private int imageToSee = -1;
+
     protected override async Task OnInitializedAsync()
     {
         bostad = await BostadDtoService.GetBostadAsync(Id);
 
         bostadensBilder = await BostadBildDtoService.GetBostadensBilderAsync(bostad.Id);
+    }
+
+    private void SeeImage(int bildId)
+    {
+        imageToSee = bildId;
+    }
+    private void ClickClose()
+    {
+        imageToSee = -1;
     }
 }

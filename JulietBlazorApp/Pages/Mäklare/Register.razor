@@ -1,0 +1,37 @@
+﻿@page "/mäklare/register"
+@using BaseLibrary.DTO
+@inject NavigationManager navManager
+
+<h3>Skapa ny användare</h3>
+
+<div>
+    <EditForm Model="Mäklare" OnValidSubmit="HandleRegistration">
+        <div class="form-group">
+            <label for="email" >E-post:</label>
+            <InputText class="form-control" @bind-Value="Mäklare.Email" />
+        </div>
+        <div class="form-group">
+            <label for="firstname">Förnamn:</label>
+            <InputText class="form-control" @bind-Value="Mäklare.Förnamn" />
+        </div>
+        <div class="form-group">
+            <label for="lastname">Efternamn:</label>
+            <InputText class="form-control" @bind-Value="Mäklare.Efternamn" />
+        </div>
+        <div class="form-group">
+            <label for="password">Lösenord:</label>
+            <InputText class="form-control" @bind-Value="Mäklare.Password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Skapa</button>
+    </EditForm>
+</div>
+
+@code {
+    MäklareDto Mäklare = new MäklareDto();
+
+    private async Task HandleRegistration()
+    {
+        string errorMessage = string.Empty;
+        
+    }
+}

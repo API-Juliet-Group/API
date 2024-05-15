@@ -1,0 +1,28 @@
+﻿@page "/mäklare/login"
+@using BaseLibrary.DTO
+@inject NavigationManager navManager
+
+<h3>Logga in</h3>
+
+<div>
+    <EditForm Model="LoginRequest" OnValidSubmit="HandleLoginRequest">
+        <div class="form-group">
+            <label for="email">E-post:</label>
+            <InputText class="form-control" @bind-Value="LoginRequest.Email" />
+        </div>
+        <div class="form-group">
+            <label for="password">Lösenord:</label>
+            <InputText class="form-control" @bind-Value="LoginRequest.Password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Logga in</button>
+    </EditForm>
+</div>
+
+@code {
+    LoginDto LoginRequest = new LoginDto();
+
+    private async Task HandleLoginRequest()
+    {
+        string errorMessage = string.Empty;    
+    }
+}

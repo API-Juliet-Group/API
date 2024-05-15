@@ -4,6 +4,10 @@ using BaseLibrary.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace API_Juliet.Controllers
 {
@@ -11,11 +15,13 @@ namespace API_Juliet.Controllers
     [ApiController]
     public class MäklareDtoController : ControllerBase
     {
-        private readonly UserManager<Mäklare> userManager;
+        private readonly UserManager<Mäklare> mäklareManager;
+        private readonly IConfiguration configuration;
 
-        public MäklareDtoController(UserManager<Mäklare> userManager)
+        public MäklareDtoController(UserManager<Mäklare> mäklareManager, IConfiguration configuration)
         {
-            this.userManager = userManager;
+            this.mäklareManager = mäklareManager;
+            this.configuration = configuration;
         }
 
         [HttpPost]
@@ -31,8 +37,15 @@ namespace API_Juliet.Controllers
                     Förnamn = mäklareDto.Förnamn,
                     Efternamn = mäklareDto.Efternamn
                 };
-                var result = await userManager.CreateAsync(mäklare, mäklareDto.Password);
-
+                var result = await mäklareManager.CreateAsync(mäklare, mäklareDto.Password);
+                //await userManager.AddClaimsAsync(mäklare,
+                //    [
+                //        new Claim(JwtRegisteredClaimNames.Sub, mäklare.UserName),
+                //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                //        new Claim(JwtRegisteredClaimNames.Email, mäklare.Email),
+                //        new Claim(CustomClaimTypes.Uid, mäklare.Id)
+                //    ]
+                //);
                 if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
@@ -41,7 +54,7 @@ namespace API_Juliet.Controllers
                     }
                     return BadRequest(ModelState);
                 }
-                await userManager.AddToRoleAsync(mäklare, ApiRoles.Mäklare);
+                await mäklareManager.AddToRoleAsync(mäklare, ApiRoles.Mäklare);
                 return Accepted();
             }
             catch (Exception ex)
@@ -52,25 +65,66 @@ namespace API_Juliet.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<ActionResult<LoginResponse>> Login(LoginDto loginDto)
         {
             try
             {
-                var mäklare = await userManager.FindByEmailAsync(loginDto.Email);
-                var passwordValid = await userManager.CheckPasswordAsync(mäklare, loginDto.Password);
+                var mäklare = await mäklareManager.FindByEmailAsync(loginDto.Email);
+                var passwordValid = await mäklareManager.CheckPasswordAsync(mäklare, loginDto.Password);
 
                 if (mäklare == null || passwordValid == false)
                 {
-                    return NotFound();
+                    return Unauthorized(loginDto);
                 }
                 // skapa jwt
+                string tokenString = await GenerateToken(mäklare);
 
-                return Accepted();
+                var response = new LoginResponse
+                {
+                    Email = loginDto.Email,
+                    Token = tokenString,
+                    Id = mäklare.Id
+                };
+
+                return Accepted(response);
             }
             catch (Exception ex)
             {
                 return Problem($"Something went wrong in {nameof(Login)}", statusCode: 500);
             }
+        }
+
+        private async Task<string> GenerateToken(Mäklare mäklare)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var roles = await mäklareManager.GetRolesAsync(mäklare);
+            var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
+
+            //var userClaims = await userManager.GetClaimsAsync(mäklare);
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, mäklare.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, mäklare.Email),
+                new Claim(CustomClaimTypes.Uid, mäklare.Id)
+            }.Union(roleClaims);
+            //var claims = new List<Claim>
+            //{
+
+            //}.Union(userClaims);
+
+
+            var token = new JwtSecurityToken(
+                issuer: configuration["JwtSettings:Issuer"],
+                audience: configuration["JwtSettings:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToInt32(configuration["JwtSettings:DurationInMinutes"])),
+                signingCredentials: credentials
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

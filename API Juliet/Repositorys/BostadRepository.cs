@@ -13,31 +13,6 @@ namespace API_Juliet.Repositorys
         {
             _context = context;
         }
-        public async Task<IEnumerable<Bostad>> GetAllAsync()
-        {
-            return await _context.Bostäder.OrderBy(s => s.Id).ToListAsync();
-        }
-
-        public async Task<Bostad> GetByIdAsync(int id)
-        {
-            return await _context.Bostäder.SingleOrDefaultAsync(c => c.Id == id);
-        }
-        public async Task AddAsync(Bostad bostad)
-        {
-            _context.Bostäder.Add(bostad);
-            await _context.SaveChangesAsync();
-        }
-        public async Task UpdateAsync(Bostad bostad)
-        {
-            _context.Bostäder.Update(bostad);
-            await _context.SaveChangesAsync();
-        }
-        public async Task DeleteAsync(Bostad bostad)
-        {
-            _context.Bostäder.Remove(bostad);
-            await _context.SaveChangesAsync();
-        }
-
 
         //BostadDto
 
@@ -71,7 +46,7 @@ namespace API_Juliet.Repositorys
                 .ToListAsync();
         }
 
-        public async Task<BostadDto> GetBostadDtoByIdAsync(int id)
+        public async Task<BostadDto> GetBostad(int id)
         {
 #pragma warning disable CS8603 // Possible null reference return.
             return await _context.Bostäder
@@ -103,7 +78,7 @@ namespace API_Juliet.Repositorys
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
-        public async Task AddBostadDtoAsync(BostadDto bostadDto)
+        public async Task<Bostad> AddBostadDtoAsync(BostadDto bostadDto)
         {
             Bostad bostad = new Bostad()
             {
@@ -122,11 +97,12 @@ namespace API_Juliet.Repositorys
                 KommunId = bostadDto.KommunId,
                 MäklareId = bostadDto.MäklarId
             };
-            _context.Bostäder.Add(bostad);
+            var result = await _context.Bostäder.AddAsync(bostad);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
-        public async Task DeleteDtoAsync(int id)
+        public async Task DeleteBostadAsync(int id)
         {
             Bostad bostad = await _context.Bostäder.FindAsync(id);
 
@@ -135,6 +111,32 @@ namespace API_Juliet.Repositorys
                 _context.Bostäder.Remove(bostad);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task UpdateBostad(BostadDto bostadDto)
+        {
+
+            Bostad bostad = new Bostad()
+            {
+                Id = bostadDto.Id,
+                Utgångspris = bostadDto.Utgångspris,
+                Boarea = bostadDto.Boarea,
+                Biarea = bostadDto.Biarea,
+                Tomtarea = bostadDto.Tomtarea,
+                Antalrum = bostadDto.Antalrum,
+                Månadsavgift = bostadDto.Månadsavgift,
+                Driftkonstnad = bostadDto.Driftkonstnad,
+                Byggår = bostadDto.Byggår,
+                Gatuadress = bostadDto.Gatuadress,
+                Ort = bostadDto.Ort,
+                Objektbeskrivning = bostadDto.Objektbeskrivning,
+                KategoriId = bostadDto.KategoriId,
+                KommunId = bostadDto.KommunId,
+                MäklareId = bostadDto.MäklarId
+            };
+            _context.Update(bostad);
+
+            await _context.SaveChangesAsync();
         }
 
 

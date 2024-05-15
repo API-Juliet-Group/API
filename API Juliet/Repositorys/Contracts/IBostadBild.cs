@@ -5,13 +5,11 @@ namespace API_Juliet.Repositorys.Contracts
 {
     public interface IBostadBild
     {
-        Task<BostadBild> GetByIdAsync(int id);
-        Task<IEnumerable<BostadBild>> GetAllAsync();
-        Task AddAsync(BostadBild bostadBild);
-        Task UpdateAsync(BostadBild bostadBild);
-        Task DeleteAsync(BostadBild bostadBild);
-
-
+        //DTO
+        Task AddBostadsBilderDtosAsync(IEnumerable<BostadBildDto> bostadBilder);
+        Task AddBostadBildAsync(BostadBildDto bostadBildDto);
         Task<IEnumerable<BostadBildDto>> GetBostadsBilderDtosAsync();
+        Task<IEnumerable<BostadBildDto>> GetBostadensBilderDtosAsync(int bostadsId);
+        Task DeleteBostadsBild(int id);
     }
 }

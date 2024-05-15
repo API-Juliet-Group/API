@@ -23,7 +23,7 @@
             else
             {
                 <div class="modal-header">
-                    <h5 class="modal-title">Ny Bostad</h5>
+                    <h5 class="modal-title">Smörgås</h5>
                     <button type="button" class="btn-close" @onclick="ClickClose"></button>
                 </div>
                 <form @onsubmit:preventDefault="true" @onsubmit="SubmitForm">
@@ -33,31 +33,31 @@
                                 <div class="col">
                                     <div class="mb-2">
                                         <label for="utgångspris" class="form-label mb-1">Utgångspris</label>
-                                        <input type="number" class="form-control" id="utgångspris" @bind="utgångspris" required>
+                                        <input type="number" class="form-control" id="utgångspris" @bind="bostad.Utgångspris" required>
                                     </div>
                                     <div class="mb-2">
                                         <label for="månadsavgift" class="form-label mb-1">Månadsavgift</label>
-                                        <input type="number" class="form-control" id="månadsavgift" @bind="månadsavgift">
+                                        <input type="number" class="form-control" id="månadsavgift" @bind="bostad.Månadsavgift">
                                     </div>
                                     <div class="mb-2">
                                         <label for="driftkonstnad" class="form-label mb-1">Driftkonstnad</label>
-                                        <input type="number" class="form-control" id="driftkonstnad" @bind="driftkonstnad">
+                                        <input type="number" class="form-control" id="driftkonstnad" @bind="bostad.Driftkonstnad">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="mb-2">
                                         <label for="gatuadress" class="form-label mb-1">Gatuadress</label>
-                                        <input type="text" class="form-control" id="gatuadress" placeholder="Gata nr" @bind="gatuadress" required>
+                                        <input type="text" class="form-control" id="gatuadress" placeholder="Gata nr" @bind="bostad.Gatuadress" required>
                                     </div>
                                     <div class="mb-2">
                                         <label for="ort" class="form-label mb-1">Ort</label>
-                                        <input type="text" class="form-control" id="ort" @bind="ort" required>
+                                        <input type="text" class="form-control" id="ort" @bind="bostad.Ort" required>
                                     </div>
                                     <div class="mb-2">
                                         <label for="kommunId" class="form-label mb-1">Kommun</label>
                                         @if (Kommuner != null)
                                         {
-                                            <select @bind="kommunId" class="form-select" id="kommunId" required>
+                                            <select @bind="bostad.KommunId" class="form-select" id="kommunId" required>
                                                 @foreach (var kommun in Kommuner)
                                                 {
                                                     <option value="@kommun.Id">@kommun.Namn</option>
@@ -71,23 +71,23 @@
                                 <div class="col">
                                     <div class="mb-2">
                                         <label for="boarea" class="form-label mb-1">Boarea</label>
-                                        <input type="number" class="form-control" id="boarea" @bind="boarea" required>
+                                        <input type="number" class="form-control" id="boarea" @bind="bostad.Boarea" required>
                                     </div>
 
                                     <div class="mb-2">
                                         <label for="biarea" class="form-label mb-1">Biarea</label>
-                                        <input type="number" class="form-control" id="biarea" @bind="biarea">
+                                        <input type="number" class="form-control" id="biarea" @bind="bostad.Biarea">
                                     </div>
 
                                     <div class="mb-2">
                                         <label for="tomtarea" class="form-label mb-1">Tomtarea</label>
-                                        <input type="number" class="form-control" id="tomtarea" @bind="tomtarea">
+                                        <input type="number" class="form-control" id="tomtarea" @bind="bostad.Tomtarea">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="mb-2">
                                         <label for="antalrum" class="form-label mb-1">Antalrum</label>
-                                        <select @bind="antalrum" class="form-select" id="antalrum" required>
+                                        <select @bind="bostad.Antalrum" class="form-select" id="antalrum" required>
                                             @for (int i = 1; i < 11; i++)
                                             {
                                                 <option value="@i">@i</option>
@@ -96,13 +96,13 @@
                                     </div>
                                     <div class="mb-2">
                                         <label for="byggår" class="form-label mb-1">Byggår</label>
-                                        <input type="number" class="form-control" id="byggår" @bind="byggår" required>
+                                        <input type="number" class="form-control" id="byggår" @bind="bostad.Byggår" required>
                                     </div>
                                     <div class="mb-2">
                                         <label for="kategoriId" class="form-label mb-1">Kategori</label>
                                         @if (BostadKategorier != null)
                                         {
-                                            <select @bind="kategoriId" class="form-select" id="kategoriId" required>
+                                            <select @bind="bostad.KategoriId" class="form-select" id="kategoriId" required>
                                                 @foreach (var kategori in BostadKategorier)
                                                 {
                                                     <option value="@kategori.Id">@kategori.Namn</option>
@@ -114,11 +114,11 @@
                             </div>
                             <div class="mb-3 mt-4">
                                 <label for="objektbeskrivning" class="form-label mb-1">Objektbeskrivning</label>
-                                <textarea class="form-control" id="objektbeskrivning" @bind="objektbeskrivning" rows="5" required></textarea>
+                                <textarea class="form-control" id="objektbeskrivning" @bind="bostad.Objektbeskrivning" rows="5" required></textarea>
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-secondary" style="margin-right: 10px;" @onclick="ClickClose">Avbryt</button>
-                                <button type="submit" class="btn btn-primary">Skapa</button>
+                                <button type="submit" class="btn btn-primary">Spara</button>
                             </div>
                         </section>
                         <div class="mt-4 d-flex align-items-center">
@@ -126,7 +126,7 @@
                                 <label for="PictureURL">Lägg till bild URL</label>
                                 <input type="text" id="PictureURL" @bind="newPictureURL">
                             </div>
-                            <button type="button" class="btn btn-primary btn-sm" style="margin-right: 10px;" @onclick="AddPictureURl" disabled="@IsPictureLimitReached()"><i class="bi bi-plus-lg"></i></button>
+                            <button type="button" class="btn btn-primary btn-sm" style="margin-right: 10px;" @onclick="AddImage" disabled="@IsPictureLimitReached()"><i class="bi bi-plus-lg"></i></button>
                             @if (IsPictureLimitReached())
                             {
                                 <p style="color: red;">Max 40 bilder</p>
@@ -141,32 +141,32 @@
                             {
                                 var numberOfBilder = bostadensBilder.Count();
                                 //4 bilder i rad
-                                for (int i = 0; i < numberOfBilder; i += 4)
+                                for (int i = 0; i < numberOfBilder; i+= 4)
                                 {
                                     var bildRow = bostadensBilder.Skip(i).Take(4).ToList();
 
                                     <div class="row mt-4">
-                                        @foreach (string bild in bildRow)
+                                        @foreach (BostadBildDto bild in bildRow)
                                         {
-                                            if (imageAlternative == bild)
+                                            if (imageAlternative != bild.Id)
                                             {
                                                 <div class="col-md-3">
-                                                    <div class="image-button">
-                                                        <div class="emty-room" style="background-image: url('@bild');">
-                                                            <div class="button-container">
-                                                                <button type="button" class="btn-secondary cancel-button" @onclick="ToggleOffImageAlternatives"><i class="bi bi-x h4"></i></button>
-                                                                <button type="button" class="btn-danger remove-button" @onclick="()=>RemoveImage(bild)"><i class="bi bi-trash h4"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <button type="button" class="image-button" @onclick="()=>ToggleImageAlternatives(bild.Id)">
+                                                        <img class="full-image" src="@bild.BildURL" alt="Bostadsbild">
+                                                    </button>
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div class="col-md-3">
-                                                    <button type="button" class="image-button" @onclick="()=>ToggleImageAlternatives(bild)">
-                                                        <img class="full-image" src="@bild" alt="Bostadsbild">
-                                                    </button>
+                                                    <div class="image-button">
+                                                        <div class="emty-room" style="background-image: url('@bild.BildURL');">
+                                                            <div class="button-container">
+                                                                <button type="button" class="btn-secondary cancel-button" @onclick="ToggleOffImageAlternatives"><i class="bi bi-x h4"></i></button>
+                                                                <button type="button" class="btn-danger remove-button" @onclick="()=>RemoveImage(bild.Id)"><i class="bi bi-trash h4"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             }
                                         }
@@ -174,7 +174,6 @@
                                 }
                             }
                         </div>
-
                     </div>
                     <div class="modal-footer">
                     </div>
@@ -191,56 +190,70 @@
     public IEnumerable<BostadKategoriDto> BostadKategorier { get; set; }
     [Parameter]
     public IEnumerable<KommunDto> Kommuner { get; set; }
+    [Parameter]
+    public BostadDto bostad { get; set; }
 
-
-    private BostadDto bostad;
-
-    private int utgångspris;
-    private int boarea;
-    private int biarea;
-    private int tomtarea;
-    private int antalrum;
-    private int? månadsavgift;
-    private int driftkonstnad;
-    private int byggår;
-    private string? gatuadress;
-    private string? ort;
-    private string? objektbeskrivning;
-    private int kategoriId;
-    private int kommunId;
-    private string? mäklarId;
 
     private string? successMessage;
 
+    private IEnumerable<BostadBildDto> bostadensBilder;
     private const int pictureLimit = 40;
-    private List<string> bostadensBilder = new List<string>();
     private string newPictureURL;
-    private string? imageAlternative = null;
 
-    private void AddPictureURl()
+    private int imageAlternative = -1;
+
+    protected override async Task OnInitializedAsync()
     {
-        if (!string.IsNullOrWhiteSpace(newPictureURL))
-        {
-            bostadensBilder.Add(newPictureURL);
-            newPictureURL = string.Empty;
-        }
+        bostadensBilder = await BostadBildDtoService.GetBostadensBilderAsync(bostad.Id);
     }
+
     private bool IsPictureLimitReached()
     {
-        return bostadensBilder.Count >= pictureLimit;
+        if(bostadensBilder != null)
+        {
+            return bostadensBilder.Count() >= pictureLimit;    
+        }
+        else
+        {
+            return true;
+        }
     }
-    private void ToggleImageAlternatives(string bild)
+
+    private void ToggleImageAlternatives(int bildId)
     {
-        imageAlternative = bild;
+        imageAlternative = bildId;
     }
+
     private void ToggleOffImageAlternatives()
     {
-        imageAlternative = null;
+        imageAlternative = -1;
     }
-    private void RemoveImage(string bildURL)
+
+    private async void AddImage()
     {
-        bostadensBilder.Remove(bildURL);
-        imageAlternative = null;
+        if (!string.IsNullOrEmpty(newPictureURL))
+        {
+            BostadBildDto newBostadBild = new BostadBildDto { BildURL = newPictureURL, BostadId = bostad.Id };
+
+            bool successful = await BostadBildDtoService.AddBostadBildAsync(newBostadBild);
+            if (successful)
+            {
+                bostadensBilder = await BostadBildDtoService.GetBostadensBilderAsync(bostad.Id);
+            }
+        }
+        newPictureURL = string.Empty;
+    }
+
+    private async void RemoveImage(int bildId)
+    {
+
+        bool successfulRemoval = await BostadBildDtoService.RemoveBostadBildAsync(bildId);
+
+        if (successfulRemoval)
+        {
+            bostadensBilder = bostadensBilder.Where(b => b.Id != bildId).ToList();
+            imageAlternative = -1;
+        }
     }
 
 
@@ -252,43 +265,16 @@
         await OnCancel.InvokeAsync();
     }
 
+
     private async Task SubmitForm()
     {
         try
         {
-            bostad = new BostadDto
-                {
-                    Utgångspris = utgångspris,
-                    Boarea = boarea,
-                    Biarea = biarea,
-                    Tomtarea = tomtarea,
-                    Antalrum = antalrum,
-                    Månadsavgift = månadsavgift,
-                    Driftkonstnad = driftkonstnad,
-                    Byggår = byggår,
-                    Gatuadress = gatuadress,
-                    Ort = ort,
-                    Objektbeskrivning = objektbeskrivning,
-                    KategoriId = kategoriId,
-                    KommunId = kommunId,
-                    MäklarId = mäklarId
+            var successesfulResponse = await BostadDtoService.UpdateBostadAsync(bostad);
 
-                };
-
-            int? createdBostadId = await BostadDtoService.AddBostadAsync(bostad);
-
-            if (createdBostadId != null)
+            if (successesfulResponse == true)
             {
-                successMessage = $"Ny bostad på {bostad.Gatuadress} har lagts till";
-
-                List<BostadBildDto> bostadBildDtoList = new List<BostadBildDto>();
-                foreach (string url in bostadensBilder)
-                {
-                    bostadBildDtoList.Add(new BostadBildDto { BildURL = url, BostadId = (int)createdBostadId });
-                }
-
-                await BostadBildDtoService.AddBostadsBilderAsync(bostadBildDtoList);
-
+                successMessage = $"Ändringarna har sparats";
             }
         }
         catch (Exception ex)

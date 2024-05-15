@@ -15,39 +15,7 @@ namespace API_Juliet.Repositorys
             _context = context;
         }
 
-        public async Task<IEnumerable<Kommun>> GetAllAsync()
-        {
-            return await _context.Kommuner.OrderBy(k => k.Id).ToListAsync();
-        }
-
-        public async Task<Kommun> GetByIdAsync(int id)
-        {
-            return await _context.Kommuner.FindAsync(id);
-        }
-
-        public async Task AddAsync(Kommun kommun)
-        {
-            _context.Kommuner.Add(kommun);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(Kommun kommun)
-        {
-            _context.Entry(kommun).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(Kommun kommun)
-        {
-            _context.Kommuner.Remove(kommun);
-            await _context.SaveChangesAsync();
-        }
-
-
-
         //DTO
-
-
         public async Task<IEnumerable<KommunDto>> GetAllKommunDtosAsync()
         {
             return await _context.Kommuner

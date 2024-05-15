@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_Juliet.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240508025724_SeededDefaultUsersAndRoles")]
-    partial class SeededDefaultUsersAndRoles
+    [Migration("20240515053551_SeededDefaultMäklareAndRoles")]
+    partial class SeededDefaultMäklareAndRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -250,9 +250,9 @@ namespace API_Juliet.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "62e8b88c-364b-4731-929d-d477c855302f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4d1076c7-5880-455f-a7d1-ba5a5e566202",
+                            ConcurrencyStamp = "a281a3f8-f181-493a-9f98-8751a9077a9b",
                             Efternamn = "Bostäder.se",
                             Email = "admin@bostäder.se",
                             EmailConfirmed = true,
@@ -260,17 +260,17 @@ namespace API_Juliet.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@BOSTÄDER.SE",
                             NormalizedUserName = "ADMIN@BOSTÄDER.SE",
-                            PasswordHash = "AQAAAAIAAYagAAAAELQwqE8wJfb3z2laH3GdMc4AaeLbMwIW6rBbyIE6CnBEyxntasMO51TpsO+gYROO8g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE4nwzYPgsroLZcstVrr9MUkP6BL9+/nIz7udNWeRtMbok5rbJtRkNR8tzPLK/iKUw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ad0eab94-0673-4078-8c31-058b152264d5",
+                            SecurityStamp = "5245e6ef-1db1-4097-adc0-3c38887bd9e5",
                             TwoFactorEnabled = false,
                             UserName = "admin@bostäder.se"
                         },
                         new
                         {
-                            Id = "2",
+                            Id = "2a2b8c8e-d2db-4fb8-b3f0-869975afb523",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7189b41d-55da-43d2-8f19-052d89ce5756",
+                            ConcurrencyStamp = "3ccd93e1-8ae3-4f19-a50d-bb9229f75b1a",
                             Efternamn = "Bostäder.se",
                             Email = "mäklare@bostäder.se",
                             EmailConfirmed = true,
@@ -278,9 +278,9 @@ namespace API_Juliet.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MÄKLARE@BOSTÄDER.SE",
                             NormalizedUserName = "MÄKLARE@BOSTÄDER.SE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP6gQ8rm7HfYWGvz7X/xucRkhlKxcZ4K2ywA0u0jxD2NbV0PytRSW+Jg+NygDwqICQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHselcuN+iE+ECI//me1mmWGmV1DDeSV8NK9s2lS4YGGK5y8k64P7332Zem7DJanog==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c37be430-d548-4428-8a85-4e65a4f1eca2",
+                            SecurityStamp = "c3963181-4589-47ab-ac5d-b67b6bce4e70",
                             TwoFactorEnabled = false,
                             UserName = "mäklare@bostäder.se"
                         });
@@ -416,12 +416,12 @@ namespace API_Juliet.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "1",
+                            UserId = "62e8b88c-364b-4731-929d-d477c855302f",
                             RoleId = "0a266c2d-db5e-4cf8-a968-c4e553775127"
                         },
                         new
                         {
-                            UserId = "2",
+                            UserId = "2a2b8c8e-d2db-4fb8-b3f0-869975afb523",
                             RoleId = "b18549c3-dafa-45b3-a75c-f6813af1b6af"
                         });
                 });

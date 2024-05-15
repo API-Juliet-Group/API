@@ -39,7 +39,7 @@ namespace API_Juliet.Data
             builder.Entity<Mäklare>().HasData(
                 new Mäklare
                 {
-                    Id = "1",
+                    Id = "62e8b88c-364b-4731-929d-d477c855302f",
                     Email = "admin@bostäder.se",
                     NormalizedEmail = "admin@bostäder.se".ToUpper(),
                     UserName = "admin@bostäder.se",
@@ -51,7 +51,7 @@ namespace API_Juliet.Data
                 },
                 new Mäklare
                 {
-                    Id = "2",
+                    Id = "2a2b8c8e-d2db-4fb8-b3f0-869975afb523",
                     Email = "mäklare@bostäder.se",
                     NormalizedEmail = "mäklare@bostäder.se".ToUpper(),
                     UserName = "mäklare@bostäder.se",
@@ -66,12 +66,12 @@ namespace API_Juliet.Data
                 new IdentityUserRole<string>
                 {
                     RoleId = ApiRoles.SuperAdminId,
-                    UserId = "1"
+                    UserId = "62e8b88c-364b-4731-929d-d477c855302f"
                 },
                 new IdentityUserRole<string>
                 {
                     RoleId = ApiRoles.MäklareId,
-                    UserId = "2"
+                    UserId = "2a2b8c8e-d2db-4fb8-b3f0-869975afb523"
                 }
             );
         }

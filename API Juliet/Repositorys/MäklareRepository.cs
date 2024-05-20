@@ -19,7 +19,7 @@ namespace API_Juliet.Repositorys
             return await _context.Mäklare.OrderBy(m => m.Id).ToListAsync();
         }
 
-        public async Task<Mäklare> GetByIdAsync(int id)
+        public async Task<Mäklare> GetByIdAsync(string id)
         {
             return await _context.Mäklare.FindAsync(id);
         }

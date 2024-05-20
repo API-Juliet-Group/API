@@ -29,7 +29,7 @@ namespace API_Juliet.Models
         [ForeignKey("KommunId")]
         public Kommun Kommun { get; set; }
 
-        public int? MäklareId { get; set; }
+        public string? MäklareId { get; set; }
         [ForeignKey("MäklareId")]
         public Mäklare? Mäklare { get; set; }
     }

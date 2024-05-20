@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API_Juliet.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_Juliet.Controllers
 {
@@ -27,7 +29,7 @@ namespace API_Juliet.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Mäklare>> GetMäklare(int id)
+        public async Task<ActionResult<Mäklare>> GetMäklare(string id)
         {
             var mäklare = await _mäklareRepository.GetByIdAsync(id);
 
@@ -48,7 +50,8 @@ namespace API_Juliet.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMäklare(int id, Mäklare mäklare)
+        [Authorize(Roles = ApiRoles.Mäklare)]
+        public async Task<IActionResult> UpdateMäklare(string id, Mäklare mäklare)
         {
             if (id != mäklare.Id)
             {
@@ -68,7 +71,8 @@ namespace API_Juliet.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMäklare(int id)
+        [Authorize(Roles = ApiRoles.SuperAdmin)]
+        public async Task<IActionResult> DeleteMäklare(string id)
         {
             var mäklare = await _mäklareRepository.GetByIdAsync(id);
             if (mäklare == null)

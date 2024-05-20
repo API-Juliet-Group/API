@@ -1,25 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Juliet.Models
 {
-    public class Mäklare
+    public class Mäklare : IdentityUser
     {
-        public int Id { get; set; }
-
+        public override string Id { get => base.Id; set => base.Id = value; }
         [Required]
         public string Förnamn { get; set; }
         [Required]
         public string Efternamn { get; set; }
-        [EmailAddress]
-        public string Epostadress {  get; set; }
-
-        public string? Telefonnummer { get; set; }
         public string? BildURL { get; set; }
 
 
-        public int MäklarbyråId { get; set; }
+        public int? MäklarbyråId { get; set; }
         [ForeignKey("MäklarbyråId")]
-        public Mäklarbyrå Mäklarbyrå { get; set; }
+        public Mäklarbyrå? Mäklarbyrå { get; set; }
     }
 }

@@ -136,7 +136,7 @@ else
     private IEnumerable<BostadDto> GetMäklarensBostäder(IEnumerable<BostadDto> bostader)
     {
         var mäklarensBostäder = bostader
-            .Where(b => b.MäklarId == Id)
+            .Where(b => int.Parse(b.MäklarId) == Id)
             .ToList();
 
         return mäklarensBostäder;

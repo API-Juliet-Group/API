@@ -1,7 +1,9 @@
-﻿using API_Juliet.Models;
+﻿using API_Juliet.Constants;
+using API_Juliet.Models;
 using API_Juliet.Repositorys;
 using API_Juliet.Repositorys.Contracts;
 using BaseLibrary.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +47,7 @@ namespace API_Juliet.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = ApiRoles.Mäklare)]
         public async Task<IActionResult> DeleteBostad(int id)
         {
             await _bostadRepository.DeleteBostadAsync(id);
@@ -53,6 +56,7 @@ namespace API_Juliet.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = ApiRoles.Mäklare)]
         public async Task<ActionResult<BostadDto>> CreateBostad(BostadDto bostadDto)
         {
 

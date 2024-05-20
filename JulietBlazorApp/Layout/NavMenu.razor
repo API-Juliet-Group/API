@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">
             <img src="/images/JulietLogga.png" class="juliet-logo" alt="JulietBlazorApp">
@@ -16,16 +18,37 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="bostäder">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Bostäder
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="BostadsLista/1">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> BostadsHantering
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="bostäder">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Bostäder
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/Authentication/Login">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Logga in
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/Authentication/Register">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Skapa användare
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="BostadsLista/1">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> BostadsHantering
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/Authentication/Logout">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Logga ut
+                    </NavLink>
+                </div>
+            </Authorized>
+         </AuthorizeView>
     </nav>
 </div>
 

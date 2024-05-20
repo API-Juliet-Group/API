@@ -4,7 +4,7 @@ namespace API_Juliet.Repositorys.Contracts
 {
     public interface IMäklare
     {
-        Task<Mäklare> GetByIdAsync(int id);
+        Task<Mäklare> GetByIdAsync(string id);
         Task<IEnumerable<Mäklare>> GetAllAsync();
         Task AddAsync(Mäklare mäklare);
         Task UpdateAsync(Mäklare mäklare);

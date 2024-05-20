@@ -1,0 +1,51 @@
+﻿@page "/authentication/register"
+@using BaseLibrary.DTO
+@using JulietBlazorApp.Services.Authentication
+@inject IAuthenticationService authService
+@inject NavigationManager navManager
+
+<h3>Skapa ny användare</h3>
+@if (errorMessage is not null)
+{
+    <p class="error">@errorMessage</p>
+}
+
+<div>
+    <EditForm Model="mäklareModel" OnValidSubmit="HandleRegistration">
+        <div class="form-group">
+            <label for="email" >E-post:</label>
+            <InputText class="form-control" @bind-Value="mäklareModel.Email" />
+        </div>
+        <div class="form-group">
+            <label for="firstname">Förnamn:</label>
+            <InputText class="form-control" @bind-Value="mäklareModel.Förnamn" />
+        </div>
+        <div class="form-group">
+            <label for="lastname">Efternamn:</label>
+            <InputText class="form-control" @bind-Value="mäklareModel.Efternamn" />
+        </div>
+        <div class="form-group">
+            <label for="password">Lösenord:</label>
+            <InputText class="form-control" type="password" @bind-Value="mäklareModel.Password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Skapa</button>
+    </EditForm>
+</div>
+
+@code {
+    private MäklareDto mäklareModel = new MäklareDto();
+    private string? errorMessage = string.Empty;
+
+    private async Task HandleRegistration()
+    {
+        try
+        {
+            await authService.RegisterAsync(mäklareModel);
+            navManager.NavigateTo("/authentication/login");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}

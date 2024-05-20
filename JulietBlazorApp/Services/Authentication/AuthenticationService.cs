@@ -1,4 +1,8 @@
-﻿using BaseLibrary.DTO;
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+using BaseLibrary.DTO;
 using Blazored.LocalStorage;
 using JulietBlazorApp.Constants;
 using JulietBlazorApp.Providers;

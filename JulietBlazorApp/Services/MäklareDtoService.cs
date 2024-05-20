@@ -1,4 +1,8 @@
-﻿using BaseLibrary.DTO;
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+using BaseLibrary.DTO;
 using System.Net.Http.Json;
 
 namespace JulietBlazorApp.Services

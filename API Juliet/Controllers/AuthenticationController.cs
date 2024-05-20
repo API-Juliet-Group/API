@@ -1,7 +1,10 @@
-﻿using API_Juliet.Constants;
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+using API_Juliet.Constants;
 using API_Juliet.Models;
 using BaseLibrary.DTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -44,14 +47,6 @@ namespace API_Juliet.Controllers
                     Efternamn = mäklareDto.Efternamn
                 };
                 var result = await _userManager.CreateAsync(mäklare, mäklareDto.Password);
-                //await userManager.AddClaimsAsync(mäklare,
-                //    [
-                //        new Claim(JwtRegisteredClaimNames.Sub, mäklare.UserName),
-                //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                //        new Claim(JwtRegisteredClaimNames.Email, mäklare.Email),
-                //        new Claim(CustomClaimTypes.Uid, mäklare.Id)
-                //    ]
-                //);
                 if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
@@ -109,7 +104,6 @@ namespace API_Juliet.Controllers
             var roles = await _userManager.GetRolesAsync(mäklare);
             var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
 
-            //var userClaims = await userManager.GetClaimsAsync(mäklare);
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, mäklare.UserName),
@@ -117,11 +111,6 @@ namespace API_Juliet.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, mäklare.Email),
                 new Claim(CustomClaimTypes.Uid, mäklare.Id)
             }.Union(roleClaims);
-            //var claims = new List<Claim>
-            //{
-
-            //}.Union(userClaims);
-
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:Issuer"],

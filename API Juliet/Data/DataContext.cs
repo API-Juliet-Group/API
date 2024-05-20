@@ -1,4 +1,8 @@
-﻿using API_Juliet.Models;
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+using API_Juliet.Models;
 using API_Juliet.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -26,20 +30,20 @@ namespace API_Juliet.Data
                 {
                     Name = ApiRoles.SuperAdmin,
                     NormalizedName = ApiRoles.SuperAdmin.ToUpper(),
-                    Id = ApiRoles.SuperAdminId
+                    Id = ApiRoles.SuperAdminRoleId
                 },
                 new IdentityRole
                 {
                     Name = ApiRoles.Mäklare,
                     NormalizedName = ApiRoles.Mäklare.ToUpper(),
-                    Id = ApiRoles.MäklareId
+                    Id = ApiRoles.MäklareRoleId
                 }
             );
             var hasher = new PasswordHasher<Mäklare>();
             builder.Entity<Mäklare>().HasData(
                 new Mäklare
                 {
-                    Id = "62e8b88c-364b-4731-929d-d477c855302f",
+                    Id = SeedUserId.SuperAdminId,
                     Email = "admin@bostäder.se",
                     NormalizedEmail = "admin@bostäder.se".ToUpper(),
                     UserName = "admin@bostäder.se",
@@ -51,7 +55,7 @@ namespace API_Juliet.Data
                 },
                 new Mäklare
                 {
-                    Id = "2a2b8c8e-d2db-4fb8-b3f0-869975afb523",
+                    Id = SeedUserId.MäklareId,
                     Email = "mäklare@bostäder.se",
                     NormalizedEmail = "mäklare@bostäder.se".ToUpper(),
                     UserName = "mäklare@bostäder.se",
@@ -65,13 +69,13 @@ namespace API_Juliet.Data
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
                 {
-                    RoleId = ApiRoles.SuperAdminId,
-                    UserId = "62e8b88c-364b-4731-929d-d477c855302f"
+                    RoleId = ApiRoles.SuperAdminRoleId,
+                    UserId = SeedUserId.SuperAdminId
                 },
                 new IdentityUserRole<string>
                 {
-                    RoleId = ApiRoles.MäklareId,
-                    UserId = "2a2b8c8e-d2db-4fb8-b3f0-869975afb523"
+                    RoleId = ApiRoles.MäklareRoleId,
+                    UserId = SeedUserId.MäklareId
                 }
             );
         }

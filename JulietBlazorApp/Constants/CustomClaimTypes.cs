@@ -1,4 +1,8 @@
-﻿namespace JulietBlazorApp.Constants
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+namespace JulietBlazorApp.Constants
 {
     public static class CustomClaimTypes
     {

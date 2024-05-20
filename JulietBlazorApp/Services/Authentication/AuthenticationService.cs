@@ -15,15 +15,15 @@ namespace JulietBlazorApp.Services.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IHttpClientFactory _httpFactory;
+        private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorageService;
         private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-        private string? _tokenCache;
+        public event Action<string?>? LoginChange;
 
         public AuthenticationService(IHttpClientFactory factory, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider)
         {
-            _httpFactory = factory;
+            _httpClient = factory.CreateClient(AppConstants.ServerApi);
             _localStorageService = localStorage;
             _authenticationStateProvider = authenticationStateProvider;
         }
@@ -35,7 +35,7 @@ namespace JulietBlazorApp.Services.Authentication
 
         public async Task<string> LoginAsync(LoginRequest loginModel)
         {
-            var response = await _httpFactory.CreateClient(AppConstants.ServerApi).PostAsync("api/authentication/login", JsonContent.Create(loginModel));
+            var response = await _httpClient.PostAsync("api/authentication/login", JsonContent.Create(loginModel));
 
             if (!response.IsSuccessStatusCode)
             {
@@ -62,19 +62,11 @@ namespace JulietBlazorApp.Services.Authentication
 
         public async Task RegisterAsync(MäklareDto mäklareDto)
         {
-            var response = await _httpFactory.CreateClient(AppConstants.ServerApi).PostAsync("api/authentication/register", JsonContent.Create(mäklareDto));
+            var response = await _httpClient.PostAsync("api/authentication/register", JsonContent.Create(mäklareDto));
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception();
             }
-        }
-
-        public async ValueTask<string> GetJwtAsync()
-        {
-            if (string.IsNullOrEmpty(_tokenCache))
-                _tokenCache = await _localStorageService.GetItemAsync<string>(AppConstants.TOKEN_KEY);
-
-            return _tokenCache;
         }
 
         private static string GetId(string token)

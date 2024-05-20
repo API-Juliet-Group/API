@@ -1,7 +1,6 @@
 using Blazored.LocalStorage;
 using JulietBlazorApp;
 using JulietBlazorApp.Constants;
-using JulietBlazorApp.Handlers;
 using JulietBlazorApp.Providers;
 using JulietBlazorApp.Services;
 using JulietBlazorApp.Services.Authentication;
@@ -25,14 +24,12 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 /*
  * Edited for identity: Johan Ahlqvist
  */
-builder.Services.AddTransient<AuthenticationHandler>();
 builder.Services.AddHttpClient(AppConstants.ServerApi)
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ServerUrl"] ?? ""))
-                .AddHttpMessageHandler<AuthenticationHandler>();
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ServerUrl"] ?? ""));
+builder.Services.AddBlazoredLocalStorageAsSingleton();
 builder.Services.AddSingleton<ApiAuthenticationStateProvider>();
 builder.Services.AddSingleton<AuthenticationStateProvider>(p => p.GetRequiredService<ApiAuthenticationStateProvider>());
 builder.Services.AddAuthorizationCore();
 builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
-builder.Services.AddBlazoredLocalStorageAsSingleton();
 
 await builder.Build().RunAsync();

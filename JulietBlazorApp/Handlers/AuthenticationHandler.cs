@@ -28,8 +28,6 @@ namespace JulietBlazorApp.Handlers
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
             }
 
-            var response = await base.SendAsync(request,cancellationToken);
-
             return await base.SendAsync(request, cancellationToken);
         }
     }

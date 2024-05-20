@@ -41,7 +41,8 @@ namespace API_Juliet.Controllers
             MäklareDto mäklareDto = new MäklareDto()
             {
                 Förnamn = mäklare.Förnamn,
-                Efternamn = mäklare.Efternamn
+                Efternamn = mäklare.Efternamn,
+                BildURL = mäklare.BildURL
             };
 
             return mäklareDto;

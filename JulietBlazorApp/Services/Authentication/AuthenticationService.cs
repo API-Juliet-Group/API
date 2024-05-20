@@ -56,6 +56,15 @@ namespace JulietBlazorApp.Services.Authentication
             await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
         }
 
+        public async Task RegisterAsync(MäklareDto mäklareDto)
+        {
+            var response = await _httpClient.PostAsync("api/authentication/register", JsonContent.Create(mäklareDto));
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception();
+            }
+        }
+
         private static string GetId(string token)
         {
             var jwt = new JwtSecurityToken(token);

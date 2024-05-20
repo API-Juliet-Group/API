@@ -7,5 +7,6 @@ namespace JulietBlazorApp.Services.Authentication
         Task<bool> AuthenticateAsync(LoginRequest loginModel);
         Task<string> LoginAsync(LoginRequest loginModel);
         Task LogoutAsync();
+        Task RegisterAsync(MäklareDto mäklareDto);
     }
 }

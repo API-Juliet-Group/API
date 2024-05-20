@@ -76,5 +76,10 @@ namespace JulietBlazorApp.Providers
             var tokenContent = _jwtHandler.ReadJwtToken(savedToken);
             return tokenContent.Claims.First(c => c.Type == CustomClaimTypes.Uid).Value;
         }
+
+        public async Task<string> GetToken()
+        {
+            return await _localStorage.GetItemAsync<string>(AppConstants.TOKEN_KEY);
+        }
     }
 }

@@ -60,7 +60,7 @@ namespace API_Juliet.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = ApiRoles.Mäklare)]
+        [Authorize(Roles = ApiRoles.Mäklare)]
         public async Task<IActionResult> UpdateMäklare(string id, MäklareDto mäklareDto)
         {
             if (mäklareDto == null)

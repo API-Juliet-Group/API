@@ -48,6 +48,7 @@
         {
             id = await authService.LoginAsync(loginRequest);
             errorMessage = null;
+            navManager.NavigateTo("/");
         }
         catch (Exception ex)
         {
@@ -55,14 +56,5 @@
 
             errorMessage = ex.Message;
         }
-        // try
-        // {
-        //     var response = await authService.AuthenticateAsync(LoginRequest);
-
-        //     if (response)
-        //     {
-        //         //navManager()
-        //     }
-        // }
     }
 }

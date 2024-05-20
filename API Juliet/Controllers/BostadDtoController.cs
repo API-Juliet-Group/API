@@ -47,7 +47,7 @@ namespace API_Juliet.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = ApiRoles.Mäklare)]
+        //[Authorize(Roles = ApiRoles.Mäklare)]
         public async Task<IActionResult> DeleteBostad(int id)
         {
             await _bostadRepository.DeleteBostadAsync(id);
@@ -56,7 +56,7 @@ namespace API_Juliet.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = ApiRoles.Mäklare)]
+        //[Authorize(Roles = ApiRoles.Mäklare)]
         public async Task<ActionResult<BostadDto>> CreateBostad(BostadDto bostadDto)
         {
 

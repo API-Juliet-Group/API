@@ -48,7 +48,7 @@ namespace JulietBlazorApp.Services.Authentication
             await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedIn();
 
             //return responseContent.Email;
-            return GetId(responseContent.Token);
+            return await ((ApiAuthenticationStateProvider)_authenticationStateProvider).GetId();
         }
 
         public async Task LogoutAsync()

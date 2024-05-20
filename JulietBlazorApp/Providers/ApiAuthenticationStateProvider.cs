@@ -65,5 +65,12 @@ namespace JulietBlazorApp.Providers
             claims.Add(new Claim(ClaimTypes.Name, tokenContent.Subject));
             return claims;
         }
+
+        public async Task<string> GetId()
+        {
+            var savedToken = await _localStorage.GetItemAsync<string>(AppConstants.TOKEN_KEY);
+            var tokenContent = _jwtHandler.ReadJwtToken(savedToken);
+            return tokenContent.Claims.First(c => c.Type == CustomClaimTypes.Uid).Value;
+        }
     }
 }

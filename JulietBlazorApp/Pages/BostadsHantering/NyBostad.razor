@@ -1,4 +1,7 @@
 ﻿@using BaseLibrary.DTO
+@using JulietBlazorApp.Providers
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider authStateProvider
 @inject BostadBildDtoService BostadBildDtoService
 @inject BostadDtoService BostadDtoService
 @inject NavigationManager NavigationManager
@@ -256,6 +259,7 @@
     {
         try
         {
+            mäklarId = await ((ApiAuthenticationStateProvider)authStateProvider).GetId();
             bostad = new BostadDto
                 {
                     Utgångspris = utgångspris,

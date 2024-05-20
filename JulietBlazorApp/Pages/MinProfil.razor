@@ -1,0 +1,27 @@
+﻿@page "/minprofil"
+@using BaseLibrary.DTO
+@using JulietBlazorApp.Providers
+@using JulietBlazorApp.Services
+@using JulietBlazorApp.Services.Authentication
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider authStateProvider
+@inject IAuthenticationService authService
+@inject MäklareDtoService MäklareService
+@inject NavigationManager navManager
+
+<h3>Profil</h3>
+
+@code {
+    private MäklareDto profil = new MäklareDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var mäklarId = await ((ApiAuthenticationStateProvider)authStateProvider).GetId();
+        profil = await MäklareService.GetMäklare(mäklarId);
+    }
+
+    private async Task UpdateUser()
+    {
+        
+    }
+}

@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using JulietBlazorApp;
 using JulietBlazorApp.Constants;
 using JulietBlazorApp.Providers;
+using JulietBlazorApp.Services;
 using JulietBlazorApp.Services.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -15,6 +16,7 @@ builder.Services.AddScoped<BostadBildDtoService>();
 builder.Services.AddScoped<BostadKategoriDtoService>();
 builder.Services.AddScoped<KommunDtoService>();
 builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<MäklareDtoService>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7045/") });
 

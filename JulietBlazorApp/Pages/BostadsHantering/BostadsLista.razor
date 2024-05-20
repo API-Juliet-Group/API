@@ -1,9 +1,12 @@
-﻿@page "/BostadsLista/{Id:int}"
+﻿@page "/BostadsLista"
 @using BaseLibrary.DTO
+@using JulietBlazorApp.Providers
+@using Microsoft.AspNetCore.Components.Authorization
 @inject BostadDtoService BostadDtoService
 @inject BostadBildDtoService BostadBildDtoService
 @inject BostadKategoriDtoService BostadKategoriDtoService
 @inject KommunDtoService KommunDtoService
+@inject AuthenticationStateProvider authStateProvider
 
 @if (changeBostad != null)
 {
@@ -14,7 +17,7 @@
 @if(showCreateBostad)
 {
     <div class="modal-backdrop">
-        <NyBostad Kommuner="@kommuner" BostadKategorier="@bostadKategorier" OnCancel="HideCreateBostad" />
+        <NyBostad Kommuner="@kommuner" BostadKategorier="@bostadKategorier" MäklarId="@mäklarId" OnCancel="HideCreateBostad" />
     </div>
 }
 @if (deleteById != -1)
@@ -107,8 +110,7 @@ else
 }
 
 @code {
-    [Parameter]
-    public int Id { get; set; } //Då vi har Mäklarens Id, så använder vi det till att hämta dennes bostads-objekt.
+    public string? mäklarId;
 
     private IEnumerable<BostadDto> bostäder = new List<BostadDto>();
     private IEnumerable<BostadBildDto> bostadsBilder;
@@ -129,14 +131,16 @@ else
         bostadKategorier = await BostadKategoriDtoService.GetBostadKategorierAsync();
         kommuner = await KommunDtoService.GetkommunerAsync();
 
-        //bostäder = GetMäklarensBostäder(bostäder); Används då vi har mäklarens id.
+        mäklarId = await ((ApiAuthenticationStateProvider)authStateProvider).GetId();
+
+        bostäder = GetMäklarensBostäder(bostäder);
     }
 
     //Hämtar mäklarens bostads-objekt.
     private IEnumerable<BostadDto> GetMäklarensBostäder(IEnumerable<BostadDto> bostader)
     {
         var mäklarensBostäder = bostader
-            .Where(b => int.Parse(b.MäklarId) == Id)
+            .Where(b => b.MäklarId == mäklarId)
             .ToList();
 
         return mäklarensBostäder;
@@ -146,6 +150,7 @@ else
     {
         bostäder = await BostadDtoService.GetBostäderAsync();
         bostadsBilder = await BostadBildDtoService.GetBostadsBilderAsync();
+        bostäder = GetMäklarensBostäder(bostäder);
     }
 
     private bool HasImagesForBostad(BostadDto Bostad)

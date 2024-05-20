@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using JulietBlazorApp;
 using JulietBlazorApp.Constants;
 using JulietBlazorApp.Providers;
+using JulietBlazorApp.Services;
 using JulietBlazorApp.Services.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -13,6 +14,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<BostadDtoService>();
 builder.Services.AddScoped<BostadBildDtoService>();
 builder.Services.AddScoped<BostadKategoriDtoService>();
+builder.Services.AddScoped<MäklareDtoService>();
 builder.Services.AddScoped<KommunDtoService>();
 builder.Services.AddScoped<AuthenticationService>();
 

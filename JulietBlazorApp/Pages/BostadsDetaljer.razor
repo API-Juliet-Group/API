@@ -1,7 +1,9 @@
 ﻿@page "/BostadsDetaljer/{Id:int}"
 @using BaseLibrary.DTO
+@using JulietBlazorApp.Services
 @inject BostadDtoService BostadDtoService
 @inject BostadBildDtoService BostadBildDtoService
+@inject MäklareDtoService MäklareDtoService
 
 @if(imageToSee != -1)
 {
@@ -36,9 +38,19 @@
             </div>
             <div class="col-md-3">
                 <h4>Kontakta Mäklare</h4>
+                @if(mäklare != null)
+                {
                 <p>mäklarens bild</p>
-                <p>mäklarens namn</p>
+                <p>@mäklare.Förnamn @mäklare.Efternamn</p>
                 <p>mäklarenskontakt info</p>
+
+                }
+                else
+                {
+                    <p>mäklarens bild</p>
+                    <p>mäklarens namn</p>
+                    <p>mäklarenskontakt info</p>
+                }
             </div>
         </div>
     </section>
@@ -136,6 +148,7 @@ else
 
     private BostadDto bostad;
     private IEnumerable<BostadBildDto> bostadensBilder;
+    private MäklareDto mäklare;
 
     private int imageToSee = -1;
 
@@ -144,6 +157,10 @@ else
         bostad = await BostadDtoService.GetBostadAsync(Id);
 
         bostadensBilder = await BostadBildDtoService.GetBostadensBilderAsync(bostad.Id);
+        if(bostad.MäklarId != null)
+        {
+            mäklare = await MäklareDtoService.GetMäklareAsync(bostad.MäklarId);
+        }
     }
 
     private void SeeImage(int bildId)

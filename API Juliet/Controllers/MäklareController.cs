@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API_Juliet.Constants;
 using Microsoft.AspNetCore.Authorization;
+using BaseLibrary.DTO;
 
 namespace API_Juliet.Controllers
 {
@@ -29,7 +30,7 @@ namespace API_Juliet.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Mäklare>> GetMäklare(string id)
+        public async Task<ActionResult<MäklareDto>> GetMäklare(string id)
         {
             var mäklare = await _mäklareRepository.GetByIdAsync(id);
 
@@ -37,8 +38,13 @@ namespace API_Juliet.Controllers
             {
                 return NotFound();
             }
+            MäklareDto mäklareDto = new MäklareDto()
+            {
+                Förnamn = mäklare.Förnamn,
+                Efternamn = mäklare.Efternamn
+            };
 
-            return mäklare;
+            return mäklareDto;
         }
 
         [HttpPost]

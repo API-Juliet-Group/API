@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API_Juliet.Migrations
 {
     /// <inheritdoc />
-    public partial class SeededDefaultMäklareAndRoles : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -286,8 +286,8 @@ namespace API_Juliet.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "BildURL", "ConcurrencyStamp", "Efternamn", "Email", "EmailConfirmed", "Förnamn", "LockoutEnabled", "LockoutEnd", "MäklarbyråId", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "2a2b8c8e-d2db-4fb8-b3f0-869975afb523", 0, null, "3ccd93e1-8ae3-4f19-a50d-bb9229f75b1a", "Bostäder.se", "mäklare@bostäder.se", true, "Mäklare", false, null, null, "MÄKLARE@BOSTÄDER.SE", "MÄKLARE@BOSTÄDER.SE", "AQAAAAIAAYagAAAAEHselcuN+iE+ECI//me1mmWGmV1DDeSV8NK9s2lS4YGGK5y8k64P7332Zem7DJanog==", null, false, "c3963181-4589-47ab-ac5d-b67b6bce4e70", false, "mäklare@bostäder.se" },
-                    { "62e8b88c-364b-4731-929d-d477c855302f", 0, null, "a281a3f8-f181-493a-9f98-8751a9077a9b", "Bostäder.se", "admin@bostäder.se", true, "Admin", false, null, null, "ADMIN@BOSTÄDER.SE", "ADMIN@BOSTÄDER.SE", "AQAAAAIAAYagAAAAEE4nwzYPgsroLZcstVrr9MUkP6BL9+/nIz7udNWeRtMbok5rbJtRkNR8tzPLK/iKUw==", null, false, "5245e6ef-1db1-4097-adc0-3c38887bd9e5", false, "admin@bostäder.se" }
+                    { "2a2b8c8e-d2db-4fb8-b3f0-869975afb523", 0, null, "9c1fc48b-eeae-4b04-a4b0-71cddbda641c", "Bostäder.se", "mäklare@bostäder.se", true, "Mäklare", false, null, null, "MÄKLARE@BOSTÄDER.SE", "MÄKLARE@BOSTÄDER.SE", "AQAAAAIAAYagAAAAEK5u4ajLKjicHSgtFa3j6rxpRAARsdYl7ZurezhpCZSJg0k9cEnoneVphFcpIudbjA==", null, false, "b11a1396-db01-4b0e-9afe-c3df4e3fd87a", false, "mäklare@bostäder.se" },
+                    { "62e8b88c-364b-4731-929d-d477c855302f", 0, null, "5df54d04-74ea-450e-8023-96c4fe7706d9", "Bostäder.se", "admin@bostäder.se", true, "Admin", false, null, null, "ADMIN@BOSTÄDER.SE", "ADMIN@BOSTÄDER.SE", "AQAAAAIAAYagAAAAELAKfa8Dww4auOTCCSN1BKkPocXLG4slsMY0qpjO3KfhcQCuY5w1tP2nypSucy4ptQ==", null, false, "e8175263-5533-403e-a549-3bc198cebbdf", false, "admin@bostäder.se" }
                 });
 
             migrationBuilder.InsertData(
@@ -344,11 +344,6 @@ namespace API_Juliet.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BostadsBilder_BostadId",
-                table: "BostadsBilder",
-                column: "BostadId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Bostäder_KategoriId",
                 table: "Bostäder",
                 column: "KategoriId");
@@ -362,6 +357,11 @@ namespace API_Juliet.Migrations
                 name: "IX_Bostäder_MäklareId",
                 table: "Bostäder",
                 column: "MäklareId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BostadsBilder_BostadId",
+                table: "BostadsBilder",
+                column: "BostadId");
         }
 
         /// <inheritdoc />

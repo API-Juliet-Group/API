@@ -1,4 +1,7 @@
-﻿namespace JulietBlazorApp.Services
+﻿using BaseLibrary.DTO;
+using System.Net.Http.Json;
+
+namespace JulietBlazorApp.Services
 {
     public class MäklareDtoService
     {
@@ -9,6 +12,17 @@
             _httpClient = httpClient;
         }
 
-
+        public async Task<MäklareDto> GetMäklareAsync(string id)
+        {
+            try
+            {
+                var mäklare = await _httpClient.GetFromJsonAsync<MäklareDto>($"api/Mäklare/{id}");
+                return mäklare;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

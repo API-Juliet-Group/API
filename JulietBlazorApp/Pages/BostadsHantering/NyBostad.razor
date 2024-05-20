@@ -194,6 +194,8 @@
     public IEnumerable<BostadKategoriDto> BostadKategorier { get; set; }
     [Parameter]
     public IEnumerable<KommunDto> Kommuner { get; set; }
+    [Parameter]
+    public string MäklarId { get; set; }
 
 
     private BostadDto bostad;
@@ -259,7 +261,6 @@
     {
         try
         {
-            mäklarId = await ((ApiAuthenticationStateProvider)authStateProvider).GetId();
             bostad = new BostadDto
                 {
                     Utgångspris = utgångspris,
@@ -275,7 +276,7 @@
                     Objektbeskrivning = objektbeskrivning,
                     KategoriId = kategoriId,
                     KommunId = kommunId,
-                    MäklarId = mäklarId
+                    MäklarId = MäklarId
 
                 };
 

@@ -249,7 +249,7 @@ namespace API_Juliet.Migrations
                         {
                             Id = "62e8b88c-364b-4731-929d-d477c855302f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a281a3f8-f181-493a-9f98-8751a9077a9b",
+                            ConcurrencyStamp = "5df54d04-74ea-450e-8023-96c4fe7706d9",
                             Efternamn = "Bostäder.se",
                             Email = "admin@bostäder.se",
                             EmailConfirmed = true,
@@ -257,9 +257,9 @@ namespace API_Juliet.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@BOSTÄDER.SE",
                             NormalizedUserName = "ADMIN@BOSTÄDER.SE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE4nwzYPgsroLZcstVrr9MUkP6BL9+/nIz7udNWeRtMbok5rbJtRkNR8tzPLK/iKUw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELAKfa8Dww4auOTCCSN1BKkPocXLG4slsMY0qpjO3KfhcQCuY5w1tP2nypSucy4ptQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5245e6ef-1db1-4097-adc0-3c38887bd9e5",
+                            SecurityStamp = "e8175263-5533-403e-a549-3bc198cebbdf",
                             TwoFactorEnabled = false,
                             UserName = "admin@bostäder.se"
                         },
@@ -267,7 +267,7 @@ namespace API_Juliet.Migrations
                         {
                             Id = "2a2b8c8e-d2db-4fb8-b3f0-869975afb523",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3ccd93e1-8ae3-4f19-a50d-bb9229f75b1a",
+                            ConcurrencyStamp = "9c1fc48b-eeae-4b04-a4b0-71cddbda641c",
                             Efternamn = "Bostäder.se",
                             Email = "mäklare@bostäder.se",
                             EmailConfirmed = true,
@@ -275,9 +275,9 @@ namespace API_Juliet.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MÄKLARE@BOSTÄDER.SE",
                             NormalizedUserName = "MÄKLARE@BOSTÄDER.SE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHselcuN+iE+ECI//me1mmWGmV1DDeSV8NK9s2lS4YGGK5y8k64P7332Zem7DJanog==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK5u4ajLKjicHSgtFa3j6rxpRAARsdYl7ZurezhpCZSJg0k9cEnoneVphFcpIudbjA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c3963181-4589-47ab-ac5d-b67b6bce4e70",
+                            SecurityStamp = "b11a1396-db01-4b0e-9afe-c3df4e3fd87a",
                             TwoFactorEnabled = false,
                             UserName = "mäklare@bostäder.se"
                         });

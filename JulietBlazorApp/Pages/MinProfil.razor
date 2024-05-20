@@ -17,7 +17,7 @@
     protected override async Task OnInitializedAsync()
     {
         var mäklarId = await ((ApiAuthenticationStateProvider)authStateProvider).GetId();
-        profil = await MäklareService.GetMäklare(mäklarId);
+        profil = await MäklareService.GetMäklareAsync(mäklarId);
     }
 
     private async Task UpdateUser()

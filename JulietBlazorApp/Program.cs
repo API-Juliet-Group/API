@@ -17,6 +17,7 @@ builder.Services.AddScoped<BostadKategoriDtoService>();
 builder.Services.AddScoped<MäklareDtoService>();
 builder.Services.AddScoped<KommunDtoService>();
 builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<MäklareDtoService>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7045/") });
 

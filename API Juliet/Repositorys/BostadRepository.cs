@@ -1,4 +1,7 @@
-﻿using API_Juliet.Data;
+﻿/*
+  Author: Tobias Svensson
+ */
+using API_Juliet.Data;
 using API_Juliet.Repositorys.Contracts;
 using BaseLibrary.DTO;
 using API_Juliet.Models;

@@ -1,4 +1,7 @@
-﻿using API_Juliet.Repositorys.Contracts;
+﻿/*
+  Author: Tobias Svensson
+ */
+using API_Juliet.Repositorys.Contracts;
 using BaseLibrary.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

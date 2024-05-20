@@ -1,4 +1,7 @@
-﻿using BaseLibrary.DTO;
+﻿/*
+    Author: Tobias Svensson
+*/
+using BaseLibrary.DTO;
 using System.Net.Http.Json;
 
 

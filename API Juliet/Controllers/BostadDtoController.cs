@@ -1,4 +1,7 @@
-﻿using API_Juliet.Constants;
+﻿/*
+  Author: Tobias Svensson
+ */
+using API_Juliet.Constants;
 using API_Juliet.Models;
 using API_Juliet.Repositorys;
 using API_Juliet.Repositorys.Contracts;

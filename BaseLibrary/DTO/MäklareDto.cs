@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BaseLibrary.DTO
 {
-    public class MäklareDto : LoginDto
+    public class MäklareDto : LoginRequest
     {
         [Required]
         public string Förnamn { get; set; }

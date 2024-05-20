@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BaseLibrary.DTO
 {
-    public class LoginDto
+    public class LoginRequest
     {
         [Required]
         [EmailAddress]

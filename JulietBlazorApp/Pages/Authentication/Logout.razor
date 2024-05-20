@@ -1,0 +1,18 @@
+﻿@page "/authentication/logout"
+@using BaseLibrary.DTO
+@using JulietBlazorApp.Services.Authentication
+@inject IAuthenticationService authService
+@inject NavigationManager navManager
+
+<h3>Är du säker att du vill logga ut?</h3>
+
+<button class="btn btn-primary" @onclick="() => HandleLogout()">Ja</button>
+
+@code {
+    private async void HandleLogout()
+    {
+        await authService.LogoutAsync();
+
+        navManager.NavigateTo("/");
+    }
+}

@@ -1,0 +1,65 @@
+﻿@page "/authentication/login"
+@using BaseLibrary.DTO
+@using JulietBlazorApp.Services.Authentication
+@inject IAuthenticationService authService
+@inject NavigationManager navManager
+
+<h3>Logga in</h3>
+
+<div>
+    <EditForm Model="loginRequest" OnValidSubmit="HandleLoginRequest">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="email">E-post:</label>
+            <InputText class="form-control" @bind-Value="loginRequest.Email" />
+            <ValidationMessage For="@(() => loginRequest.Email)" />
+        </div>
+        <div class="form-group">
+            <label for="password">Lösenord:</label>
+            <InputText class="form-control" @bind-Value="loginRequest.Password" />
+            <ValidationMessage For="@(() => loginRequest.Password)" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Logga in</button>
+    </EditForm>
+</div>
+
+@if (id is not null)
+{
+    <p class="error">Your id is:@id</p>
+}
+
+@if (errorMessage is not null)
+{
+    <p class="error">@errorMessage</p>
+}
+
+@code {
+    private LoginRequest loginRequest = new LoginRequest();
+    private string? errorMessage;
+    private string? id;
+
+    private async Task HandleLoginRequest()
+    {
+        try
+        {
+            id = await authService.LoginAsync(loginRequest);
+            errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            id = null;
+
+            errorMessage = ex.Message;
+        }
+        // try
+        // {
+        //     var response = await authService.AuthenticateAsync(LoginRequest);
+
+        //     if (response)
+        //     {
+        //         //navManager()
+        //     }
+        // }
+    }
+}

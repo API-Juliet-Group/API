@@ -42,7 +42,8 @@ namespace API_Juliet.Controllers
             {
                 Förnamn = mäklare.Förnamn,
                 Efternamn = mäklare.Efternamn,
-                BildURL = mäklare.BildURL
+                BildURL = mäklare.BildURL,
+                MäklarbyråId = mäklare.MäklarbyråId
             };
 
             return mäklareDto;
@@ -57,14 +58,23 @@ namespace API_Juliet.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = ApiRoles.Mäklare)]
-        public async Task<IActionResult> UpdateMäklare(string id, Mäklare mäklare)
+        //[Authorize(Roles = ApiRoles.Mäklare)]
+        public async Task<IActionResult> UpdateMäklare(string id, MäklareDto mäklareDto)
         {
-            if (id != mäklare.Id)
+            if (mäklareDto == null)
             {
-                return BadRequest();
+                return BadRequest("Mäklare data is required.");
             }
 
+            var mäklare = await _mäklareRepository.GetByIdAsync(id);
+
+            if (mäklare == null)
+            {
+                return NotFound();
+            }
+            mäklare.Förnamn = mäklareDto.Förnamn;
+            mäklare.Efternamn = mäklareDto.Efternamn;
+            mäklare.BildURL = mäklareDto.BildURL;
             try
             {
                 await _mäklareRepository.UpdateAsync(mäklare);

@@ -1,4 +1,8 @@
-﻿using API_Juliet.Models;
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+using API_Juliet.Models;
 using API_Juliet.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

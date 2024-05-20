@@ -21,15 +21,9 @@ builder.Services.AddScoped<MäklareDtoService>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7045/") });
 
-
-
-
-//builder.Services.AddTransient<AuthenticationHandler>();
-
-//builder.Services.AddHttpClient("ServerApi")
-//                .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ServerUrl"] ?? ""))
-//                .AddHttpMessageHandler<AuthenticationHandler>();
-
+/*
+ * Edited for identity: Johan Ahlqvist
+ */
 builder.Services.AddHttpClient(AppConstants.ServerApi)
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ServerUrl"] ?? ""));
 builder.Services.AddBlazoredLocalStorageAsSingleton();

@@ -1,4 +1,8 @@
-﻿using Blazored.LocalStorage;
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+using Blazored.LocalStorage;
 using JulietBlazorApp.Constants;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;

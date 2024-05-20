@@ -1,10 +1,12 @@
-﻿using API_Juliet.Repositorys.Contracts;
+﻿/*
+ * Author: Tobias Svensson
+ * Edited for identity: Johan Ahlqvist
+ */
+
+using API_Juliet.Repositorys.Contracts;
 using API_Juliet.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using API_Juliet.Constants;
 using Microsoft.AspNetCore.Authorization;
 using BaseLibrary.DTO;

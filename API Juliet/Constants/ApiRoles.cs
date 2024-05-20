@@ -1,4 +1,8 @@
-﻿namespace API_Juliet.Constants
+﻿/*
+ * Author: Johan Ahlqvist
+ */
+
+namespace API_Juliet.Constants
 {
     public static class ApiRoles
     {

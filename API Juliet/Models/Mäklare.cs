@@ -11,7 +11,7 @@ namespace API_Juliet.Models
         public string Förnamn { get; set; }
         [Required]
         public string Efternamn { get; set; }
-        public string? BildURL { get; set; }
+        public string? BildURL { get; set; } = "/Placeholders/user.jpg";
 
 
         public int? MäklarbyråId { get; set; }

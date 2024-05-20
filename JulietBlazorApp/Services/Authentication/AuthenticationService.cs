@@ -61,7 +61,7 @@ namespace JulietBlazorApp.Services.Authentication
             var response = await _httpClient.PostAsync("api/authentication/register", JsonContent.Create(mäklareDto));
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception();
+                throw new Exception(response.StatusCode.ToString());
             }
         }
 

@@ -1,5 +1,7 @@
 ﻿@page "/authentication/register"
 @using BaseLibrary.DTO
+@using JulietBlazorApp.Services.Authentication
+@inject IAuthenticationService authService
 @inject NavigationManager navManager
 
 <h3>Skapa ny användare</h3>

@@ -35,8 +35,9 @@ section {
     width: 100%;
 }
 
-.profil_image {
+.profil-image {
     max-width: 200px;
+    height: auto;
 }
 
 .mini-image-button {

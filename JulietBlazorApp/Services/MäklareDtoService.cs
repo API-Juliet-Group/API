@@ -28,5 +28,26 @@ namespace JulietBlazorApp.Services
                 throw;
             }
         }
+
+        public async Task<bool> UpdateMäklareAsync(MäklareDto mäklareDto, string mäklarId)
+        {
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"api/Mäklare/{mäklarId}", mäklareDto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

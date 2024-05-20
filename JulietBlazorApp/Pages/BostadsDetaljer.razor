@@ -42,11 +42,11 @@
                 {
                     @if (!string.IsNullOrEmpty(mäklare.BildURL))
                     {
-                        <img src="@mäklare.BildURL" alt="Mäklarens bild saknas">
+                        <img class="profil-image" src="@mäklare.BildURL" alt="Mäklarens bild saknas">
                     }
                     else
                     {
-                        <img class="profil_image" src="/images/placeholder.jpg" alt="Mäklarens bild saknas">
+                        <img class="profil-image" src="/images/placeholder.jpg" alt="Mäklarens bild saknas">
                     }
                 <p>@mäklare.Förnamn @mäklare.Efternamn</p>
                 <p>mäklarenskontakt info</p>

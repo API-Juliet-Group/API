@@ -20,6 +20,9 @@ namespace API_Juliet
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            /*
+             * Added services for identity: Johan Ahlqvist
+             */
             // Add services to the container.
             builder.Services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("DataDbContext") ?? throw new InvalidOperationException("Connection string 'DataDbContext' not found.")));

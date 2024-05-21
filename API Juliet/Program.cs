@@ -26,9 +26,11 @@ namespace API_Juliet
             // Add services to the container.
             builder.Services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("DataDbContext") ?? throw new InvalidOperationException("Connection string 'DataDbContext' not found.")));
+            
             builder.Services.AddIdentityCore<Mäklare>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>();
+            
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;

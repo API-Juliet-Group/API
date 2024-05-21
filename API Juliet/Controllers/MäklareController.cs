@@ -45,7 +45,9 @@ namespace API_Juliet.Controllers
                 Förnamn = mäklare.Förnamn,
                 Efternamn = mäklare.Efternamn,
                 BildURL = mäklare.BildURL,
-                MäklarbyråId = mäklare.MäklarbyråId
+                MäklarbyråId = mäklare.MäklarbyråId,
+                Email = mäklare.Email
+                
             };
 
             return mäklareDto;

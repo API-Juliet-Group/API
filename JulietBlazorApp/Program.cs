@@ -4,6 +4,7 @@ using JulietBlazorApp.Constants;
 using JulietBlazorApp.Providers;
 using JulietBlazorApp.Services;
 using JulietBlazorApp.Services.Authentication;
+using JulietBlazorApp.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -31,5 +32,6 @@ builder.Services.AddSingleton<ApiAuthenticationStateProvider>();
 builder.Services.AddSingleton<AuthenticationStateProvider>(p => p.GetRequiredService<ApiAuthenticationStateProvider>());
 builder.Services.AddAuthorizationCore();
 builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+builder.Services.AddTransient<IClient, Client>();
 
 await builder.Build().RunAsync();

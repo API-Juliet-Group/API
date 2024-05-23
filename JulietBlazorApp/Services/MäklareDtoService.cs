@@ -1,31 +1,31 @@
 ﻿/*
  * Author: Johan Ahlqvist
- * Edited for Get and Update: Tobias Svensson
+ * Edited for use of ServiceClient: Tobias Svensson
  */
 
-using BaseLibrary.DTO;
+using Blazored.LocalStorage;
 using JulietBlazorApp.Providers;
+using JulietBlazorApp.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace JulietBlazorApp.Services
 {
-    public class MäklareDtoService
+    public class MäklareDtoService : BaseHttpService, IMäklareDtoService
     {
-        private readonly HttpClient _httpClient;
-        private readonly AuthenticationStateProvider _authenticationStateProvider;
+        private readonly IClient httpClient;
 
-        public MäklareDtoService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider)
+        public MäklareDtoService(ILocalStorageService localStorage, IClient client) : base(localStorage, client)
         {
-            _httpClient = httpClient;
-            _authenticationStateProvider = authenticationStateProvider;
+            this.httpClient = client;
         }
 
-        public async Task<MäklareDto> GetMäklareAsync(string id)
+        public async Task<MäklareDto> GetMäklareAsync(string mäklarId)
         {
             try
             {
-                var mäklare = await _httpClient.GetFromJsonAsync<MäklareDto>($"api/Mäklare/{id}");
+                var mäklare = await httpClient.MäklareGETAsync(mäklarId);
                 return mäklare;
             }
             catch (Exception)
@@ -34,21 +34,13 @@ namespace JulietBlazorApp.Services
             }
         }
 
-        public async Task<bool> UpdateMäklareAsync(MäklareDto mäklareDto, string mäklarId)
+        public async Task UpdateMäklareAsync(MäklareDto mäklareDto, string mäklarId)
         {
             try
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await ((ApiAuthenticationStateProvider)_authenticationStateProvider).GetToken());
-                var response = await _httpClient.PutAsJsonAsync($"api/Mäklare/{mäklarId}", mäklareDto);
+                await GetBearerToken();
+                await httpClient.MäklarePUTAsync(mäklarId, mäklareDto);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception)
             {

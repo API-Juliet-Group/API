@@ -66,15 +66,14 @@ namespace API_Juliet.Controllers
 
         [HttpPost]
         [Route("login")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<LoginResponse>> Login([FromBody]LoginRequest loginDto)
+        public async Task<ActionResult<LoginResponse>> Login(LoginRequest loginDto)
         {
             var mäklare = await _userManager.FindByEmailAsync(loginDto.Email);
             var passwordValid = await _userManager.CheckPasswordAsync(mäklare, loginDto.Password);
 
             if (mäklare == null || passwordValid == false)
             {
-                return Unauthorized();
+                return Unauthorized(loginDto);
             }
             try
             {
@@ -88,7 +87,7 @@ namespace API_Juliet.Controllers
                     Id = mäklare.Id
                 };
 
-                return Accepted(response);
+                return Ok(response);
             }
             catch (Exception ex)
             {

@@ -6,6 +6,7 @@ using Blazored.LocalStorage;
 using JulietBlazorApp.Constants;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.AccessControl;
 using System.Security.Claims;
 
 namespace JulietBlazorApp.Providers
@@ -17,7 +18,7 @@ namespace JulietBlazorApp.Providers
 
         public ApiAuthenticationStateProvider(ILocalStorageService localStorage)
         {
-            _localStorage = localStorage;
+            this._localStorage = localStorage;
             _jwtHandler = new JwtSecurityTokenHandler();
         }
 
@@ -25,7 +26,7 @@ namespace JulietBlazorApp.Providers
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity());
 
-            var savedToken = await _localStorage.GetItemAsync<string>(AppConstants.TOKEN_KEY);
+            var savedToken = await _localStorage.GetItemAsync<string>("accessToken");
 
             if (savedToken == null)
             {
@@ -40,7 +41,7 @@ namespace JulietBlazorApp.Providers
             }
 
             var claims = await GetClaims();
-            user = new ClaimsPrincipal(new ClaimsIdentity(claims, AppConstants.JWT_KEY));
+            user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt", ClaimTypes.Name, "role"));
 
             return new AuthenticationState(user);
         }
@@ -48,14 +49,14 @@ namespace JulietBlazorApp.Providers
         public async Task LoggedIn()
         {
             var claims = await GetClaims();
-            var user = new ClaimsPrincipal(new ClaimsIdentity(claims, AppConstants.JWT_KEY));
+            var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt", ClaimTypes.Name, "role"));
             var authState = Task.FromResult(new AuthenticationState(user));
             NotifyAuthenticationStateChanged(authState);
         }
 
         public async Task LoggedOut()
         {
-            await _localStorage.RemoveItemAsync(AppConstants.TOKEN_KEY);
+            await _localStorage.RemoveItemAsync("accessToken");
             var nobody = new ClaimsPrincipal(new ClaimsIdentity());
             var authState = Task.FromResult(new AuthenticationState(nobody));
             NotifyAuthenticationStateChanged(authState);
@@ -63,7 +64,7 @@ namespace JulietBlazorApp.Providers
 
         public async Task<List<Claim>> GetClaims()
         {
-            var savedToken = await _localStorage.GetItemAsync<string>(AppConstants.TOKEN_KEY);
+            var savedToken = await _localStorage.GetItemAsync<string>("accessToken");
             var tokenContent = _jwtHandler.ReadJwtToken(savedToken);
             var claims = tokenContent.Claims.ToList();
             claims.Add(new Claim(ClaimTypes.Name, tokenContent.Subject));
@@ -72,14 +73,9 @@ namespace JulietBlazorApp.Providers
 
         public async Task<string> GetId()
         {
-            var savedToken = await _localStorage.GetItemAsync<string>(AppConstants.TOKEN_KEY);
+            var savedToken = await _localStorage.GetItemAsync<string>("accessToken");
             var tokenContent = _jwtHandler.ReadJwtToken(savedToken);
             return tokenContent.Claims.First(c => c.Type == CustomClaimTypes.Uid).Value;
-        }
-
-        public async Task<string> GetToken()
-        {
-            return await _localStorage.GetItemAsync<string>(AppConstants.TOKEN_KEY);
         }
     }
 }

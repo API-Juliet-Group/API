@@ -46,7 +46,9 @@ namespace API_Juliet.Controllers
                 Efternamn = mäklare.Efternamn,
                 BildURL = mäklare.BildURL,
                 MäklarbyråId = mäklare.MäklarbyråId,
-                Email = mäklare.Email
+                Email = mäklare.Email,
+                Password = mäklare.PasswordHash
+                
                 
             };
 

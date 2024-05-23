@@ -2,8 +2,8 @@
     Author: Johan Ahlqvist
 *@
 @page "/authentication/login"
-@using BaseLibrary.DTO
 @using JulietBlazorApp.Services.Authentication
+@using JulietBlazorApp.Services.Base
 @inject IAuthenticationService authService
 @inject NavigationManager navManager
 
@@ -38,20 +38,28 @@
 
 
 @code {
-    private LoginRequest loginRequest = new LoginRequest();
+    LoginRequest loginRequest = new LoginRequest();
     private string? errorMessage;
     private string? id;
 
     private async Task HandleLoginRequest()
     {
+        string message = string.Empty;
         try
         {
-            id = await authService.LoginAsync(loginRequest);
-            errorMessage = null;
-            navManager.NavigateTo("/");
+            var response = await authService.AuthenticateAsync(loginRequest);
+            if (response)
+            {
+                errorMessage = null;
+                navManager.NavigateTo("/");
+            }
+            message = "Ogiltiga uppgifter, prova igen.";
         }
-        catch (Exception ex)
+        catch (ApiException ex)
         {
+            if(ex.StatusCode >= 200 && ex.StatusCode <= 299){
+                navManager.NavigateTo("/");
+            }
             id = null;
 
             errorMessage = ex.Message;

@@ -1,11 +1,12 @@
 ﻿/*
  * Author: Johan Ahlqvist
+ * Edited for use of ServiceClient: Tobias Svensson
  */
 
-using BaseLibrary.DTO;
 using Blazored.LocalStorage;
 using JulietBlazorApp.Constants;
 using JulietBlazorApp.Providers;
+using JulietBlazorApp.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Json;
@@ -15,70 +16,47 @@ namespace JulietBlazorApp.Services.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILocalStorageService _localStorageService;
-        private readonly AuthenticationStateProvider _authenticationStateProvider;
+        private readonly IClient httpClient;
+        private readonly ILocalStorageService localStorage;
+        private readonly AuthenticationStateProvider authenticationStateProvider;
 
         public event Action<string?>? LoginChange;
 
-        public AuthenticationService(IHttpClientFactory factory, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider)
+        public AuthenticationService(IClient httpClient, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider)
         {
-            _httpClient = factory.CreateClient(AppConstants.ServerApi);
-            _localStorageService = localStorage;
-            _authenticationStateProvider = authenticationStateProvider;
+            this.httpClient = httpClient;
+            this.localStorage = localStorage;
+            this.authenticationStateProvider = authenticationStateProvider;
         }
 
         public async Task<bool> AuthenticateAsync(LoginRequest loginModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+            var response = await httpClient.LoginAsync(loginModel);
+
+            await localStorage.SetItemAsync("accessToken", response.Token);
+
+            await((ApiAuthenticationStateProvider)authenticationStateProvider).LoggedIn();
+
+            return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Authentication failed: {ex.Message}");
+
+                throw;
+            }
         }
 
-        public async Task<string> LoginAsync(LoginRequest loginModel)
-        {
-            var response = await _httpClient.PostAsync("api/authentication/login", JsonContent.Create(loginModel));
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new UnauthorizedAccessException("Inloggningen misslyckades.");
-            }
-
-            var responseContent = await response.Content.ReadFromJsonAsync<LoginResponse>();
-            if (responseContent == null)
-            {
-                throw new InvalidDataException();
-            }
-            await _localStorageService.SetItemAsync(AppConstants.TOKEN_KEY, responseContent.Token);
-
-            await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedIn();
-
-            //return responseContent.Email;
-            return await ((ApiAuthenticationStateProvider)_authenticationStateProvider).GetId();
-        }
 
         public async Task LogoutAsync()
         {
-            await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
+            await ((ApiAuthenticationStateProvider)authenticationStateProvider).LoggedOut();
         }
 
-        public async Task RegisterAsync(MäklareDto mäklareDto)
-        {
-            var response = await _httpClient.PostAsync("api/authentication/register", JsonContent.Create(mäklareDto));
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception();
-            }
-        }
 
-        private static string GetId(string token)
-        {
-            var jwt = new JwtSecurityToken(token);
-            return jwt.Claims.First(c => c.Type == CustomClaimTypes.Uid).Value;
-        }
-
-        private static string GetEmail(string token)
-        {
-            var jwt = new JwtSecurityToken(token);
-            return jwt.Claims.First(c => c.Type == ClaimTypes.Email).Value;
-        }
     }
 }

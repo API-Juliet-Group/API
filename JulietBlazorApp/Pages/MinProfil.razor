@@ -1,17 +1,18 @@
 ﻿@*
     Author: Johan Ahlqvist
+    * Edited for use of ServiceClient: Tobias Svensson
 
 *@
 @page "/minprofil"
-@using BaseLibrary.DTO
 @using JulietBlazorApp.Providers
 @using JulietBlazorApp.Services
 @using JulietBlazorApp.Services.Authentication
+@using JulietBlazorApp.Services.Base
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider authStateProvider
-@inject IAuthenticationService authService
-@inject MäklareDtoService MäklareService
+@inject IClient httpClient
 @inject NavigationManager navManager
+@inject IMäklareDtoService mäklarService
 
 <h3>Profil</h3>
 <EditForm Model="profil" OnSubmit="UpdateUser" FormName="MäklareDto">
@@ -54,7 +55,7 @@
     protected override async Task OnInitializedAsync()
     {
         mäklarId = await ((ApiAuthenticationStateProvider)authStateProvider).GetId();
-        profil = await MäklareService.GetMäklareAsync(mäklarId);
+        profil = await mäklarService.GetMäklareAsync(mäklarId);
     }
 
 
@@ -62,16 +63,18 @@
     {
         try
         {
-            var successesfulResponse = await MäklareService.UpdateMäklareAsync(profil, mäklarId);
-
-            if (successesfulResponse == true)
+            if(mäklarId != null)
             {
-                successMessage = $"Ändringarna har sparats";
+                await mäklarService.UpdateMäklareAsync(profil, mäklarId);
             }
+
         }
-        catch (Exception ex)
+        catch (ApiException ex)
         {
-            throw;
+            if (ex.StatusCode >= 200 && ex.StatusCode <= 299)
+            {
+                navManager.NavigateTo("/");
+            }
         }
     }
 }

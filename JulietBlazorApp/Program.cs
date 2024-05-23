@@ -24,14 +24,17 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 
 /*
  * Edited for identity: Johan Ahlqvist
+ * Edited for use of ServiceClient: Tobias Svensson
  */
 builder.Services.AddHttpClient(AppConstants.ServerApi)
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ServerUrl"] ?? ""));
-builder.Services.AddBlazoredLocalStorageAsSingleton();
-builder.Services.AddSingleton<ApiAuthenticationStateProvider>();
-builder.Services.AddSingleton<AuthenticationStateProvider>(p => p.GetRequiredService<ApiAuthenticationStateProvider>());
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<ApiAuthenticationStateProvider>());
+builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddAuthorizationCore();
-builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 builder.Services.AddTransient<IClient, Client>();
+builder.Services.AddTransient<IMäklareDtoService, MäklareDtoService>();
 
 await builder.Build().RunAsync();

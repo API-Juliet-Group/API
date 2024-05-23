@@ -134,8 +134,7 @@ else
         bostadKategorier = await BostadKategoriDtoService.GetBostadKategorierAsync();
         kommuner = await KommunDtoService.GetkommunerAsync();
 
-        mäklarId = await ((ApiAuthenticationStateProvider)authStateProvider).GetId();
-
+        if (!string.IsNullOrEmpty(mäklarId))
         bostäder = GetMäklarensBostäder(bostäder);
     }
 

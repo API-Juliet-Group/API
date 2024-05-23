@@ -87,11 +87,6 @@ namespace API_Juliet
                 app.UseSwaggerUI();
             }
 
-            app.UseCors(policy =>
-                policy.WithOrigins("http://localhost:7109", "https://localhost:7109")
-                .AllowAnyMethod()
-                .WithHeaders(HeaderNames.ContentType)
-            );
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
